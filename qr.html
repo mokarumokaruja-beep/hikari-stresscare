@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hikari QR</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: หน้าจอแสดงตอนจบพรีเซนต์ — หัวเรื่อง + ลำดับ 2 ขั้น (ลองเว็บ → ทำแบบสอบถาม) เป็นการ์ด QR ขนาดใหญ่คู่กัน */
+:root {
+  --bg: #f4f5fc;
+  --surface: #ffffff;
+  --ink: #1f2a5c;
+  --muted: #5d6690;
+  --primary: #3e6ee0;
+  --pink: #e05a80;
+  --line: #e2e6f5;
+  --qr-bg: #ffffff;
+  --font-display: "Prompt", "Leelawadee UI", Tahoma, sans-serif;
+  --font-body: "Prompt", "Leelawadee UI", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11152b; --surface: #1b2142; --ink: #eef0ff; --muted: #a9b0d6;
+    --primary: #8fb0ff; --pink: #ff9ab8; --line: #2c3460; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11152b; --surface: #1b2142; --ink: #eef0ff; --muted: #a9b0d6;
+  --primary: #8fb0ff; --pink: #ff9ab8; --line: #2c3460; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-block: 40px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header { text-align: center; margin-bottom: 32px; }
+.brand { margin: 0 0 6px; color: var(--primary); font-weight: 600; letter-spacing: 0.04em; }
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.5vw, 44px);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.lead { margin: 10px auto 0; max-width: 600px; color: var(--muted); }
+.steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 24px 26px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+}
+.step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 999px;
+}
+.step.survey .step-label { color: var(--pink); border-color: var(--pink); }
+.step h2 { margin: 0; font-size: 24px; line-height: 1.3; text-wrap: balance; }
+.step p { margin: 0; color: var(--muted); font-size: 15px; }
+.qr-box {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1;
+  padding: 6px;
+  background: var(--qr-bg);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-box svg { display: block; width: 100%; height: 100%; }
+.qr-empty { color: #5d6690; font-size: 14px; padding: 12px; }
+.url {
+  max-width: 100%;
+  font-size: 13px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.setup { width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.setup label { font-size: 14px; font-weight: 500; }
+.setup-row { display: flex; gap: 8px; }
+.setup input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+}
+.setup input:focus-visible, button:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+button {
+  padding: 10px 18px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--pink);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.link-btn {
+  padding: 0;
+  color: var(--muted);
+  background: none;
+  text-decoration: underline;
+  font-size: 13px;
+}
+.msg { min-height: 20px; margin: 0; font-size: 13px; color: var(--pink); }
+footer { margin-top: 28px; text-align: center; color: var(--muted); font-size: 14px; }
+@media (max-width: 720px) {
+  .steps { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="brand">☀ Hikari StressCare · Rush 42 Bangkok</p>
+    <h1>ลองใช้เว็บ แล้วช่วยตอบแบบสอบถาม</h1>
+    <p class="lead">สแกน QR ที่ 1 เพื่อลองใช้เว็บไซต์ จากนั้นสแกน QR ที่ 2 เพื่อตอบแบบสอบถาม (ประมาณ 5–7 นาที ไม่ระบุตัวตน)</p>
+  </header>
+
+  <div class="steps">
+    <section class="step">
+      <span class="step-label">ขั้นที่ 1</span>
+      <h2>ทดลองใช้เว็บไซต์</h2>
+      <p>ทำแบบประเมินความเครียด ฝึกหายใจ สมัครสมาชิก และดูกราฟความเปลี่ยนแปลง</p>
+      <div class="qr-box" id="qrSite" role="img" aria-label="QR Code ไปยังเว็บไซต์ Hikari StressCare"></div>
+      <span class="url" id="siteUrl"></span>
+    </section>
+
+    <section class="step survey">
+      <span class="step-label">ขั้นที่ 2</span>
+      <h2>ทำแบบสอบถาม</h2>
+      <p>ความเห็นของคุณช่วยตัดสินใจว่า Hikari ควรพัฒนาเป็นแอปต่อหรือไม่</p>
+      <div class="qr-box" id="qrSurvey" role="img" aria-label="QR Code ไปยังแบบสอบถาม">
+        <span class="qr-empty">วางลิงก์ Google Form ด้านล่างเพื่อสร้าง QR</span>
+      </div>
+      <span class="url" id="surveyUrlText"></span>
+      <form class="setup" id="setup">
+        <label for="surveyInput">ลิงก์ Google Form (เช่น https://forms.gle/…)</label>
+        <div class="setup-row">
+          <input id="surveyInput" type="url" placeholder="https://forms.gle/..." autocomplete="off">
+          <button type="submit">สร้าง QR</button>
+        </div>
+        <p class="msg" id="msg"></p>
+      </form>
+      <button class="link-btn" id="editBtn" type="button" hidden>แก้ไขลิงก์แบบสอบถาม</button>
+    </section>
+  </div>
+
+  <footer>ขอบคุณที่ช่วยทดสอบ 💙 ทีม Hikari StressCare</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script>
+// ลิงก์เว็บไซต์ (เผยแพร่แล้ว) และลิงก์แบบสอบถาม (ใส่ค่าตรงนี้ได้ หรือวางในหน้าเว็บ)
+const SITE_URL = "https://mokarumokaruja-beep.github.io/hikari-stresscare/";
+const SURVEY_URL = "https://forms.gle/R5iZDvvk11o1Fzeu8";
+const STORE_KEY = "hikariSurveyUrl";
+
+function drawQR(boxId, url) {
+  const box = document.getElementById(boxId);
+  if (typeof qrcode === "undefined") {
+    box.innerHTML = '<span class="qr-empty">โหลดตัวสร้าง QR ไม่ได้ ลองรีเฟรชหน้า</span>';
+    return;
+  }
+  // สร้าง QR (เลือกขนาดอัตโนมัติ, กู้ข้อมูลระดับ M) แล้ววาดเป็น SVG ให้คมทุกขนาดจอ
+  const qr = qrcode(0, "M");
+  qr.addData(url);
+  qr.make();
+  const n = qr.getModuleCount();
+  let path = "";
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (qr.isDark(r, c)) { path += "M" + c + " " + r + "h1v1h-1z"; }
+    }
+  }
+  const q = 4; // ขอบเงียบรอบ QR 4 ช่อง ตามมาตรฐาน
+  box.innerHTML = '<svg viewBox="' + (-q) + " " + (-q) + " " + (n + 2 * q) + " " + (n + 2 * q) +
+    '" width="100%" height="100%" shape-rendering="crispEdges"><rect x="' + (-q) + '" y="' + (-q) +
+    '" width="' + (n + 2 * q) + '" height="' + (n + 2 * q) + '" fill="#ffffff"/><path d="' + path + '" fill="#1f2a5c"/></svg>';
+}
+
+function readSaved() {
+  try { return localStorage.getItem(STORE_KEY) || ""; } catch (e) { return ""; }
+}
+function save(url) {
+  try { localStorage.setItem(STORE_KEY, url); } catch (e) { /* บันทึกไม่ได้ก็ยังแสดง QR ได้ */ }
+}
+
+const setup = document.getElementById("setup");
+const input = document.getElementById("surveyInput");
+const msg = document.getElementById("msg");
+const editBtn = document.getElementById("editBtn");
+
+function showSurvey(url) {
+  drawQR("qrSurvey", url);
+  document.getElementById("surveyUrlText").textContent = url;
+  setup.hidden = true;
+  editBtn.hidden = SURVEY_URL !== "";
+}
+
+setup.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const url = input.value.trim();
+  if (!/^https:\/\/(forms\.gle|docs\.google\.com\/forms)\//.test(url)) {
+    msg.textContent = "ลิงก์ต้องขึ้นต้นด้วย https://forms.gle/ หรือ https://docs.google.com/forms/";
+    return;
+  }
+  msg.textContent = "";
+  save(url);
+  showSurvey(url);
+});
+
+editBtn.addEventListener("click", function () {
+  input.value = readSaved();
+  setup.hidden = false;
+  editBtn.hidden = true;
+  input.focus();
+});
+
+window.addEventListener("load", function () {
+  drawQR("qrSite", SITE_URL);
+  document.getElementById("siteUrl").textContent = SITE_URL;
+  const surveyUrl = SURVEY_URL || readSaved();
+  if (surveyUrl) {
+    showSurvey(surveyUrl);
+  }
+});
+</script>
+</body>
+</html>
