@@ -28,7 +28,7 @@ const Pet = (function () {
     function night() { return timeOfDay() === "night"; }
     function line(kind) {
         const lines = (PET_LINES[L] || PET_LINES.en)[kind];
-        return pick(lines).split("{s}").join(PET_VOICE[L][S.world]).split("{pet}").join(petName());
+        return pick(lines).split("{s}").join((PET_VOICE[L] || PET_VOICE.en)[S.world]).split("{pet}").join(petName());
     }
     // คำทักตามช่วงเวลาทำงาน ถ้าไม่มีช่วงพิเศษใช้คำทักปกติ · พักเที่ยง/บ่ายง่วง แตะคำพูดเพื่อเปิดพักสั้น
     function workSpeak(fallback, ms) {

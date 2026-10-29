@@ -18,6 +18,7 @@ A stress-care website: a 60-day journey (a new clip a day alternating sound wave
 | `game.html`, `game.css`, `game.js`, `game-pet.js`, `game-data.js`, `game.webmanifest`, `game/img/` | เกมสวนแสง 4 โลก + ร้านค้า / Light Garden game with shop |
 | `pay.js`, `staff.html` | QR PromptPay + หน้าทีมงานสร้างรหัสรับของ / PromptPay QR + staff code page |
 | `lang/` | ข้อความ 10 ภาษา / Text in 10 languages |
+| `game/lang/` | ข้อความเกม 8 ภาษา (ไทย/อังกฤษอยู่ใน `game-data.js`) โหลดเฉพาะภาษาที่เลือก / Game text in 8 more languages |
 | `images/` | รูปภาพในเว็บ / Images |
 | `#check`, `#mood-screen`, `#help` ใน `index.html` | เช็กร่างกายและพฤติกรรมรายสัปดาห์, คัดกรองซึมเศร้า 2Q/9Q (กรมสุขภาพจิต), สายด่วนช่วยเหลือ / Weekly body & behaviour check, 2Q/9Q screen, help directory |
 | `#burnout`, `#reset`, `#rootcause` ใน `index.html` | เช็กภาวะหมดไฟ (CBI), พักสั้น 1–3 นาที 6 แบบ, รับมือที่ต้นเหตุ 8 เรื่อง / Burnout check (CBI), 6 quick resets, root-cause skills |

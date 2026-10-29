@@ -437,6 +437,16 @@
 <script src="config.js"></script>
 <script src="pay.js"></script>
 <script src="game-data.js"></script>
+<script>
+// โหลดไฟล์ภาษาของเกมตามภาษาที่เลือกในเว็บ (ไทย/อังกฤษอยู่ใน game-data.js แล้ว)
+(function () {
+    var l = "th";
+    try { l = JSON.parse(localStorage.getItem("hikariLang")) || "th"; } catch (e) {}
+    if (["zh", "hi", "es", "fr", "ar", "pt", "ru", "ja"].indexOf(l) >= 0) {
+        document.write('<script src="game/lang/' + l + '.js"><\/script>');
+    }
+})();
+</script>
 <script src="game.js"></script>
 <script src="game-pet.js"></script>
 </body>

@@ -92,19 +92,19 @@ function siteData(name) {
 
 // ===== 2. ภาษา + เครื่องมือช่วย =====
 const siteLang = loadData("hikariLang", "th");
-const L = siteLang === "th" ? "th" : "en";                         // ภาษาอื่นใช้ภาษาอังกฤษ
+const L = GTEXT[siteLang] ? siteLang : (siteLang === "th" ? "th" : "en");   // ใช้ภาษาที่มีไฟล์แปล ถ้าไม่มีใช้ภาษาอังกฤษ
 function t(key, values) {
-    let s = (GTEXT[L][key] !== undefined ? GTEXT[L][key] : GTEXT.th[key]) || key;
+    let s = (GTEXT[L][key] !== undefined ? GTEXT[L][key] : (GTEXT.en[key] !== undefined ? GTEXT.en[key] : GTEXT.th[key])) || key;
     for (const k in values || {}) s = s.split("{" + k + "}").join(values[k]);
     return s;
 }
 function img(name) { return "game/img/" + name + ".webp"; }
 function $(id) { return document.getElementById(id); }
-function itemName(id) { return ITEM_NAMES[L][id] || ITEM_NAMES.th[id] || id; }
+function itemName(id) { return ITEM_NAMES[L][id] || ITEM_NAMES.en[id] || ITEM_NAMES.th[id] || id; }
 function petName() { return t("pet_" + S.world); }
 function findItem(id) { return GAME_ITEMS.find(function (x) { return x.id === id; }); }
 function bahtFor(price) { return Math.round(price * (1 - (DISCOUNTS[plan] || 0))); }
-function placeName(id) { return PLACE_NAMES[L][id] || id; }
+function placeName(id) { return PLACE_NAMES[L][id] || PLACE_NAMES.en[id] || id; }
 
 let toastTimer = null;
 function toast(text) {
@@ -128,12 +128,29 @@ function setText(el, text) {
         } else if (part) el.appendChild(document.createTextNode(part));
     });
 }
+// ข้อความจดหมายในกล่องตามภาษาที่เลือกตอนนี้ (รองรับข้อมูลเก่าที่เก็บเป็นข้อความภาษาไทย/อังกฤษ)
+function inboxText(m) {
+    let i = typeof m.i === "number" ? m.i : -1;
+    if (i < 0 && typeof m.text === "string") {
+        i = LETTERS.th.indexOf(m.text);
+        if (i < 0) i = LETTERS.en.indexOf(m.text);
+    }
+    if (i >= 0 && LETTERS[L] && LETTERS[L][i]) return LETTERS[L][i];
+    if (i >= 0 && LETTERS.th[i]) return LETTERS.th[i];
+    return typeof m.text === "string" ? m.text : "";
+}
+// ชื่อน้องสำหรับข้อความทั่วไป (ถ้ายังไม่ได้เลือกโลก ใช้คำกลาง ๆ)
+function petLabel() {
+    return S && S.world ? petName() : t("petGeneric");
+}
 function applyTexts() {
     document.documentElement.lang = L;
+    document.documentElement.dir = L === "ar" ? "rtl" : "ltr";   // อาหรับอ่านจากขวาไปซ้าย
     document.title = t("title");
     document.querySelectorAll("[data-t]").forEach(function (el) {
-        if (el.tagName === "A" || el.tagName === "BUTTON") el.textContent = t(el.dataset.t);
-        else setText(el, t(el.dataset.t));
+        const txt = t(el.dataset.t, { pet: petLabel() });
+        if (el.tagName === "A" || el.tagName === "BUTTON") el.textContent = txt;
+        else setText(el, txt);
     });
     document.querySelectorAll("[data-t-aria]").forEach(function (el) { el.setAttribute("aria-label", t(el.dataset.tAria)); });
     $("payClose").setAttribute("aria-label", t("close"));
@@ -154,8 +171,9 @@ function newDayCheck() {
     S.day = today;
     S.today = { pet: false, mood: false, breathe: 0, letters: 0, visitor: false };
     // จดหมายจากน้องวันละ 1 ฉบับ
+    // เก็บเป็นลำดับข้อความ (i) ไม่เก็บตัวข้อความ เพื่อให้เปลี่ยนภาษาแล้วจดหมายเปลี่ยนตาม
     const list = LETTERS[L];
-    S.inbox.unshift({ day: today, text: list[Math.floor(Math.random() * list.length)] });
+    S.inbox.unshift({ day: today, i: Math.floor(Math.random() * list.length) });
     S.inbox = S.inbox.slice(0, 10);
     save();
     return true;
@@ -263,6 +281,7 @@ function renderPick() {
 }
 $("pickStart").addEventListener("click", function () {
     S.world = pickChoice;
+    applyTexts();   // ข้อความที่มี {pet} ให้เปลี่ยนเป็นชื่อน้องที่เลือก
     save();
     showTab("home");
     if (!S.onboarded) openIntro();
@@ -774,7 +793,7 @@ function renderLetters() {
         d.className = "inbox-item";
         d.innerHTML = "<small></small><span></span>";
         d.querySelector("small").textContent = t("inboxFrom", { pet: petName() }) + " · " + m.day;
-        d.querySelector("span").textContent = m.text;
+        d.querySelector("span").textContent = inboxText(m);
         inbox.appendChild(d);
     });
 }

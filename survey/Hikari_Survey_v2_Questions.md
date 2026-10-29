@@ -9,14 +9,14 @@ Hikari is not medical diagnosis or treatment. In Thailand, call the mental healt
 
 ## การเก็บข้อมูลส่วนบุคคล / Personal data notice
 
-• ผู้เก็บข้อมูล: บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด ติดต่อ: [อีเมลหรือ LINE OA สำหรับติดต่อเรื่องข้อมูลส่วนบุคคล]
+• ผู้เก็บข้อมูล: บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด ติดต่อ: LINE OA @833aevlx (https://line.me/R/ti/p/@833aevlx) หรืออีเมล mokaru.entertainment.admin@gmail.com
 • เก็บอะไร: คำตอบในแบบสอบถามนี้ รวมถึงระดับความเครียดโดยประมาณ (ข้อมูลสุขภาพ) ไม่เก็บชื่อหรืออีเมล
 • ใช้เพื่อ: ประเมินว่าควรพัฒนา Hikari เป็นแอปหรือไม่ และปรับปรุงบริการ รายงานเป็นภาพรวมเท่านั้น
 • เก็บไว้: ไม่เกิน 12 เดือน แล้วลบ  • ไม่ขายหรือส่งต่อให้บุคคลอื่น
 • คุณเลือกไม่ตอบข้อใดก็ได้ หยุดได้ทุกเมื่อ และขอให้ลบคำตอบได้ทางช่องทางติดต่อด้านบน
 • ช่วงนี้รับเฉพาะผู้ที่อายุ 18 ปีขึ้นไป (กลุ่มหลักคือวัยทำงาน 18–45 ปี)
 
-• Collected by: บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด. Contact: [อีเมลหรือ LINE OA สำหรับติดต่อเรื่องข้อมูลส่วนบุคคล]
+• Collected by: MOKARU ENTERTAINMENT CO., LTD.. Contact: LINE OA @833aevlx (https://line.me/R/ti/p/@833aevlx) หรืออีเมล mokaru.entertainment.admin@gmail.com
 • What: your answers, including an approximate stress level (health data). No name or email.
 • Why: to decide whether to build the Hikari app and improve it. Reported only in aggregate.
 • Kept for up to 12 months, then deleted. Never sold or shared.

@@ -325,7 +325,7 @@ const GTEXT = {
         letterPick: "เลือกข้อความ", letterSend: "ส่งจดหมาย",
         letterHow: "กดแล้วจะเปิด LINE ให้คุณเลือกเพื่อนที่จะส่งเอง ข้อความมีลิงก์ให้เพื่อนเปิดสวนแสงได้",
         letterSent: "เปิด LINE แล้ว เลือกเพื่อนที่อยากส่งแสงให้ได้เลย +{n} แสง",
-        letterUserBad: "ชื่อผู้ใช้ต้องเป็น a–z และ 0–9 ยาว 5–30 ตัว", inbox: "กล่องจดหมาย", inboxFrom: "จาก {pet}",
+        letterUserBad: "ชื่อผู้ใช้ต้องเป็น a–z และ 0–9 ยาว 5–30 ตัว", inbox: "กล่องจดหมาย", inboxFrom: "จาก {pet}", petGeneric: "น้อง",
         lettersNote: "จดหมายในกล่องเป็นข้อความที่{pet}เขียนให้คุณวันละ 1 ฉบับ จดหมายที่คุณส่งจะไปทาง LINE ถึงเพื่อนที่คุณเลือกเอง Hikari ไม่เห็นว่าคุณส่งให้ใคร",
         arriveTitle: "มีคนส่งแสงมาให้คุณ", arriveFrom: "ส่งมาจากสวนแสงของ{pet} · Hikari", arriveGo: "ไปสวนแสงของฉัน",
         shopTitle: "ร้านค้า", cat_wear: "แต่งตัว", cat_home: "แต่งบ้าน", cat_trip: "ของเดินทาง", cat_pack: "แพ็กคุ้ม", cat_owned: "ของฉัน",
@@ -491,7 +491,7 @@ const GTEXT = {
         letterPick: "Pick a message", letterSend: "Send letter",
         letterHow: "This opens LINE so you choose which friend gets it. The message has a link to open the Light Garden",
         letterSent: "LINE is open. Pick a friend to send some light +{n} light",
-        letterUserBad: "Username must be a–z and 0–9, 5–30 characters", inbox: "Inbox", inboxFrom: "From {pet}",
+        letterUserBad: "Username must be a–z and 0–9, 5–30 characters", inbox: "Inbox", inboxFrom: "From {pet}", petGeneric: "your pet",
         lettersNote: "Inbox letters are written for you by {pet}, one a day. Letters you send go through LINE to friends you pick yourself. Hikari can't see who you send to",
         arriveTitle: "Someone sent you some light", arriveFrom: "Sent from {pet}'s Light Garden · Hikari", arriveGo: "Go to my light garden",
         shopTitle: "Shop", cat_wear: "Wear", cat_home: "Home", cat_trip: "Travel", cat_pack: "Packs", cat_owned: "Mine",
@@ -697,3 +697,15 @@ const PET_LINES = {
 };
 // ระดับความผูกพัน: แต้มที่ต้องมีของแต่ละระดับ
 const BOND_LEVELS = [0, 8, 20, 40, 70, 110, 160, 220, 300, 400];
+
+// ภาษาอื่นนอกจากไทย/อังกฤษ: ไฟล์ game/lang/<ภาษา>.js เรียกฟังก์ชันนี้ เพื่อเติมข้อความของภาษานั้น
+// (game.html โหลดเฉพาะไฟล์ภาษาที่ผู้ใช้เลือก ไม่โหลดทุกภาษา)
+function addGameLang(code, d) {
+    ITEM_NAMES[code] = d.ITEM_NAMES;
+    LETTERS[code] = d.LETTERS;
+    TALK_TEMPLATES[code] = d.TALK_TEMPLATES;
+    GTEXT[code] = d.GTEXT;
+    PLACE_NAMES[code] = d.PLACE_NAMES;
+    PET_VOICE[code] = d.PET_VOICE;
+    PET_LINES[code] = d.PET_LINES;
+}

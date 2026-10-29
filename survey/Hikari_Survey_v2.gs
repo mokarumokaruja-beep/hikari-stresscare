@@ -26,6 +26,7 @@
 // ===== ตั้งค่า =====
 const SURVEY_TITLE = 'แบบสอบถาม Hikari (เว็บ + เกมสวนแสง) / Hikari Survey (website + Light Garden game)';
 const ORG_NAME = 'บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด';
+const ORG_NAME_EN = 'MOKARU ENTERTAINMENT CO., LTD.';
 const CONTACT = 'LINE OA @833aevlx (https://line.me/R/ti/p/@833aevlx) หรืออีเมล mokaru.entertainment.admin@gmail.com';
 const KEEP_MONTHS = 12;          // เก็บคำตอบไม่เกินกี่เดือน
 const USE_THRESHOLD = 0.30;
@@ -113,7 +114,7 @@ function createSurvey() {
       '• เก็บไว้: ไม่เกิน ' + KEEP_MONTHS + ' เดือน แล้วลบ  • ไม่ขายหรือส่งต่อให้บุคคลอื่น\n' +
       '• คุณเลือกไม่ตอบข้อใดก็ได้ หยุดได้ทุกเมื่อ และขอให้ลบคำตอบได้ทางช่องทางติดต่อด้านบน\n' +
       '• ช่วงนี้รับเฉพาะผู้ที่อายุ 18 ปีขึ้นไป (กลุ่มหลักคือวัยทำงาน 18–45 ปี)\n\n' +
-      '• Collected by: ' + ORG_NAME + '. Contact: ' + CONTACT + '\n' +
+      '• Collected by: ' + ORG_NAME_EN + '. Contact: ' + CONTACT + '\n' +
       '• What: your answers, including an approximate stress level (health data). No name or email.\n' +
       '• Why: to decide whether to build the Hikari app and improve it. Reported only in aggregate.\n' +
       '• Kept for up to ' + KEEP_MONTHS + ' months, then deleted. Never sold or shared.\n' +
