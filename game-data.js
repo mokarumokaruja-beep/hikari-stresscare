@@ -34,7 +34,7 @@ const WORLDS = {
     }
 };
 
-// ----- ทริปแสง 10 สถานที่ (หายใจครบ 1 นาที = ได้แสตมป์สถานที่นั้น แล้วเดินทางต่อ) -----
+// ----- ทริปแสง 10 สถานที่ (ผู้เล่นเลือกที่เที่ยวเองจากแผนที่ · หายใจครบ 1 นาที/พักสั้นที่สถานที่นั้น = ได้แสตมป์ ครั้งเดียวต่อที่) -----
 const TRIP_STOPS = [
     { id: "doi-inthanon", bg: "bg_trip_doi-inthanon" },
     { id: "krabi", bg: "bg_trip_krabi" },
@@ -47,6 +47,12 @@ const TRIP_STOPS = [
     { id: "khao-yai", bg: "bg_trip_khao-yai" },
     { id: "phang-nga", bg: "bg_trip_phang-nga" }
 ];
+// ตำแหน่งหมุดบนภาพแผนที่ game/img/trip_map.webp (720x809) เป็น % [แนวนอน, แนวตั้ง] วัดจากกึ่งกลางหมุด
+const TRIP_MAP = {
+    "doi-inthanon": [23.2, 11.4], "phang-nga": [76.7, 17.7], "erawan-waterfall": [21.7, 31.3], "lopburi-sunflower": [80.6, 34.0],
+    "floating-market": [53.0, 46.8], "phu-chi-fa": [16.3, 52.7], "chiang-mai-yi-peng": [82.3, 55.0], "ayutthaya": [50.3, 66.8],
+    "khao-yai": [19.1, 72.4], "krabi": [79.9, 77.0]
+};
 
 // ----- อารมณ์สำหรับเช็กอินรายวัน -----
 const MOODS = [
@@ -320,7 +326,7 @@ const GTEXT = {
         tripAt: "ตอนนี้อยู่ที่: {place}",
         breatheTitle: "หายใจ 4 · 6 กับ{pet}", breatheIn: "หายใจเข้า", breatheOut: "หายใจออก", breatheReady: "พร้อมแล้วกดเริ่ม",
         breatheHint: "วางมือบนท้อง หายใจไปพร้อม{pet}", breatheStart: "เริ่มหายใจ 1 นาที", breatheStop: "หยุดพัก",
-        breatheDone: "ครบ 1 นาทีแล้ว ขอบคุณที่ให้เวลากับตัวเอง +{n} แสง", breatheDoneMax: "ครบ 1 นาทีแล้ว วันนี้รับแสงครบแล้ว แต่การหายใจช้า ๆ ยังดีกับใจเสมอ", stampGot: "ได้แสตมป์ {place} แล้ว เดินทางต่อ!",
+        breatheDone: "ครบ 1 นาทีแล้ว ขอบคุณที่ให้เวลากับตัวเอง +{n} แสง", breatheDoneMax: "ครบ 1 นาทีแล้ว วันนี้รับแสงครบแล้ว แต่การหายใจช้า ๆ ยังดีกับใจเสมอ", stampGot: "ได้แสตมป์ {place} แล้ว! เปิดแผนที่เลือกที่เที่ยวต่อได้เลย",
         lettersTitle: "จดหมายใจดี", lettersLeft: "วันนี้ส่งได้อีก {n} ฉบับ", lettersNone: "วันนี้ส่งครบแล้ว พรุ่งนี้ส่งต่อได้อีก",
         letterPick: "เลือกข้อความ", letterSend: "ส่งจดหมาย",
         letterHow: "กดแล้วจะเปิด LINE ให้คุณเลือกเพื่อนที่จะส่งเอง ข้อความมีลิงก์ให้เพื่อนเปิดสวนแสงได้",
@@ -463,7 +469,16 @@ const GTEXT = {
         tip_family: "ลองบอกความรู้สึกด้วยประโยค \"ฉันรู้สึก… เพราะ…\" ในช่วงที่ทั้งสองฝ่ายใจเย็น",
         tip_health: "คืนนี้ลองวางมือถือก่อนนอน 30 นาที และตื่นเวลาเดิมทุกวัน ร่างกายจะค่อย ๆ ปรับ",
         tip_study: "แบ่งเนื้อหาเป็นชิ้นเล็ก อ่าน 25 นาที พัก 5 นาที แล้วจดสิ่งที่เข้าใจ 1 บรรทัด",
-        statQb: "พักสั้น (ครั้ง)", statDays: "วันที่อยู่ด้วยกัน"
+        statQb: "พักสั้น (ครั้ง)", statDays: "วันที่อยู่ด้วยกัน",
+        // แผนที่ทริปแสง (เลือกที่เที่ยวเอง)
+        mapBtn: "แผนที่ · เลือกที่เที่ยว", mapBtnSub: "แสตมป์ {n}/10", mapTitle: "แผนที่ทริปแสง",
+        mapSub: "แตะหมุดหรือการ์ดด้านล่าง เพื่อเลือกที่ที่อยากไป", mapStamped: "ได้แสตมป์แล้ว", mapNoStamp: "ยังไม่ได้แสตมป์",
+        mapHere: "อยู่ที่นี่ตอนนี้", mapGo: "ไปที่นี่", mapBack: "ดูที่อื่น",
+        mapStampHint: "หายใจครบ 1 นาที หรือพักสั้นที่นี่ เพื่อรับแสตมป์", tripArrive: "ถึง{place}แล้ว! หายใจสูดอากาศดี ๆ กัน", mapCards: "ทุกสถานที่",
+        stampTap: "แตะแสตมป์เพื่อเปิดแผนที่", "placeDesc_doi-inthanon": "ยอดดอยที่สูงที่สุดของไทย มีทะเลหมอกและอากาศเย็นสบาย", placeDesc_krabi: "หาดทรายขาว ต้นมะพร้าว และน้ำทะเลใสสีเขียวมรกต",
+        "placeDesc_erawan-waterfall": "น้ำตกหลายชั้นสีฟ้าใส เสียงน้ำไหลช่วยให้ใจเย็นลง", "placeDesc_lopburi-sunflower": "ทุ่งทานตะวันสีเหลืองสดใส บานรับแดดอุ่น ๆ", "placeDesc_floating-market": "เรือขายของกินริมคลอง คึกคักแต่เป็นกันเอง",
+        "placeDesc_phu-chi-fa": "จุดชมทะเลหมอกยามเช้า รอดูพระอาทิตย์ขึ้นด้วยกัน", "placeDesc_chiang-mai-yi-peng": "โคมลอยนับพันลอยขึ้นฟ้า พร้อมคำอธิษฐานดี ๆ", placeDesc_ayutthaya: "เมืองเก่ากับปรางค์โบราณ เดินช้า ๆ ฟังเรื่องเล่าในอดีต",
+        "placeDesc_khao-yai": "ป่าใหญ่สีเขียว อากาศสดชื่น และเสียงนกร้อง", "placeDesc_phang-nga": "อ่าวทะเลสงบ มีเกาะหินปูนสูงตระหง่านกลางน้ำ"
     },
     en: {
         title: "Hikari Light Garden",
@@ -486,7 +501,7 @@ const GTEXT = {
         tripAt: "Now at: {place}",
         breatheTitle: "Breathe 4 · 6 with {pet}", breatheIn: "Breathe in", breatheOut: "Breathe out", breatheReady: "Ready? Press start",
         breatheHint: "Hand on belly, breathe along with {pet}", breatheStart: "Breathe 1 minute", breatheStop: "Pause",
-        breatheDone: "One minute done. Thanks for giving yourself this time +{n} light", breatheDoneMax: "One minute done. Today's light is all collected, but slow breathing still helps", stampGot: "Got the {place} stamp. On to the next stop!",
+        breatheDone: "One minute done. Thanks for giving yourself this time +{n} light", breatheDoneMax: "One minute done. Today's light is all collected, but slow breathing still helps", stampGot: "Got the {place} stamp! Open the map to choose your next place",
         lettersTitle: "Kind letters", lettersLeft: "{n} letters left today", lettersNone: "All sent for today. You can send more tomorrow",
         letterPick: "Pick a message", letterSend: "Send letter",
         letterHow: "This opens LINE so you choose which friend gets it. The message has a link to open the Light Garden",
@@ -625,7 +640,16 @@ const GTEXT = {
         tip_family: "Try saying \"I feel… because…\" at a time when you're both calm",
         tip_health: "Tonight, put your phone away 30 minutes before bed and wake at the same time daily. Your body will adjust",
         tip_study: "Split it into small pieces: 25 minutes of study, 5 minutes of rest, then write one line you understood",
-        statQb: "Quick breaks", statDays: "Days together"
+        statQb: "Quick breaks", statDays: "Days together",
+        // แผนที่ทริปแสง (เลือกที่เที่ยวเอง)
+        mapBtn: "Map · choose a place", mapBtnSub: "Stamps {n}/10", mapTitle: "Light Trip map",
+        mapSub: "Tap a pin or a card below to choose where to go", mapStamped: "Stamp collected", mapNoStamp: "No stamp yet",
+        mapHere: "You are here", mapGo: "Go here", mapBack: "See other places",
+        mapStampHint: "Finish a 1-minute breath or a quick break here to earn the stamp", tripArrive: "We made it to {place}! Let's breathe in the fresh air", mapCards: "All places",
+        stampTap: "Tap a stamp to open the map", "placeDesc_doi-inthanon": "Thailand's highest peak, with seas of mist and cool fresh air", placeDesc_krabi: "White sand, palm trees and clear emerald water",
+        "placeDesc_erawan-waterfall": "Tiers of turquoise falls; the sound of water calms the mind", "placeDesc_lopburi-sunflower": "Bright yellow sunflower fields turning toward the warm sun", "placeDesc_floating-market": "Boats selling snacks along a lively, friendly canal",
+        "placeDesc_phu-chi-fa": "A morning viewpoint over a sea of mist; let's watch the sunrise", "placeDesc_chiang-mai-yi-peng": "Thousands of lanterns rising into the sky with kind wishes", placeDesc_ayutthaya: "An old capital of ancient towers; walk slowly and feel its history",
+        "placeDesc_khao-yai": "A big green forest with fresh air and birdsong", "placeDesc_phang-nga": "A calm bay with tall limestone islands rising from the water"
     }
 };
 

@@ -157,6 +157,7 @@ function applyTexts() {
     $("itemClose").setAttribute("aria-label", t("close"));
     $("helpClose").setAttribute("aria-label", t("close"));
     $("qbClose").setAttribute("aria-label", t("close"));
+    $("mapClose").setAttribute("aria-label", t("close"));
 }
 
 // ===== 3. วันใหม่ / วันต่อเนื่อง / แสง =====
@@ -349,7 +350,7 @@ function todaysVisitor() {
     return list[h % list.length];
 }
 function stageBg() {
-    if (S.world === "trip") return TRIP_STOPS[S.tripStop % TRIP_STOPS.length].bg;
+    if (S.world === "trip") return tripStop().bg;
     return WORLDS[S.world].bg[timeOfDay()];
 }
 function renderHome() {
@@ -381,10 +382,14 @@ function renderHome() {
         $("visitorImg").src = img(v);
         $("visitorBtn").setAttribute("aria-label", t("visitor"));
     }
-    // ทริปแสง: บอกสถานที่
-    $("tripAt").hidden = S.world !== "trip";
-    if (S.world === "trip") {
-        $("tripAt").textContent = t("tripAt", { place: placeName(TRIP_STOPS[S.tripStop % TRIP_STOPS.length].id) });
+    // ทริปแสง: บอกสถานที่ + ปุ่มแผนที่ (อยู่ข้างปุ่มพักสั้น)
+    const trip = S.world === "trip";
+    $("tripAt").hidden = !trip;
+    $("mapBtn").hidden = !trip;
+    $("qbRow").classList.toggle("trip", trip);
+    if (trip) {
+        $("tripAt").textContent = t("tripAt", { place: placeName(tripStop().id) });
+        $("mapBtn").setAttribute("aria-label", t("mapBtn") + " · " + t("mapBtnSub", { n: stampCount() }));
     }
     renderTasks();
     renderMood();
@@ -756,14 +761,9 @@ function finishBreathe() {
     const gain = S.today.breathe === 1 ? 3 : (S.today.breathe <= 3 ? 1 : 0);
     let msg = gain ? t("breatheDone", { n: gain }) : t("breatheDoneMax");
     if (gain) addLight(gain); else { markActive(); save(); }
-    // ทริปแสง: ได้แสตมป์สถานที่ แล้วไปที่ถัดไป
-    if (S.world === "trip" && S.today.breathe === 1) {
-        const stop = TRIP_STOPS[S.tripStop % TRIP_STOPS.length];
-        S.stamps[stop.id] = true;
-        S.tripStop = (S.tripStop + 1) % TRIP_STOPS.length;
-        msg += " · " + t("stampGot", { place: placeName(stop.id) });
-        save();
-    }
+    // ทริปแสง: ได้แสตมป์ของสถานที่ที่อยู่ตอนนี้ (ครั้งเดียวต่อที่ ไม่ย้ายที่เอง)
+    const stamp = tripStampEarn();
+    if (stamp) msg += " · " + stamp;
     $("breatheMsg").textContent = msg;
     $("breatheMsg").className = "note center ok";
 }
@@ -1110,6 +1110,7 @@ $("paySheet").addEventListener("click", function (e) { if (e.target.id === "payS
 document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
     if (!$("helpSheet").hidden) closeHelp();
+    else if (!$("mapSheet").hidden) { if (!$("mapConfirm").hidden) mapShowPick(); else closeMap(); }
     else if (!$("qbSheet").hidden) closeQuick();
     else if (!$("arriveSheet").hidden) closeArrive();
     else if (!$("introSheet").hidden) closeIntro();
@@ -1233,17 +1234,157 @@ function renderMe() {
     });
     const stamps = $("stampBox");
     stamps.innerHTML = "";
+    // แตะแสตมป์ = เปิดแผนที่ที่สถานที่นั้น (เฉพาะตอนอยู่ในโลกทริปแสง)
+    const canMap = S.world === "trip";
     TRIP_STOPS.forEach(function (s) {
         const im = document.createElement("img");
         im.src = img("stamp_" + s.id);
-        im.alt = placeName(s.id);
+        im.alt = canMap ? "" : placeName(s.id);
         im.title = placeName(s.id);
         if (!S.stamps[s.id]) im.className = "locked";
-        stamps.appendChild(im);
+        if (!canMap) { stamps.appendChild(im); return; }
+        const b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-label", placeName(s.id) + " · " + t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp"));
+        b.appendChild(im);
+        b.addEventListener("click", function () { openMap(s.id, b); });
+        stamps.appendChild(b);
     });
+    $("stampTap").hidden = !canMap;
     renderPrivacy();
 }
 $("switchWorld").addEventListener("click", function () { pickChoice = S.world; showTab("pick"); });
+
+// ===== 10ข. ทริปแสง: แผนที่เลือกที่เที่ยวเอง =====
+// เซฟเก่า: S.tripStop เป็นลำดับใน TRIP_STOPS (เดิมเลื่อนเองทุกวัน ตอนนี้ผู้เล่นเลือกเอง) · S.stamps = { id: true }
+function tripIndex() {
+    const n = TRIP_STOPS.length, i = Math.floor(Number(S.tripStop) || 0);
+    return ((i % n) + n) % n;
+}
+function tripStop() { return TRIP_STOPS[tripIndex()]; }
+function stampCount() { return TRIP_STOPS.filter(function (s) { return S.stamps[s.id]; }).length; }
+function placeDesc(id) { return t("placeDesc_" + id); }
+// หายใจครบ / พักสั้นเสร็จ ที่สถานที่ปัจจุบัน: ได้แสตมป์ครั้งเดียวต่อที่ คืนข้อความ (หรือ "" ถ้าไม่ได้)
+function tripStampEarn() {
+    if (S.world !== "trip") return "";
+    const stop = tripStop();
+    if (S.stamps[stop.id]) return "";
+    S.stamps[stop.id] = true;
+    save();
+    const msg = t("stampGot", { place: placeName(stop.id) });
+    toast(msg);
+    return msg;
+}
+let mapFrom = null, mapPickIdx = 0;
+function openMap(focusId, from) {
+    if (S.world !== "trip") return;
+    mapFrom = from || document.activeElement;
+    renderMap();
+    mapShowPick();
+    $("mapSheet").hidden = false;
+    $("mapSheet").querySelector(".sheet-box").scrollTop = 0;
+    const i = focusId ? TRIP_STOPS.findIndex(function (s) { return s.id === focusId; }) : -1;
+    if (i >= 0) mapShowPlace(i);
+    else $("mapClose").focus();
+}
+function closeMap() {
+    $("mapSheet").hidden = true;
+    if (mapFrom && mapFrom.focus && document.contains(mapFrom)) mapFrom.focus();
+    mapFrom = null;
+}
+function placeLabel(s, i) {
+    return placeName(s.id) + " · " + t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp") + (i === tripIndex() ? " · " + t("mapHere") : "");
+}
+function renderMap() {
+    const wrap = $("mapWrap"), here = tripIndex();
+    wrap.querySelectorAll(".map-pin").forEach(function (b) { b.remove(); });
+    const cards = $("mapCards");
+    cards.textContent = "";
+    TRIP_STOPS.forEach(function (s, i) {
+        const pos = TRIP_MAP[s.id] || [50, 50];
+        const pin = document.createElement("button");
+        pin.type = "button";
+        pin.className = "map-pin" + (i === here ? " here" : "");
+        pin.dataset.place = s.id;
+        pin.style.left = pos[0] + "%";
+        pin.style.top = pos[1] + "%";
+        pin.setAttribute("aria-label", placeLabel(s, i));
+        if (i === here) pin.setAttribute("aria-current", "location");
+        if (S.stamps[s.id]) {
+            const badge = document.createElement("span");
+            badge.className = "map-badge";
+            const bi = document.createElement("img");
+            bi.src = img("icon_check");
+            bi.alt = "";
+            badge.appendChild(bi);
+            pin.appendChild(badge);
+        }
+        pin.addEventListener("click", function () { mapShowPlace(i); });
+        wrap.appendChild(pin);
+
+        const c = document.createElement("button");
+        c.type = "button";
+        c.className = "map-card" + (i === here ? " here" : "");
+        c.dataset.place = s.id;
+        if (i === here) c.setAttribute("aria-current", "location");
+        const im = document.createElement("img");
+        im.src = img(s.bg);
+        im.alt = "";
+        im.loading = "lazy";
+        const b = document.createElement("b");
+        b.textContent = placeName(s.id);
+        const sm = document.createElement("small");
+        sm.textContent = i === here ? t("mapHere") + " · " + t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp") : t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp");
+        if (S.stamps[s.id]) sm.className = "got";
+        c.append(im, b, sm);
+        c.addEventListener("click", function () { mapShowPlace(i); });
+        cards.appendChild(c);
+    });
+}
+function mapShowPick() {
+    $("mapPick").hidden = false;
+    $("mapConfirm").hidden = true;
+}
+function mapShowPlace(i) {
+    const s = TRIP_STOPS[i];
+    if (!s) return;
+    mapPickIdx = i;
+    const here = i === tripIndex();
+    $("mapPhoto").src = img(s.bg);
+    $("mapPhoto").alt = placeName(s.id);
+    $("mapPlace").textContent = placeName(s.id);
+    $("mapStatus").textContent = (here ? t("mapHere") + " · " : "") + t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp");
+    $("mapStatus").className = "map-status" + (S.stamps[s.id] ? " got" : "");
+    $("mapDesc").textContent = placeDesc(s.id);
+    $("mapHint").hidden = !!S.stamps[s.id];
+    $("mapGo").hidden = here;
+    $("mapPick").hidden = true;
+    $("mapConfirm").hidden = false;
+    $("mapSheet").querySelector(".sheet-box").scrollTop = 0;
+    (here ? $("mapBack") : $("mapGo")).focus();
+}
+function goPlace(i) {
+    const s = TRIP_STOPS[i];
+    if (!s || S.world !== "trip") return;
+    S.tripStop = i;
+    save();
+    $("mapSheet").hidden = true;
+    mapFrom = null;
+    if (currentTab !== "home") showTab("home"); else renderHome();
+    // น้องดวงแสงพูดตอนมาถึง (ถ้าน้องยังไม่พร้อม ใช้แถบข้อความแทน)
+    const line = t("tripArrive", { place: placeName(s.id) });
+    if (typeof Pet !== "undefined" && !$("screen-home").hidden) Pet.say(line); else toast(line);
+    $("mapBtn").focus();
+}
+$("mapBtn").addEventListener("click", function () { openMap(null, $("mapBtn")); });
+$("mapClose").addEventListener("click", closeMap);
+$("mapBack").addEventListener("click", function () {
+    mapShowPick();
+    const pin = $("mapWrap").querySelector('.map-pin[data-place="' + TRIP_STOPS[mapPickIdx].id + '"]');
+    if (pin) pin.focus();
+});
+$("mapGo").addEventListener("click", function () { goPlace(mapPickIdx); });
+$("mapSheet").addEventListener("click", function (e) { if (e.target.id === "mapSheet") closeMap(); });
 
 // ===== 11. แท็บ + เริ่มเกม =====
 const RENDER = { pick: renderPick, home: renderHome, breathe: renderBreathe, letters: renderLetters, shop: renderShop, me: renderMe };
@@ -1484,7 +1625,8 @@ function finishQuick(kind) {
     const gain = S.today.qb <= QB_LIGHT_TIMES ? QB_LIGHT : 0;
     if (gain) addLight(gain); else { markActive(); save(); }
     if (currentTab === "home") renderTasks();
-    return gain ? t("qbGain", { n: gain }) : t("qbGainMax");
+    const stamp = tripStampEarn();
+    return (gain ? t("qbGain", { n: gain }) : t("qbGainMax")) + (stamp ? " · " + stamp : "");
 }
 function showQuickDone(title, text, gainMsg, mine) {
     $("qbDoneImg").src = img(WORLDS[S.world].pet.happy);

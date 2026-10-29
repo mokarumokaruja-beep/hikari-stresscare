@@ -75,7 +75,11 @@
                 <button type="button" id="playSound" aria-pressed="true"><span class="pb-ico snd"></span><span id="playSoundTxt"></span></button>
             </div>
             <!-- พักสั้น 1–2 นาที (ต้องเห็นได้โดยไม่เลื่อนจอ) -->
+            <!-- ทริปแสง: ปุ่มแผนที่อยู่ข้างปุ่มพักสั้น (ทั้งสองปุ่มต้องเห็นได้โดยไม่เลื่อนจอ) -->
+            <div class="qb-row" id="qbRow">
             <button class="qb-btn" type="button" id="qbBtn"><img src="game/img/mood_tea.webp" alt=""><span><b data-t="qbBtn">พักสั้น</b><small data-t="qbBtnSub"></small></span><i aria-hidden="true">›</i></button>
+            <button class="map-btn" type="button" id="mapBtn" hidden><img src="game/img/gear_map.webp" alt=""><span><b data-t="mapBtn">แผนที่ · เลือกที่เที่ยว</b></span></button>
+            </div>
             <!-- ชวนดูแลตัวเองเบา ๆ (สูงสุด 7 วันครั้ง ปิดได้ เก็บแค่วันที่แสดงล่าสุด) -->
             <div class="nudge" id="nudgeBox" role="status" hidden>
                 <img id="nudgeImg" alt="">
@@ -205,6 +209,7 @@
             <div class="card">
                 <h2 class="h-card" data-t="stamps">แสตมป์ทริปแสง</h2>
                 <div class="album album-stamps" id="stampBox"></div>
+                <p class="muted stamp-tap" id="stampTap" data-t="stampTap" hidden></p>
             </div>
             <!-- สรุปการทดสอบ (สำหรับวางในแบบสอบถาม ไม่มีอารมณ์หรือคะแนน) -->
             <div class="card">
@@ -335,6 +340,33 @@
                 <div class="call-list" id="helpSubCalls"></div>
             </div>
             <p class="note" data-t="helpNote"></p>
+        </div>
+    </div>
+
+    <!-- ===== ทริปแสง: แผนที่เลือกที่เที่ยว 10 แห่ง (หมุดบนภาพ + การ์ดด้านล่างสำหรับจอเล็ก/โปรแกรมอ่านหน้าจอ) ===== -->
+    <div class="sheet map-sheet" id="mapSheet" hidden>
+        <div class="sheet-box map-box" role="dialog" aria-modal="true" aria-labelledby="mapTitle">
+            <button class="sheet-close" type="button" id="mapClose" aria-label="ปิด">×</button>
+            <div id="mapPick">
+                <h2 class="h-display" id="mapTitle" data-t="mapTitle"></h2>
+                <p class="muted map-sub" data-t="mapSub"></p>
+                <div class="map-wrap" id="mapWrap" dir="ltr">
+                    <img class="map-img" src="game/img/trip_map.webp" alt="" width="720" height="809">
+                </div>
+                <h3 class="map-cards-h" data-t="mapCards"></h3>
+                <div class="map-cards" id="mapCards"></div>
+            </div>
+            <div id="mapConfirm" class="map-confirm" hidden>
+                <img class="map-photo" id="mapPhoto" alt="">
+                <h2 class="h-display" id="mapPlace"></h2>
+                <p class="map-status" id="mapStatus"></p>
+                <p class="map-desc" id="mapDesc"></p>
+                <p class="note" id="mapHint" data-t="mapStampHint"></p>
+                <div class="item-actions">
+                    <button class="btn btn-primary" type="button" id="mapGo" data-t="mapGo"></button>
+                    <button class="btn" type="button" id="mapBack" data-t="mapBack"></button>
+                </div>
+            </div>
         </div>
     </div>
 
