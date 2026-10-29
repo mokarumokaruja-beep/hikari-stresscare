@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#fff5e6">
+    <title>Hikari สวนแสง</title>
+    <meta name="description" content="เกมดูแลใจวันละนิด เล่นกับน้องแมว น้องหมา หรือเพื่อนตัวเล็ก หายใจ 1 นาที และส่งจดหมายใจดีให้เพื่อน · A tiny daily self-care game with a pet, 1-minute breathing and kind letters.">
+    <!-- แชร์ลิงก์ (LINE / Facebook / X) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hikari สวนแสง">
+    <meta property="og:description" content="ดูแลใจวันละนิด กับเพื่อนตัวน้อย เล่นกับน้อง หายใจ 1 นาที และส่งแสงให้เพื่อน">
+    <meta property="og:url" content="https://mokarumokaruja-beep.github.io/hikari-stresscare/game.html">
+    <meta property="og:image" content="https://mokarumokaruja-beep.github.io/hikari-stresscare/game/img/og-game.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Hikari สวนแสง: น้องหมา แมว และกระต่ายในสวน">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" sizes="64x64" href="game/img/favicon.png">
+    <link rel="apple-touch-icon" href="game/img/apple-touch-icon.png">
+    <link rel="manifest" href="game.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Itim&family=Prompt:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+<div class="app" id="app">
+
+    <!-- ===== แถบบน ===== -->
+    <header class="g-top">
+        <a class="g-back" href="index.html" aria-label="กลับเว็บ" data-t-aria="back">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="g-title" data-t="title">Hikari สวนแสง</span>
+        <span class="chip chip-light" title="แสง"><img src="game/img/icon_light-currency.webp" alt=""><b id="lightCount">0</b></span>
+        <span class="chip chip-days" id="daysChip" title="วันที่อยู่ด้วยกัน"><img src="game/img/icon_heart.webp" alt=""><b id="daysCount">0</b></span>
+    </header>
+
+    <main class="g-main">
+
+        <!-- ===== เลือกโลก (ครั้งแรก หรือกดเปลี่ยนโลก) ===== -->
+        <section class="screen" id="screen-pick" hidden>
+            <h1 class="h-display" data-t="pickTitle">เลือกโลกของคุณ</h1>
+            <p class="muted" data-t="pickSub"></p>
+            <div class="world-grid" id="worldGrid"></div>
+            <button class="btn btn-primary btn-wide" id="pickStart" type="button" data-t="start">เริ่มเลย</button>
+        </section>
+
+        <!-- ===== บ้าน ===== -->
+        <section class="screen" id="screen-home" hidden>
+            <div class="notice" id="testNotice" hidden>
+                <p id="testNoticeText"></p>
+                <button class="btn btn-small" type="button" id="openExternal" data-t="openExternal" hidden>เปิดในเบราว์เซอร์</button>
+                <button class="notice-close" type="button" id="testNoticeClose" aria-label="ปิด">×</button>
+            </div>
+            <div class="stage" id="stage">
+                <img class="stage-bg" id="stageBg" alt="">
+                <div class="stage-shade"></div>
+                <p class="stage-say" id="petSay" role="status"></p>
+                <span class="bond-chip" id="bondChip"><b id="bondLv"></b><i><em id="bondBar"></em></i></span>
+                <div class="decor-row" id="decorRow"></div>
+                <button class="visitor" id="visitorBtn" type="button" hidden><img id="visitorImg" alt=""></button>
+                <div class="toy" id="toy" hidden></div>
+                <div class="pet" id="petBtn" role="button" tabindex="0">
+                    <span class="pet-shadow"></span>
+                    <div class="pet-flip" id="petFlip"><div class="pet-body" id="petBody"><img id="petImg" alt="" draggable="false"></div></div>
+                    <span class="wear-badge" id="wearBadge" hidden><img id="wearImg" alt=""></span>
+                </div>
+                <div class="fx" id="fx" aria-hidden="true"></div>
+            </div>
+            <div class="play-bar" id="playBar">
+                <button type="button" id="playBall"><span class="pb-ico ball"></span><span data-t="playBall"></span></button>
+                <button type="button" id="playTreat"><span class="pb-ico treat"></span><span data-t="playTreat"></span></button>
+                <button type="button" id="playCall"><span class="pb-ico call"></span><span data-t="playCall"></span></button>
+                <button type="button" id="playSound" aria-pressed="true"><span class="pb-ico snd"></span><span id="playSoundTxt"></span></button>
+            </div>
+            <!-- พักสั้น 1–2 นาที (ต้องเห็นได้โดยไม่เลื่อนจอ) -->
+            <button class="qb-btn" type="button" id="qbBtn"><img src="game/img/mood_tea.webp" alt=""><span><b data-t="qbBtn">พักสั้น</b><small data-t="qbBtnSub"></small></span><i aria-hidden="true">›</i></button>
+            <!-- ชวนดูแลตัวเองเบา ๆ (สูงสุด 7 วันครั้ง ปิดได้ เก็บแค่วันที่แสดงล่าสุด) -->
+            <div class="nudge" id="nudgeBox" role="status" hidden>
+                <img id="nudgeImg" alt="">
+                <div>
+                    <p><b id="nudgeFrom"></b> <span id="nudgeText"></span></p>
+                    <div class="nudge-actions">
+                        <a class="btn btn-small btn-primary" id="nudgeGo"></a>
+                        <button class="btn btn-small" type="button" id="nudgeLater" data-t="nudgeLater"></button>
+                    </div>
+                </div>
+            </div>
+            <p class="play-hint" data-t="playHint"></p>
+            <p class="trip-at" id="tripAt" hidden></p>
+
+            <div class="card">
+                <h2 class="h-card" data-t="todayTitle">ภารกิจวันนี้</h2>
+                <ul class="tasks" id="taskList"></ul>
+            </div>
+
+            <div class="card" id="moodCard">
+                <h2 class="h-card" data-t="moodAsk">วันนี้รู้สึกอย่างไร?</h2>
+                <div class="mood-row" id="moodRow"></div>
+                <div class="note" id="moodMsg" role="status"></div>
+                <!-- เรื่องที่หนักใจวันนี้: เก็บแค่รหัสหมวด ไม่มีข้อความ -->
+                <div class="cause-box" id="causeBox" hidden>
+                    <p class="cause-ask" data-t="causeAsk"></p>
+                    <div class="chip-row" id="causeRow" role="group"></div>
+                    <div class="cause-tip" id="causeTip" role="status" hidden>
+                        <img id="causeImg" alt="">
+                        <p><b id="causeFrom"></b> <span id="causeTipText"></span><br><a id="causeLink" href="index.html#rootcause" data-t="causeMore"></a> <button class="link-btn" type="button" id="causeTalk" data-t="moodTalkBtn" hidden></button></p>
+                    </div>
+                </div>
+            </div>
+            <p class="disclaimer" data-t="disclaimer"></p>
+            <button class="btn btn-small help-btn" type="button" id="helpHome" data-t="helpBtn">ต้องการความช่วยเหลือตอนนี้</button>
+        </section>
+
+        <!-- ===== หายใจ ===== -->
+        <section class="screen" id="screen-breathe" hidden>
+            <h1 class="h-display" id="breatheTitle"></h1>
+            <div class="breathe-ring" id="breatheRing">
+                <img id="breatheImg" alt="">
+            </div>
+            <p class="breathe-phase" id="breathePhase" aria-live="polite"></p>
+            <p class="muted center" id="breatheHint"></p>
+            <p class="breathe-clock" id="breatheClock">1:00</p>
+            <div class="sound-row" id="soundRow" role="radiogroup"></div>
+            <button class="btn btn-primary btn-wide" id="breatheBtn" type="button"></button>
+            <p class="note center" id="breatheMsg" role="status"></p>
+        </section>
+
+        <!-- ===== จดหมาย ===== -->
+        <section class="screen" id="screen-letters" hidden>
+            <h1 class="h-display" data-t="lettersTitle">จดหมายใจดี</h1>
+            <p class="pill" id="lettersLeft"></p>
+            <div class="card">
+                <h2 class="h-card" data-t="letterPick">เลือกข้อความ</h2>
+                <div class="letter-list" id="letterList" role="radiogroup"></div>
+                <button class="btn btn-primary btn-wide" id="letterSend" type="button" data-t="letterSend">ส่งจดหมาย</button>
+                <p class="note" data-t="letterHow"></p>
+                <p class="note" id="letterMsg" role="status"></p>
+            </div>
+            <!-- ชวนคนที่ไว้ใจคุย: ข้อความสำเร็จรูป ส่งทาง LINE -->
+            <div class="card talk-card" id="talkCard">
+                <h2 class="h-card" data-t="talkTitle">ชวนคนที่ไว้ใจคุย</h2>
+                <p class="muted" data-t="talkSub"></p>
+                <div class="letter-list" id="talkList" role="radiogroup"></div>
+                <button class="btn btn-primary btn-wide" id="talkSend" type="button" data-t="talkSend">ส่งทาง LINE</button>
+                <p class="note" data-t="talkHow"></p>
+                <p class="note" id="talkMsg" role="status"></p>
+            </div>
+            <div class="card">
+                <h2 class="h-card" data-t="inbox">กล่องจดหมาย</h2>
+                <div id="inboxList"></div>
+            </div>
+            <p class="note" data-t="lettersNote"></p>
+        </section>
+
+        <!-- ===== ร้านค้า ===== -->
+        <section class="screen" id="screen-shop" hidden>
+            <div class="shop-head">
+                <h1 class="h-display" data-t="shopTitle">ร้านค้า</h1>
+                <span class="pill pill-plan" id="shopPlan"></span>
+            </div>
+            <div class="reward-box" id="rewardBox"></div>
+            <div class="cat-row" id="catRow" role="tablist"></div>
+            <div class="item-grid" id="itemGrid"></div>
+        </section>
+
+        <!-- ===== ฉัน ===== -->
+        <section class="screen" id="screen-me" hidden>
+            <h1 class="h-display" data-t="meTitle">ฉัน</h1>
+            <div class="card me-head">
+                <img id="meWorldImg" alt="">
+                <div>
+                    <b id="meName"></b>
+                    <span class="muted" id="mePlan"></span>
+                </div>
+                <button class="btn btn-small" id="switchWorld" type="button" data-t="switchWorld">เปลี่ยนโลก</button>
+            </div>
+            <div class="card survey-card" id="surveyCard" hidden>
+                <h2 class="h-card" data-t="surveyTitle"></h2>
+                <p class="muted" data-t="surveyText"></p>
+                <a class="btn btn-primary btn-wide" id="surveyBtn" target="_blank" rel="noopener" data-t="surveyBtn"></a>
+            </div>
+            <div class="card" id="redeemCard">
+                <h2 class="h-card" data-t="redeemTitle">ใส่รหัสรับของ</h2>
+                <div class="redeem-row">
+                    <input class="field" id="redeemInput" autocomplete="off" spellcheck="false" aria-label="รหัส">
+                    <button class="btn btn-primary" id="redeemBtn" type="button" data-t="redeemBtn">รับของ</button>
+                </div>
+                <p class="note" id="redeemMsg" role="status"></p>
+                <div id="giftCodes"></div>
+            </div>
+            <div class="card">
+                <h2 class="h-card" data-t="orders">คำสั่งซื้อ</h2>
+                <div id="orderList"></div>
+            </div>
+            <div class="card">
+                <h2 class="h-card" data-t="stats">สถิติ</h2>
+                <div class="stats" id="statsBox"></div>
+            </div>
+            <div class="card">
+                <h2 class="h-card" data-t="album">อัลบั้มเพื่อนที่มาเยี่ยม</h2>
+                <div class="album" id="albumBox"></div>
+            </div>
+            <div class="card">
+                <h2 class="h-card" data-t="stamps">แสตมป์ทริปแสง</h2>
+                <div class="album album-stamps" id="stampBox"></div>
+            </div>
+            <!-- สรุปการทดสอบ (สำหรับวางในแบบสอบถาม ไม่มีอารมณ์หรือคะแนน) -->
+            <div class="card">
+                <h2 class="h-card" data-t="summaryTitle"></h2>
+                <p class="muted" data-t="summaryText"></p>
+                <button class="btn btn-small" type="button" id="summaryBtn" data-t="summaryBtn"></button>
+                <code class="order-line summary-code" id="summaryCode" hidden></code>
+            </div>
+            <!-- ความเป็นส่วนตัว + ลบข้อมูลบนเครื่องนี้ -->
+            <div class="card" id="privacyCard">
+                <h2 class="h-card" data-t="privacyTitle"></h2>
+                <ul class="privacy-list" id="privacyList"></ul>
+                <button class="btn btn-small" type="button" id="wipeBtn" data-t="wipeBtn"></button>
+                <div class="wipe-box" id="wipeBox" hidden>
+                    <p data-t="wipeAsk"></p>
+                    <div class="item-actions">
+                        <button class="btn" type="button" id="wipeNo" data-t="wipeNo"></button>
+                        <button class="btn btn-danger" type="button" id="wipeYes" data-t="wipeYes"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2 class="h-card" data-t="aboutTitle"></h2>
+                <p class="muted" data-t="aboutText"></p>
+                <div class="item-actions">
+                    <button class="btn btn-small" type="button" id="replayIntro" data-t="replayIntro"></button>
+                    <button class="btn btn-small help-btn" type="button" id="helpMe" data-t="helpBtn"></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== แถบแท็บล่าง ===== -->
+    <nav class="g-tabs" id="tabs" role="tablist">
+        <button type="button" data-tab="home"><img src="game/img/icon_garden.webp" alt=""><span data-t="tabHome">บ้าน</span></button>
+        <button type="button" data-tab="breathe"><img src="game/img/icon_breathe.webp" alt=""><span data-t="tabBreathe">หายใจ</span></button>
+        <button type="button" data-tab="letters"><img src="game/img/mood_journal.webp" alt=""><span data-t="tabLetters">จดหมาย</span></button>
+        <button type="button" data-tab="shop"><img src="game/img/icon_shop.webp" alt=""><span data-t="tabShop">ร้านค้า</span></button>
+        <button type="button" data-tab="me"><img src="game/img/icon_album.webp" alt=""><span data-t="tabMe">ฉัน</span></button>
+    </nav>
+
+    <!-- ===== หน้าต่างสินค้า ===== -->
+    <div class="sheet" id="itemSheet" hidden>
+        <div class="sheet-box" role="dialog" aria-modal="true" aria-labelledby="itemName">
+            <button class="sheet-close" type="button" id="itemClose" aria-label="ปิด">×</button>
+            <div class="item-hero"><img id="itemImg" alt=""></div>
+            <h2 class="h-card" id="itemName"></h2>
+            <p class="muted" id="itemInfo"></p>
+            <div class="tiers" id="itemTiers"></div>
+            <div class="item-actions" id="itemActions"></div>
+            <div id="giftBox" hidden>
+                <label class="field-label" for="giftTo" data-t="giftTo"></label>
+                <input class="field" id="giftTo" autocomplete="off" spellcheck="false" placeholder="@">
+            </div>
+            <p class="note" id="itemMsg" role="status"></p>
+        </div>
+    </div>
+
+    <!-- ===== หน้าต่างชำระเงิน PromptPay ===== -->
+    <div class="sheet" id="paySheet" hidden>
+        <div class="sheet-box" role="dialog" aria-modal="true" aria-labelledby="payHead">
+            <button class="sheet-close" type="button" id="payClose" aria-label="ปิด">×</button>
+            <h2 class="h-card" id="payHead" data-t="payTitle">ชำระเงินด้วย PromptPay</h2>
+            <div class="pay-sum"><span id="payItem"></span><b id="payAmount"></b></div>
+            <div class="pay-qr-box">
+                <div class="pay-brand">THAI QR PAYMENT · PromptPay</div>
+                <div class="pay-qr" id="payQr"></div>
+                <p><span data-t="payTo">ชื่อผู้รับ</span>: <b id="payName"></b></p>
+                <p class="pay-timer" id="payTimer"></p>
+            </div>
+            <p class="field-label" data-t="payOrder"></p>
+            <div class="redeem-row">
+                <code class="order-line" id="payLine"></code>
+                <button class="btn btn-small" type="button" id="payCopy" data-t="payCopy">คัดลอก</button>
+            </div>
+            <ol class="pay-steps">
+                <li data-t="payStep1"></li>
+                <li data-t="payStep2"></li>
+                <li data-t="payStep3"></li>
+            </ol>
+            <div class="item-actions">
+                <a class="btn" id="paySlip" target="_blank" rel="noopener" data-t="paySlip">ส่งสลิป</a>
+                <button class="btn btn-primary" type="button" id="payDone" data-t="payDone">ฉันโอนแล้ว</button>
+            </div>
+            <p class="note" id="payMsg" role="status"></p>
+        </div>
+    </div>
+
+    <!-- ===== หน้าแนะนำผู้เล่นใหม่ 3 หน้า ===== -->
+    <div class="sheet sheet-center" id="introSheet" hidden>
+        <div class="sheet-box intro-box" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+            <div class="intro-art"><img id="introImg" alt=""></div>
+            <h2 class="h-display" id="introTitle"></h2>
+            <p id="introText"></p>
+            <div class="intro-dots" id="introDots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="item-actions">
+                <button class="btn" type="button" id="introSkip" data-t="introSkip"></button>
+                <button class="btn btn-primary" type="button" id="introNext"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ชวนทำแบบสอบถามเมื่อเล่นครบ 3 วัน ===== -->
+    <div class="sheet sheet-center" id="askSheet" hidden>
+        <div class="sheet-box intro-box" role="dialog" aria-modal="true" aria-labelledby="askTitle">
+            <div class="intro-art"><img id="askImg" alt=""></div>
+            <h2 class="h-display" id="askTitle" data-t="askTitle"></h2>
+            <p data-t="askText"></p>
+            <div class="item-actions">
+                <button class="btn" type="button" id="askLater" data-t="askLater"></button>
+                <a class="btn btn-primary" id="askGo" target="_blank" rel="noopener" data-t="surveyBtn"></a>
+            </div>
+            <button class="btn btn-small" type="button" id="askCopy" data-t="summaryBtn"></button>
+            <code class="order-line summary-code" id="askCode" hidden></code>
+        </div>
+    </div>
+
+    <!-- ===== ต้องการความช่วยเหลือตอนนี้ (สายด่วน) ===== -->
+    <div class="sheet sheet-center" id="helpSheet" hidden>
+        <div class="sheet-box" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+            <button class="sheet-close" type="button" id="helpClose" aria-label="ปิด">×</button>
+            <h2 class="h-display" id="helpTitle" data-t="helpBtn"></h2>
+            <p class="muted" data-t="helpText"></p>
+            <div class="call-list" id="helpCalls"></div>
+            <!-- แสดงเฉพาะผู้ที่ตอบบนหน้าเว็บว่ามีเรื่องนั้น (ไม่มีโปรไฟล์ / ตอบว่าไม่มี = ไม่แสดงเลย) -->
+            <div class="help-sub" id="helpSub" hidden>
+                <p id="helpSubText"></p>
+                <div class="call-list" id="helpSubCalls"></div>
+            </div>
+            <p class="note" data-t="helpNote"></p>
+        </div>
+    </div>
+
+    <!-- ===== พักสั้น: ถอนหายใจ 1 นาที / หายใจ 4·8 / ยืดเหยียด 2 นาที / คลายกล้ามเนื้อ 3 นาที / เดิน 5 นาที / ก้าวเล็กถัดไป ===== -->
+    <div class="sheet" id="qbSheet" hidden>
+        <div class="sheet-box qb-box" role="dialog" aria-modal="true" aria-labelledby="qbTitle">
+            <button class="sheet-close" type="button" id="qbClose" aria-label="ปิด">×</button>
+            <!-- เลือกแบบ -->
+            <div id="qbPick">
+                <h2 class="h-display" id="qbTitle"></h2>
+                <p class="muted" data-t="qbSub"></p>
+                <div class="qb-list">
+                    <button class="qb-choice" type="button" id="qbSigh"><img src="game/img/mood_lungs.webp" alt=""><span><b data-t="qbSighT"></b><small data-t="qbSighD"></small></span><em data-t="qb1m"></em></button>
+                    <button class="qb-choice" type="button" id="qbB48"><img src="game/img/icon_breathe.webp" alt=""><span><b data-t="qbB48T"></b><small data-t="qbB48D"></small></span><em data-t="qb1m"></em></button>
+                    <button class="qb-choice" type="button" id="qbStretch"><img id="qbStretchIco" alt=""><span><b data-t="qbStretchT"></b><small id="qbStretchD"></small></span><em data-t="qb2m"></em></button>
+                    <button class="qb-choice" type="button" id="qbPmr"><img id="qbPmrIco" alt=""><span><b data-t="qbPmrT"></b><small id="qbPmrD"></small></span><em data-t="qb3m"></em></button>
+                    <button class="qb-choice" type="button" id="qbWalk"><img id="qbWalkIco" alt=""><span><b data-t="qbWalkT"></b><small id="qbWalkD"></small></span><em data-t="qb5m"></em></button>
+                    <button class="qb-choice" type="button" id="qbStep"><img src="game/img/mood_sprout.webp" alt=""><span><b data-t="qbStepT"></b><small id="qbStepD"></small></span><em data-t="qbAny"></em></button>
+                </div>
+                <p class="note" id="qbLeftMsg"></p>
+            </div>
+            <!-- ยืดเหยียดที่โต๊ะ 2 นาที -->
+            <div id="qbStretchView" class="qb-view" hidden>
+                <h2 class="h-card" id="stretchTitle"></h2>
+                <div class="qb-art"><img id="stretchImg" alt=""></div>
+                <span class="pill" id="stretchNo"></span>
+                <p class="qb-say" id="stretchText" aria-live="polite"></p>
+                <div class="progress"><i id="stretchBar"></i></div>
+                <p class="breathe-clock" id="stretchClock">2:00</p>
+                <div class="item-actions">
+                    <button class="btn" type="button" id="stretchBack" data-t="qbBack"></button>
+                    <button class="btn btn-primary" type="button" id="stretchBtn"></button>
+                </div>
+            </div>
+            <!-- คลายกล้ามเนื้อ 3 นาที / เดินกับน้อง 5 นาที (ใช้หน้าต่างเดียวกัน) -->
+            <div id="qbGuideView" class="qb-view" hidden>
+                <h2 class="h-card" id="guideTitle"></h2>
+                <div class="qb-art" id="guideArt">
+                    <img id="guideImg" alt="">
+                    <div class="walk-stage" id="walkStage" hidden>
+                        <img class="walk-bg" id="walkBg" alt="">
+                        <div class="walk-pet"><img id="walkPet" alt=""></div>
+                    </div>
+                </div>
+                <span class="pill" id="guideNo"></span>
+                <p class="guide-phase" id="guidePhase" aria-live="polite"></p>
+                <p class="qb-say" id="guideText" aria-live="polite"></p>
+                <p class="note center" id="guideNote"></p>
+                <div class="progress"><i id="guideBar"></i></div>
+                <p class="breathe-clock" id="guideClock"></p>
+                <div class="item-actions">
+                    <button class="btn" type="button" id="guideBack" data-t="qbBack"></button>
+                    <button class="btn" type="button" id="guideSkip" data-t="pmrSkip" hidden></button>
+                    <button class="btn btn-primary" type="button" id="guideBtn"></button>
+                </div>
+            </div>
+            <!-- ก้าวเล็กถัดไป: ข้อความอยู่ในหน่วยความจำเท่านั้น ไม่บันทึก -->
+            <div id="qbStepView" class="qb-view" hidden>
+                <div class="qb-art small"><img id="stepImg" alt=""></div>
+                <p class="qb-say" id="stepSay" aria-live="polite"></p>
+                <textarea class="field qb-input" id="stepInput" rows="2" maxlength="160" autocomplete="off" spellcheck="false"></textarea>
+                <div class="chip-row" id="stepIdeas" hidden></div>
+                <p class="note" data-t="stepPrivate"></p>
+                <div class="item-actions">
+                    <button class="btn" type="button" id="stepBack"></button>
+                    <button class="btn btn-primary" type="button" id="stepNext"></button>
+                </div>
+            </div>
+            <!-- เสร็จแล้ว -->
+            <div id="qbDoneView" class="qb-view center" hidden>
+                <div class="qb-art"><img id="qbDoneImg" alt=""></div>
+                <h2 class="h-display" id="qbDoneTitle"></h2>
+                <div class="qb-mine" id="qbMine" hidden><small data-t="stepYours"></small><b id="qbMineText"></b></div>
+                <p class="qb-say" id="qbDoneText"></p>
+                <p class="note ok" id="qbDoneMsg" role="status"></p>
+                <div class="item-actions">
+                    <button class="btn" type="button" id="qbAgain" data-t="qbAgain"></button>
+                    <button class="btn btn-primary" type="button" id="qbFinish" data-t="qbFinish"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== เปิดจากลิงก์จดหมายใจดี (?letter=N) ===== -->
+    <div class="sheet sheet-center letter-arrive" id="arriveSheet" hidden>
+        <div class="sheet-box intro-box" role="dialog" aria-modal="true" aria-labelledby="arriveTitle">
+            <div class="intro-art"><img id="arriveImg" alt=""></div>
+            <h2 class="h-display" id="arriveTitle" data-t="arriveTitle"></h2>
+            <blockquote class="arrive-letter" id="arriveText"></blockquote>
+            <p class="muted" id="arriveFrom"></p>
+            <div class="call-list" id="arriveCalls"></div>
+            <button class="btn btn-primary btn-wide" type="button" id="arriveGo" data-t="arriveGo"></button>
+        </div>
+    </div>
+
+    <p class="toast" id="toast" role="status" hidden></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<script src="config.js"></script>
+<script src="pay.js"></script>
+<script src="game-data.js"></script>
+<script src="game.js"></script>
+<script src="game-pet.js"></script>
+</body>
+</html>

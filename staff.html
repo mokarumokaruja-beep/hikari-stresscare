@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Hikari · สร้างรหัสรับของ (ทีมงาน)</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap">
+    <style>
+        body { margin: 0; font-family: "Prompt", Arial, sans-serif; background: #f5f6fc; color: #1f2a5c; }
+        main { max-width: 560px; margin: 0 auto; padding: 24px 16px; }
+        h1 { font-size: 22px; }
+        .card { background: #fff; border-radius: 18px; padding: 18px; box-shadow: 0 6px 24px rgba(52, 72, 140, 0.08); margin-bottom: 14px; }
+        label { display: block; font-size: 14px; color: #4f587d; margin-bottom: 6px; }
+        textarea, input { width: 100%; box-sizing: border-box; padding: 12px; font: inherit; border: 2px solid #d9def0; border-radius: 12px; }
+        button { margin-top: 10px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; background: #3e6ee0; color: #fff; font: inherit; cursor: pointer; }
+        .code { font-size: 34px; font-weight: 600; letter-spacing: 6px; margin: 8px 0; }
+        .warn { background: #fff3d6; color: #6b4a08; border-radius: 12px; padding: 12px; font-size: 14px; line-height: 1.6; }
+        ol { line-height: 1.7; font-size: 14px; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>สร้างรหัสรับของ (สำหรับทีมงาน)</h1>
+    <div class="card">
+        <ol>
+            <li>ตรวจสลิปในแอปธนาคาร: เงินเข้าจริง ยอดตรงกับข้อความคำสั่งซื้อ และยังไม่เคยออกรหัสให้เลขที่นี้</li>
+            <li>วาง “ข้อความคำสั่งซื้อ” ที่ลูกค้าส่งมา เช่น <code>HK7Q2M9A · acc_thai-outfit · 53.00</code></li>
+            <li>กดสร้างรหัส แล้วส่งรหัส 6 ตัวให้ลูกค้า ลูกค้าใส่ในเกมสวนแสง แท็บ “ฉัน”</li>
+        </ol>
+        <label for="line">ข้อความคำสั่งซื้อ</label>
+        <textarea id="line" rows="2"></textarea>
+        <button id="make" type="button">สร้างรหัส</button>
+        <p id="out" role="status"></p>
+    </div>
+    <p class="warn">หน้านี้ไม่มีรหัสผ่าน และรหัสลับ (STAFF_KEY ใน config.js) อยู่ในโค้ดที่ใครก็เปิดดูได้ จึงเหมาะกับช่วงทดลองขายเท่านั้น เมื่อขายจริงจังควรย้ายไปใช้ระบบหลังบ้านหรือ payment gateway ที่ยืนยันอัตโนมัติ และควรจดเลขที่คำสั่งซื้อที่ออกรหัสแล้วไว้ในตาราง (เช่น Google Sheets) เพื่อกันออกซ้ำ</p>
+</main>
+<script src="config.js"></script>
+<script src="pay.js"></script>
+<script>
+    document.getElementById("make").addEventListener("click", function () {
+        const out = document.getElementById("out");
+        const o = parseOrderLine(document.getElementById("line").value);
+        if (!o) {
+            out.textContent = "อ่านข้อความไม่ได้ ต้องเป็นรูปแบบ  เลขที่ · รหัสสินค้า · ยอดเงิน";
+            return;
+        }
+        out.innerHTML = "";
+        const info = document.createElement("div");
+        info.textContent = "เลขที่ " + o.id + " · " + o.item + " · ฿" + o.amount.toFixed(2);
+        const code = document.createElement("div");
+        code.className = "code";
+        code.textContent = redeemCode(o.id, o.amount, o.item);
+        out.append(info, code);
+    });
+</script>
+</body>
+</html>

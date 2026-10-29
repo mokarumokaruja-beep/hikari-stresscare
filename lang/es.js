@@ -21,8 +21,8 @@ LANG.es = {
         "auth.4": "Usuario",
         "auth.5": "Contraseña",
         "auth.6": "Prototipo: las cuentas y los registros se guardan solo en este navegador. Las contraseñas se guardan con hash, pero no uses la contraseña de una cuenta real.",
-        "home.1": "El estrés...<br>no tienes que enfrentarlo solo",
-        "home.2": "Hikari StressCare te ayuda a conocerte y a manejar el estrés paso a paso, con información confiable y herramientas fáciles de usar.",
+        "home.1": "¿Agotamiento acumulado por el trabajo?<br>Ataca la causa, paso a paso",
+        "home.2": "Para quienes trabajan y llegan sin energía, y para estudiantes que empiezan a sentir la presión: evalúa tu estrés y tu burnout, haz pausas de 1–3 minutos en tu escritorio y practica por tu cuenta habilidades que atacan la causa.",
         "home.3": "Empieza tu evaluación de estrés →",
         "home.4": "✅ Solo 4–6 minutos • Sin registro",
         "home.5": "Una joven descansando junto a un lago entre flores",
@@ -35,7 +35,7 @@ LANG.es = {
         "features.7": "Información confiable",
         "features.8": "Basada en estudios y expertos",
         "why.1": "¿Por qué es importante manejar el estrés?",
-        "why.2": "El estrés acumulado afecta el sueño, la concentración, las relaciones y la salud física. Reconocerlo a tiempo te ayuda a elegir cómo cuidarte antes de que el problema crezca.",
+        "why.2": "El cansancio laboral que se acumula afecta el sueño, la concentración, las relaciones y la salud física. Detectarlo a tiempo te permite elegir cómo cuidarte antes de que el problema crezca.",
         "why.3": "Ver cómo cuidarte →",
         "why.4": "Plantas en macetas junto a una ventana con luz de la mañana",
         "why.5": "“Una mejor salud<br>empieza por cuidar<br>nuestra mente”",
@@ -46,13 +46,13 @@ LANG.es = {
         "assessment.5": "Qué influye en tu estrés",
         "assessment.6": "Primeros pasos",
         "assessment.7": "Tus resultados anteriores",
-        "assessment.8": "Tu puntuación es bastante alta. Habla con alguien de confianza o con un profesional, o llama a la línea de salud mental de Tailandia <strong>1323</strong> (24 horas) · <a href=\"#help\">Ver opciones de ayuda</a>",
-        "assessment.9": "Este resultado es solo para conocerte mejor, no es un diagnóstico médico. Los resultados anteriores se guardan solo en tu navegador y no se envían a ningún lugar.",
+        "assessment.8": "Tu puntuación es bastante alta. No tienes que afrontarlo solo/a: habla con alguien de confianza o con un profesional. La línea de salud mental es gratuita y atiende las 24 horas.",
+        "assessment.9": "Este resultado es solo para autoconocimiento, no es un diagnóstico médico. Los resultados anteriores se guardan en este navegador y no se envían a un servidor de Hikari · <a href=\"#privacy\">Privacidad</a>",
         "assessment.10": "Hacer la evaluación otra vez",
         "assessment.11": "“Entender lo que sientes es el comienzo del cambio”",
         "assessment.12": "Una joven escribiendo sus emociones junto a una maceta",
         "selfcare.1": "Autocuidado que puedes empezar hoy",
-        "selfcare.2": "Pulsa la flecha para ver los pasos. Cada actividad dura 10 minutos o menos.",
+        "selfcare.2": "Toca la flecha para ver los pasos. Cada actividad dura 10 minutos o menos, en el trabajo, en casa o en la residencia.",
         "selfcare.3": "Una joven con los ojos cerrados practicando la respiración",
         "selfcare.4": "Respiración relajante",
         "selfcare.5": "Suelta la tensión en 5 minutos",
@@ -99,7 +99,7 @@ LANG.es = {
         "breathe.8": "3 minutos",
         "breathe.9": "5 minutos",
         "research.1": "Respaldado por estudios",
-        "research.2": "Cada consejo de este sitio viene de estos 8 estudios. Haz clic en una tarjeta para leer el original.",
+        "research.2": "Los consejos de este sitio se basan en estos estudios y cuestionarios. Toca una tarjeta para leer el original.",
         "research.3": "Una joven meditando",
         "research.4": "Atención plena",
         "research.5": "La atención plena reduce el estrés",
@@ -164,7 +164,7 @@ LANG.es = {
         "mylog.13": "Detalles",
         "mylog.14": "Aún no hay registros. Prueba la evaluación o una sesión de respiración.",
         "plans.1": "Planes futuros",
-        "plans.2": "Gratis todos los días, con una mejora para herramientas más completas cuando la quieras (prototipo, aún no disponible)",
+        "plans.2": "Gratis todos los días. Premium y Care+ son una vista previa de planes futuros y aún no están disponibles",
         "plans.3": "Mensual",
         "plans.4": "Anual (ahorra 33%)",
         "plans.5": "Soy estudiante (50% de descuento)",
@@ -180,11 +180,8 @@ LANG.es = {
         "plans.16": "⭐ Programas de 14 días: dormir mejor, estrés de exámenes, estrés por dinero",
         "plans.17": "⭐ Audios de respiración guiada y cuentos para dormir en tailandés",
         "plans.18": "⭐ Informe mensual (PDF)",
-        "plans.20": "/sesión",
-        "plans.21": "💜 Habla con un psicólogo con licencia",
-        "plans.22": "💜 Chat o video de 30–50 minutos",
         "plans.23": "💜 Comparte tus resultados con el profesional (con tu consentimiento)",
-        "plans.24": "💜 Los usuarios Premium tienen 15% de descuento",
+        "plans.24": "💜 Juego Jardín de Luz: 20% de descuento · 20 cartas/día",
         "help.1": "¿Necesitas ayuda ahora?",
         "help.2": "Si te sientes desbordado o en peligro, no esperes. Pide ayuda ahora, gratis (líneas de Tailandia).",
         "help.3": "Línea de salud mental, Departamento de Salud Mental<br>24 horas",
@@ -201,7 +198,7 @@ LANG.es = {
         "help.14": "Busquen ayuda juntos, por ejemplo llamen juntos al 1323",
         "help.15": "Vuelve a preguntarle cómo está al día siguiente",
         "footer.1": "Si sientes mucho estrés o estás en peligro, llama a la línea de salud mental 1323 (24 horas) · Emergencias 1669 (Tailandia)",
-        "footer.2": "Proyecto Rush · 42 Bangkok Discovery Piscine · Sitio web educativo, no es un diagnóstico médico",
+        "footer.2": "Hikari por บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด · No es un diagnóstico ni un tratamiento médico",
         "page.title": "Hikari StressCare - El estrés, no tienes que enfrentarlo solo",
         "auth.r1": "Solo a–z y 0–9",
         "auth.r2": "De 5 a 30 caracteres",
@@ -220,21 +217,162 @@ LANG.es = {
         "mylog.p5": "🗂️ Historial de actividades",
         "mylog.u1": "Usuario",
         "mylog.u2": "Plan",
-        "plans.note": "Prototipo: elegir un plan es una simulación para mostrar el estado de membresía en el registro. No se hace ningún pago real.",
+        "plans.note": "Solo vista previa: estos planes aún no están disponibles. Pulsa “Me interesa” para decírnoslo y ver una vista previa de las ventajas en esta página. No se cobra ni se realiza ningún pago.",
         "feedback.1": "¿Qué te pareció?",
         "feedback.2": "Responde una encuesta de 5–7 minutos. Tu opinión decidirá si Hikari se convierte en una app y qué debería incluir.",
         "feedback.3": "📝 Responder la encuesta",
         "header.v": "Videos",
         "auth.or": "o",
         "videos.1": "Videos para aliviar el estrés",
-        "videos.2": "Videos seleccionados de fuentes confiables, como el Departamento de Salud Mental de Tailandia, Thai PBS y la OMS. Toca un video para verlo aquí mismo.",
+        "videos.2": "Biblioteca del reto de 60 días: ondas sonoras, sonidos naturales, música tailandesa e internacional, respiración, meditación e ideas en tailandés e inglés. Cada día se desbloquea un video.",
         "videos.3": "Los videos pertenecen a sus canales, se reproducen en el reproductor de YouTube y son gratis para todos · Los anuncios dentro del video son de YouTube",
         "videos.p1": "De Hikari",
         "videos.p2": "¿Quieres ver que tu estrés realmente baja?",
         "videos.p3": "Hikari Premium te da gráficos comparativos ilimitados, un plan de autocuidado personal y un informe mensual",
         "videos.p4": "Ver Premium",
         "videos.yt": "Abrir en YouTube ↗",
-        "plans.v1": "✅ Videos antiestrés de fuentes confiables"
+        "plans.v1": "✅ Videos antiestrés de fuentes confiables",
+        "home.t": "▶ Misión de hoy",
+        "today.1": "Reto de 60 días: más calma, un día a la vez",
+        "today.2": "Unos minutos al día, en el almuerzo o antes de dormir: un clip nuevo cada día durante 60 días, alternando sonidos relajantes y charlas que reconfortan. Completa 3 tareas para ganar luz y cada 7 días elige 1 recompensa 🎁",
+        "today.3": "🎯 Misión de hoy",
+        "today.4": "Sin iniciar sesión: tu progreso se guarda en este dispositivo. Inicia sesión para ver tu racha en Mi registro.",
+        "today.5": "💡 Misión extra (opcional)",
+        "today.6": "📖 Investigación de hoy",
+        "today.7": "Pruébalo:",
+        "today.8": "Las ondas y frecuencias como 432/528 Hz o los ritmos binaurales son para relajarse; la evidencia es limitada y no son un tratamiento · Escucha los binaurales con auriculares a bajo volumen",
+        "today.t1": "📝 Registro de ánimo (o haz la evaluación)",
+        "today.t2": "🎧 Escucha el video de hoy o 📖 lee la investigación de hoy (elige uno)",
+        "today.t3": "🌬️ Haz 1 ronda de respiración o 1 pausa corta",
+        "today.b1": "▶ Ver video",
+        "today.b2": "📖 Leer investigación",
+        "today.b3": "Ir a respirar →",
+        "today.r1": "🎁 Caja de premios",
+        "today.r2": "Tus recompensas (guardadas en este sitio · el juego Jardín de Luz tiene su propia caja de recompensas)",
+        "today.r3": "Los artículos especiales aún se compran · los miembros tienen descuento",
+        "pay.1": "Pagar con PromptPay",
+        "pay.2": "Beneficiario:",
+        "pay.3": "Texto del pedido (envíalo con el comprobante):",
+        "pay.4": "Abre tu app bancaria, toca “Escanear” y escanea este QR",
+        "pay.5": "Revisa el nombre y el monto y confirma la transferencia",
+        "pay.6": "Envía el comprobante con el texto del pedido. Te enviaremos un código en 24 horas; introdúcelo en el juego Jardín de Luz, pestaña “Yo”",
+        "pay.7": "Enviar comprobante",
+        "pay.8": "Ya pagué",
+        "pay.o1": "Mis pedidos",
+        "header.g": "Juego Jardín de Luz",
+        "plans.g1": "⭐ Juego Jardín de Luz: 10% de descuento · 10 cartas/día · enviar regalos",
+        "inapp.1": "Este navegador dentro de la app guarda tu progreso por separado de Safari / Chrome. Si luego abres el enlace en otro lugar, tus datos no te seguirán. Te recomendamos abrirlo en tu navegador habitual y siempre desde el mismo sitio.",
+        "inapp.2": "Abrir en el navegador",
+        "inapp.3": "Cerrar",
+        "home.g1": "Juega con tu mascota en el Jardín de Luz →",
+        "home.g2": "Respira 1 minuto con un gato, un perro, un conejo o Hikari y junta luz cada día",
+        "today.c1": "¿Día difícil? Está bien. Respiremos despacio juntos 1 minuto, o llama gratis a la línea de salud mental, las 24 horas. No estás solo/a.",
+        "today.c2": "🌬️ Respirar 1 minuto",
+        "help.call": "📞 Llamar al 1323 (gratis, 24 h)",
+        "help.see": "Ver opciones de ayuda",
+        "assessment.g1": "Relájate con tu mascota en el Jardín de Luz →",
+        "mylog.c1": "“Borrar registro” elimina el historial de actividad y los resultados anteriores de esta cuenta (los gráficos quedarán vacíos). Tu cuenta, el recorrido de 60 días, las recompensas y los pedidos se mantienen · Para borrarlo todo, ve a <a href=\"#privacy\">Privacidad</a>",
+        "privacy.1": "Privacidad y tus datos",
+        "privacy.2": "Un resumen breve de qué guarda este sitio, dónde y con qué servicios se conecta",
+        "privacy.3": "📱 <b>Se guarda en este dispositivo (localStorage del navegador):</b> tu cuenta (usuario y contraseña cifrada con hash), resultados de evaluación, registros de ánimo, registro de actividad, recorrido de 60 días, recompensas, pedidos, idioma y datos del juego Jardín de Luz",
+        "privacy.4": "🔒 <b>No se envía a un servidor de Hikari:</b> este sitio aún no tiene servidor para datos de usuarios, así que nuestro equipo no puede ver tus resultados ni tu ánimo. Si cambias de dispositivo o borras los datos del navegador, los datos se pierden",
+        "privacy.5": "🌐 <b>Servicios externos que contacta esta página:</b> Google Fonts (tipografías), jsDelivr (librería de códigos QR), YouTube (miniaturas y, al pulsar reproducir, videos mediante youtube-nocookie.com), Google Sign-In (solo si el botón de Google está activado) y Google Forms al abrir la encuesta. Estos servicios pueden ver tu dirección IP y datos del navegador",
+        "privacy.6": "🩺 <b>No es un tratamiento médico:</b> los resultados y consejos son solo para autoconocimiento y autocuidado básico. Si te sientes desbordado/a, llama al 1323 (24 horas) o al 1669 en emergencias",
+        "privacy.7": "✉️ <b>Proveedor del servicio:</b> บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด",
+        "privacy.8": "🗑️ Borrar todos los datos de este dispositivo",
+        "privacy.9": "¿Borrar tu cuenta, resultados, ánimo, registro, recorrido, recompensas, pedidos y datos del juego de este dispositivo? No se puede deshacer.",
+        "privacy.10": "Borrar todo",
+        "privacy.11": "Cancelar",
+        "footer.p": "Privacidad",
+        "footer.c": "Contacto",
+        "footer.3": "Nació como un proyecto de 42 Bangkok",
+        "header.b": "Test de burnout",
+        "home.r": "⏱ Pausa de 1 minuto",
+        "trust.1": "🔒 Tus datos se quedan solo en tu dispositivo. Tu empresa o tu jefe no pueden verlos.",
+        "reset.1": "Pausas de 1–3 minutos para hacer en tu escritorio",
+        "reset.2": "Entre reuniones seguidas, en plena urgencia o en el metro: elige una tarjeta, pulsa iniciar y sigue los pasos. El temporizador te avisa al terminar.",
+        "reset.3": "Muévete con suavidad. Si sientes dolor, entumecimiento o mareo, detente de inmediato · Lo que escribas en una tarjeta se queda en esta página y solo se guarda cuando pulsas “Guardar”.",
+        "today.b4": "⏱ Pausa de 1–3 min",
+        "today.tip": "🎯 Consejo del día",
+        "today.tipLink": "Ver cómo →",
+        "today.self": "✍️ Lo que elegí probar hoy",
+        "burnout.1": "Test de burnout",
+        "burnout.2": "13 preguntas, 2–3 minutos, del Copenhagen Burnout Inventory (CBI): 6 sobre burnout personal y 7 sobre burnout relacionado con el trabajo",
+        "burnout.3": "Si eres estudiante, entiende “trabajo” como “estudios” (igual que en la versión para estudiantes del CBI)",
+        "burnout.r1": "Tu resultado del test de burnout",
+        "burnout.r2": "Habilidades para ti: prueba una hoy",
+        "burnout.r3": "¿Aún no elegiste las causas de tu estrés? <a href=\"#rootcause\">Elige lo que te estresa</a> para recibir habilidades más adecuadas",
+        "burnout.r4": "Este nivel de agotamiento no es debilidad y no deberías cargarlo solo. Habla con alguien de confianza, un médico o un psicólogo, y date tiempo para descansar de verdad. Si sientes que no puedes más, llama a la línea de salud mental 1323, gratis, las 24 horas.",
+        "burnout.r5": "Esto es una autoevaluación, no un diagnóstico médico · Cada puntuación va de 0 a 100: menos de 50 = bajo, 50–74 = moderado, 75–99 = alto, 100 = severo (la investigación suele usar 50 o más como punto de corte del burnout) · Fuente: Kristensen et al., 2005 · Los resultados se guardan solo en este dispositivo",
+        "burnout.r6": "Hacerlo de nuevo",
+        "burnout.h": "Resultados anteriores",
+        "root.1": "Ataca la causa",
+        "root.2": "El estrés baja de verdad cuando actúas sobre lo que lo causa. Elige lo que más te estresa y practica por tu cuenta habilidades cortas. El psicólogo es el último paso, cuando lo necesites.",
+        "root.3": "¿Qué te estresa más? (elige hasta 3)",
+        "root.4": "Estas habilidades son conocimientos generales, no consejos médicos ni financieros personalizados. Si no mejoras tras 2–4 semanas de práctica, o si afecta mucho tu trabajo y tu vida, consulta a un profesional.",
+        "root.5": "Elige al menos 1 tema arriba para ver habilidades que pueden ayudarte",
+        "research.30": "Burnout",
+        "research.31": "Copenhagen Burnout Inventory (CBI)",
+        "research.32": "Cuestionario de uso gratuito, creado a partir de un estudio con trabajadores daneses. Mide el agotamiento personal y el relacionado con el trabajo, y se usa en el “Test de burnout” de este sitio.",
+        "research.33": "Suspiro cíclico, 5 minutos al día",
+        "research.34": "En un ensayo aleatorizado, el suspiro cíclico (dos inhalaciones y una exhalación larga) durante 5 minutos al día mejoró el ánimo y redujo la frecuencia respiratoria en reposo más que la meditación mindfulness.",
+        "plans.cp1": "Care+ <small>(precio en diseño)</small>",
+        "plans.cp2": "Todo lo de Premium + un programa de autocuidado con seguimiento de un coach y descuento al reservar con un psicólogo",
+        "header.c": "Chequeo corporal",
+        "ov.1": "🧭 Mi resumen",
+        "check.1": "Chequeo de cuerpo y hábitos en 1 minuto",
+        "check.2": "El estrés acumulado suele notarse en el cuerpo y en los hábitos. Responde unas preguntas breves sobre los últimos 7 días para ver qué áreas pueden estar relacionadas con el estrés, con autocuidado a la medida. Hazlo una vez por semana para comparar con la anterior.",
+        "check.p1": "😴 Sueño · 🤕 Cabeza, cuello y hombros · 🌀 Estómago · 💓 Palpitaciones",
+        "check.p2": "🍽️ Alimentación · 🚪 Ver a otras personas",
+        "check.start": "Empezar el chequeo (1 min)",
+        "check.q": "En los últimos 7 días, ¿cuántos días te pasó esto?",
+        "check.rf": "⚠️ Dolor u opresión en el pecho, no poder respirar, palpitaciones con desmayo, dolor de cabeza intenso y repentino, debilidad en brazos o piernas → llama al 1669 o ve a urgencias ya. No supongas que es solo estrés.",
+        "check.r1": "Tu chequeo: comparado con la vez anterior",
+        "check.r2": "🩺 Los síntomas físicos que continúan deben revisarse con un médico para descartar otras causas.",
+        "check.r3": "Esto sirve para el autocuidado básico, no es un diagnóstico. «Puede estar relacionado con el estrés» significa que puede haber otras causas. · Los resultados se guardan solo en este dispositivo.",
+        "check.again": "Volver a hacer el chequeo",
+        "prof.1": "¿Usas alguna de estas cosas últimamente?",
+        "prof.2": "Esto queda solo en tu dispositivo. Sin juicios. · Se pregunta una sola vez, para que las preguntas encajen contigo.",
+        "prof.none": "No uso ninguna",
+        "prof.3": "O elige lo que usas (puedes elegir varias)",
+        "prof.smoke": "Cigarrillos / cigarrillos electrónicos",
+        "prof.alcohol": "Bebidas alcohólicas",
+        "prof.other": "Otras sustancias",
+        "prof.save": "Guardar y continuar →",
+        "prof.skip": "Omitir por ahora",
+        "prof.line": "Preguntas adicionales configuradas al inicio:",
+        "prof.edit": "Editar esto",
+        "dep.1": "Detección de depresión",
+        "dep.2": "El cribado de 2 preguntas (2Q) y la evaluación de 9 preguntas (9Q) del Departamento de Salud Mental de Tailandia. Si respondes «Sí» a alguna pregunta del 2Q, sigue el 9Q. Toma de 1 a 3 minutos.",
+        "dep.3": "Cribado inicial, no es un diagnóstico",
+        "dep.r1": "Tu resultado",
+        "dep.ok": "Por ahora no se detecta riesgo de depresión. Sigue cuidándote y vuelve cuando quieras si algo cambia.",
+        "dep.s1": "⏱ Pausa de 1–3 min",
+        "dep.s2": "🌱 Ideas de autocuidado",
+        "dep.s3": "💬 Habla con alguien de confianza",
+        "dep.r2": "Cribado inicial, no es un diagnóstico. Solo un médico puede diagnosticar. · 9Q: menos de 7 = sin síntomas o muy leves, 7–12 = leve, 13–18 = moderado, 19 o más = grave · Los resultados se guardan solo en este dispositivo.",
+        "dep.src": "Fuente: cribado de depresión 2Q y evaluación de depresión 9Q, Departamento de Salud Mental, Ministerio de Salud Pública de Tailandia",
+        "crisis.1": "Ahora mismo no tienes que pasar por esto a solas",
+        "crisis.2": "Gracias por responder con sinceridad. Pensamientos así nos dicen que estás sufriendo mucho. Si ahora no te sientes a salvo, busca ayuda de inmediato. Es gratis.",
+        "crisis.1323": "📞 Llama al 1323, línea de salud mental (24 h)",
+        "crisis.1669": "🚑 Llama al 1669, emergencias",
+        "crisis.er": "🏥 Ve a urgencias de un hospital cercano",
+        "crisis.tell": "💬 Díselo ahora a alguien de confianza y pídele que se quede contigo",
+        "talk.1": "💬 Habla con alguien de confianza",
+        "talk.2": "No hace falta esperar a que pese demasiado. Elige un mensaje, cámbialo con tus propias palabras y envíalo por LINE. · Los mensajes no se guardan en ningún sitio.",
+        "dir.1": "📒 Directorio de líneas de ayuda (llamada gratuita)",
+        "dir.1669": "Emergencias médicas (24 h)",
+        "dir.1323": "Línea de salud mental, Departamento de Salud Mental (24 h)",
+        "dir.1387": "Línea de la infancia, para niños y jóvenes",
+        "dir.1600": "Línea nacional para dejar de fumar de Tailandia",
+        "dir.1413": "Línea para dejar el alcohol",
+        "dir.1165": "Línea de tratamiento de drogas, Instituto Nacional Boromarajonani de Tratamiento y Rehabilitación de Drogas (24 h)",
+        "dir.dep": "Detección de depresión (2Q / 9Q) →",
+        "dir.check": "Chequeo de cuerpo y hábitos →",
+        "privacy.12": "🩺 <b>Chequeo corporal, detección de depresión y tu respuesta sobre uso de sustancias (si la diste):</b> se guardan solo en este dispositivo y nunca se envían. Puedes editarlo en el chequeo corporal y borrarlo todo con el botón de abajo.",
+        "research.40": "Detección de depresión",
+        "research.41": "Cribado 2Q y evaluación 9Q",
+        "research.42": "Herramientas de detección de depresión del Departamento de Salud Mental de Tailandia, usadas en hospitales y servicios de salud de todo el país. Se usan en la sección «Detección de depresión» de este sitio, con la redacción original en tailandés."
     },
     "js": {
         "locale": "es-ES",
@@ -348,8 +486,18 @@ LANG.es = {
             "assessment": "Evaluación",
             "breathing": "Respiración",
             "mood": "Estado de ánimo",
-            "plan": "Cambio de plan",
-            "video": "Vio un video"
+            "plan": "Interés en plan",
+            "video": "Vio un video",
+            "daily": "Misión diaria",
+            "reward": "Premio recibido",
+            "research": "Investigación leída",
+            "order": "Pedido",
+            "reset": "Pausa corta",
+            "burnout": "Test de burnout",
+            "skill": "Eligió una habilidad",
+            "note": "Nota privada",
+            "bodycheck": "Chequeo corporal",
+            "depscreen": "Detección de depresión"
         },
         "detailAssessment": "Puntuación {score}/15 ({level})",
         "detailBreathing": "{pattern} · {min} min",
@@ -370,10 +518,659 @@ LANG.es = {
         "changeSame": "➖ Igual que tu primera puntuación ({a})",
         "noMood": "No hay estados de ánimo guardados en los últimos 7 días. Toca uno abajo para empezar.",
         "moodTop": "Ánimo más frecuente en los últimos 7 días: {mood} ({n} registros)",
-        "planUse": "Elegir este plan",
-        "planCurrent": "✓ Plan actual",
-        "planChanged": "Cambiaste al plan {plan} (simulado, sin pago)",
-        "needLogin": "Inicia sesión antes de elegir un plan",
-        "videoPlay": "Reproducir video"
+        "planUse": "Me interesa",
+        "planCurrent": "✓ Te interesa",
+        "planChanged": "Gracias por tu interés en {plan} 💛 Lo hemos anotado. Esta página muestra ahora una vista previa de sus ventajas (aún no disponible, sin pago)",
+        "needLogin": "Inicia sesión para que podamos anotar tu interés en este plan",
+        "videoPlay": "Reproducir video",
+        "dayShort": "Día {d}",
+        "unlockedInfo": "{n}/{total} videos desbloqueados · un video nuevo cada día",
+        "dayLabel": "Día {d}/{total}",
+        "roundLabel": "Ronda {r}",
+        "streak": "🔥 Racha de {n} días",
+        "streak0": "🔥 Empieza tu racha hoy",
+        "doneBtn": "✅ Hice la misión de hoy",
+        "doneAlready": "✓ ¡Hecho por hoy, buen trabajo!",
+        "doneThanks": "Guardado. Mañana te espera un video nuevo 🌱",
+        "badge": "🏅 ¡Increíble! {n} días seguidos",
+        "lockedMsg": "🔒 Este video se desbloquea en un día posterior",
+        "progressLabel": "Misiones hechas: {n}/{total} días en esta ronda",
+        "catNames": {
+            "breath": "🌬️ Respiración",
+            "mind": "🧘 Meditación",
+            "sound": "🌊 Sonidos naturales",
+            "music": "🎵 Música relajante",
+            "learn": "💡 Idea práctica",
+            "wave": "〰️ Ondas sonoras"
+        },
+        "missions": [
+            "Inhala 4 segundos y exhala 6 durante 2 minutos antes de empezar a trabajar o estudiar",
+            "Escribe 1 cosa que te estresa hoy y 1 parte de ella que puedes controlar",
+            "Escucha sonidos de agua 10 minutos con el móvil lejos de ti",
+            "Elige 1 consejo del video y pruébalo hoy",
+            "Haz el 5-4-3-2-1: 5 cosas que ves, 4 que oyes, 3 que tocas, 2 que hueles y 1 que saboreas",
+            "Apaga todas las pantallas 30 minutos antes de dormir",
+            "Estira cuello y hombros 3 minutos mientras suena la música",
+            "Pon 3 recordatorios para pausar y respirar hondo 3 veces",
+            "Cuando se acelere tu corazón, dite: “Mi cuerpo se está preparando para ayudarme”",
+            "Acuéstate a la misma hora que ayer",
+            "Camina a paso rápido 10 minutos",
+            "Ponle nombre a tu emoción: “Noto que estoy sintiendo…”",
+            "Haz 10 respiraciones abdominales al despertar",
+            "Haz una cosa con atención plena 10 minutos, como comer sin pantallas",
+            "Bebe un vaso de agua y toma un descanso de 5 minutos",
+            "Escribe tus pendientes y elige solo las 3 tareas más importantes",
+            "Antes de dormir, recorre tu cuerpo y relaja las zonas tensas",
+            "Haz 4 rondas de respiración 4-7-8 cuando sientas ansiedad",
+            "Pasa 10 minutos al sol o cerca de árboles",
+            "Concéntrate 25 minutos y descansa 5 (Pomodoro)",
+            "Dedica 20 minutos a algo que disfrutes, sin culpa",
+            "Cuando te critiques, háblate como le hablarías a un buen amigo",
+            "Evita café y té después de las 2 p. m.",
+            "Apoya los pies en el suelo, siéntate erguido y observa tu entorno 1 minuto",
+            "Ordena tu escritorio o mesita de noche 10 minutos",
+            "Envía un mensaje de agradecimiento o saludo a alguien importante",
+            "Escribe 3 cosas que hiciste bien esta semana",
+            "Respiración cuadrada (inhala 4, pausa 4, exhala 4, pausa 4) durante 3 minutos",
+            "Escribe el nombre de 2 personas a quienes pedir ayuda cuando el estrés pese (Tailandia: línea 1323)",
+            "Repasa los 30 días y elige los 3 métodos que mejor te funcionaron para seguir usándolos",
+            "Escucha el sonido de hoy con auriculares 10 minutos y nota si tus hombros se relajan",
+            "Cuando te sientas mal, nombra la emoción con precisión, como “decepción” en vez de “estrés”",
+            "Camina 15 minutos al aire libre sin auriculares",
+            "Fija una hora de dormir que te dé 7–9 horas de sueño esta noche",
+            "Desactiva las notificaciones de 1 app que no necesitas",
+            "Escribe una nota breve de agradecimiento a alguien que te ayudó",
+            "Escucha el sonido de hoy antes de dormir y exhala más largo de lo que inhalas",
+            "Cuando te enojes, cuenta despacio del 1 al 10 antes de responder",
+            "Bebe despacio un vaso de agua tibia sin hacer nada más",
+            "Divide una tarea grande en pasos pequeños y haz el primero",
+            "Escucha la música de hoy 10 minutos en un descanso",
+            "Mírate al espejo y di: “Hoy hice lo mejor que pude”",
+            "No uses el móvil los primeros 15 minutos tras despertar",
+            "Escribe tus preocupaciones y sepáralas en “controlo” y “no controlo”",
+            "Come con amigos o familia sin pantallas",
+            "Ayuda a alguien con algo pequeño hoy",
+            "Pon el sonido de hoy de fondo mientras trabajas 25 minutos",
+            "Estira todo el cuerpo 5 minutos al levantarte",
+            "Escribe una frase de ánimo para ti y pégala donde la veas",
+            "Descansa la vista cada 20 minutos mirando lejos 20 segundos (regla 20-20-20)",
+            "Antes de dormir, escucha el sonido de hoy 10 minutos en vez de usar redes",
+            "Escribe 5 líneas sobre un futuro tú al que todo le ha ido bien",
+            "Prepárate con atención una comida o bebida sencilla",
+            "Escribe 3 cosas buenas de hoy y por qué pasaron",
+            "Haz 20 minutos del ejercicio que te guste",
+            "Cuéntale cómo te sientes a una persona de confianza",
+            "Escucha el sonido de hoy y solo observa tu respiración 5 minutos",
+            "Haz una lista de 10 actividades que te alegran y haz una",
+            "Dedica 10 minutos a borrar archivos o fotos que no usas",
+            "Repasa los 60 días y escribe una carta a tu yo de dentro de un mes"
+        ],
+        "lightLabel": "✨ Luz {n}",
+        "taskCount": "{n}/{total}",
+        "taskSaved": "Guardado: {n}/3 tareas hechas",
+        "rewardReady": "🎁 ¡7 días completos, elige 1 premio!",
+        "resDoneBtn": "✓ Lo leí",
+        "resDoneAlready": "✓ Leído hoy",
+        "rewardProgress": "{n}/{total} días",
+        "rewardPick": "Elige 1 premio (normalmente ฿19)",
+        "rewardLeft": "Completa {n} días más para 1 premio gratis",
+        "rewardFree": "Gratis (normal ฿{p})",
+        "rewardOwned": "Ya lo tienes",
+        "rewardNone": "Aún nada: completa 7 días para el primero",
+        "rewardGot": "Conseguiste {item} 🎉",
+        "rewardNames": {
+            "bell": "Collar con cascabel",
+            "scarf": "Bufanda",
+            "mouse": "Ratón de juguete",
+            "ball": "Pelota",
+            "crown": "Corona de flores",
+            "glasses": "Gafas redondas",
+            "beanie": "Gorro de lana",
+            "mat": "Manta de pícnic"
+        },
+        "shopNames": {
+            "house": "Casita de madera",
+            "thai": "Traje tailandés mini",
+            "krathong": "Tema Loy Krathong"
+        },
+        "priceFull": "Normal ฿{p}",
+        "pricePremium": "Premium ฿{p}",
+        "priceCare": "Care+ ฿{p}",
+        "shopSoon": "Próximamente",
+        "payLeft": "El QR caduca en {t}",
+        "payExpired": "QR caducado: cierra y vuelve a comprar",
+        "payThanks": "Pedido #{id} guardado, pendiente de revisar el comprobante",
+        "orderPending": "Pendiente",
+        "orderPaid": "Entregado",
+        "buyBtn": "Comprar ฿{p}",
+        "cbiQ": [
+            "¿Con qué frecuencia te sientes cansado/a?",
+            "¿Con qué frecuencia te sientes físicamente agotado/a?",
+            "¿Con qué frecuencia te sientes emocionalmente agotado/a?",
+            "¿Con qué frecuencia piensas: “Ya no puedo más”?",
+            "¿Con qué frecuencia te sientes desgastado/a?",
+            "¿Con qué frecuencia te sientes débil y propenso/a a enfermarte?",
+            "¿Tu trabajo te resulta emocionalmente agotador?",
+            "¿Te sientes quemado/a por tu trabajo?",
+            "¿Tu trabajo te frustra?",
+            "¿Te sientes desgastado/a al final de la jornada laboral?",
+            "¿Te sientes agotado/a por la mañana al pensar en otro día de trabajo?",
+            "¿Sientes que cada hora de trabajo te resulta cansadora?",
+            "¿Tienes suficiente energía para tu familia y tus amigos en tu tiempo libre?"
+        ],
+        "cbiFreq": [
+            "Siempre",
+            "A menudo",
+            "A veces",
+            "Rara vez",
+            "Nunca / casi nunca"
+        ],
+        "cbiDeg": [
+            "En muy alto grado",
+            "En alto grado",
+            "Algo",
+            "En bajo grado",
+            "En muy bajo grado"
+        ],
+        "cbiBands": [
+            "Bajo",
+            "Moderado",
+            "Alto",
+            "Severo"
+        ],
+        "cbiPersonal": "Burnout personal",
+        "cbiWork": "Burnout relacionado con el trabajo",
+        "cbiPart": "Parte {n}/2 · {name}",
+        "cbiMeanP": [
+            "Bajo: tu cansancio general está en un nivel manejable. Sigue protegiendo tu descanso.",
+            "Moderado: el cansancio se está acumulando. Tu cuerpo y tu mente piden descanso y menos carga.",
+            "Alto: te sientes agotado/a con tanta frecuencia que afecta tu día a día. Planifica un descanso real y busca a alguien con quien hablar.",
+            "Severo: te sientes agotado/a casi todo el tiempo. No lo afrontes solo/a; habla con un profesional."
+        ],
+        "cbiMeanW": [
+            "Bajo: por ahora el trabajo no te está quitando demasiada energía.",
+            "Moderado: el trabajo te quita más energía de la que recuperas. Revisa abajo las causas relacionadas con el trabajo.",
+            "Alto: el trabajo te deja sin energía a menudo. Considera hablar de la carga con tu jefe o con RR. HH. y practica las habilidades de abajo.",
+            "Severo: el trabajo te agota casi todo el tiempo. Habla con un profesional y considera una baja o cambios en tu trabajo."
+        ],
+        "cbiLast": "Último test: {date} · personal {p} · trabajo {w}",
+        "cbiNever": "Aún no has hecho este test",
+        "detailBurnout": "Personal {p} · Trabajo {w}",
+        "resets": {
+            "sigh": {
+                "t": "Suspiro cíclico (Cyclic sighing)",
+                "d": "Alivia la tensión rápido en 1 minuto, desde tu escritorio",
+                "steps": [
+                    "Inhala por la nariz hasta llenar casi del todo los pulmones.",
+                    "Toma un segundo sorbo de aire corto por la nariz para llenarlos por completo.",
+                    "Exhala por la boca lenta y largamente, hasta el final (más largo que la inhalación).",
+                    "Repite siguiendo el ritmo de la pantalla durante 1 minuto. Si te mareas, vuelve a respirar normal."
+                ]
+            },
+            "ground": {
+                "t": "Anclaje 5-4-3-2-1",
+                "d": "Cuando los pensamientos no paran, o antes de una reunión importante",
+                "steps": [
+                    "Nota 5 cosas que puedes ver a tu alrededor.",
+                    "Toca 4 cosas, p. ej. la mesa, la silla, tu ropa.",
+                    "Escucha 3 sonidos, cercanos y lejanos.",
+                    "Nota 2 olores.",
+                    "Nota 1 sabor, o toma un sorbo de agua despacio."
+                ]
+            },
+            "stretch": {
+                "t": "Estiramiento en el escritorio: cuello, hombros, espalda",
+                "d": "Alivia la rigidez por estar mucho tiempo sentado/a (síndrome de oficina). Con suavidad; para si duele",
+                "steps": [
+                    "Siéntate erguido/a e inclina la cabeza despacio a la derecha, mantén 15 segundos y cambia a la izquierda.",
+                    "Lleva la barbilla suavemente hacia el pecho y mantén 15 segundos.",
+                    "Sube los hombros hacia las orejas y gíralos hacia atrás despacio 10 veces.",
+                    "Entrelaza las manos, estira los brazos al frente y redondea la espalda alta, mantén 15 segundos.",
+                    "Siéntate erguido/a y gira el tronco despacio a la derecha, mantén 15 segundos y cambia a la izquierda.",
+                    "Levántate y camina o estírate suavemente hasta que termine el tiempo."
+                ]
+            },
+            "eye": {
+                "t": "Descanso visual 20-20-20",
+                "d": "Pantallas todo el día: cada 20 minutos, mira a 20 pies (6 m) durante 20 segundos",
+                "steps": [
+                    "Aparta la vista de la pantalla y mira algo a 6 metros o más, como por la ventana.",
+                    "Parpadea despacio 10 veces.",
+                    "Cierra los ojos, cúbrelos suavemente con las palmas tibias y respira despacio.",
+                    "Pon un recordatorio para descansar así cada 20 minutos."
+                ]
+            },
+            "dump": {
+                "t": "Vaciar la mente (brain dump)",
+                "d": "Escribe durante 2 minutos todo lo que tienes en la cabeza para despejarte",
+                "steps": [
+                    "Escribe todo lo pendiente: trabajo, casa, dinero. No hace falta ordenarlo.",
+                    "No resuelvas nada todavía, solo sácalo todo.",
+                    "Al terminar el tiempo, elige la única cosa que debes hacer hoy."
+                ]
+            },
+            "step": {
+                "t": "Solo el siguiente paso",
+                "d": "¿Un problema tan grande que no sabes por dónde empezar? Escríbelo y elige el paso más pequeño",
+                "steps": [
+                    "Escribe en una frase el problema que más te pesa ahora.",
+                    "Piensa en el paso más pequeño que puedes dar en 10 minutos, p. ej. escribir a una persona, abrir el archivo, anotar las cifras.",
+                    "Escribe cuándo lo harás y hazlo enseguida si puedes."
+                ]
+            },
+            "pmr": {
+                "t": "Relajación muscular progresiva (PMR)",
+                "d": "Tensa 5 segundos y relaja 10, de los pies a la cara. Salta cualquier zona que duela.",
+                "steps": [
+                    "Pies y dedos: encoge los dedos hacia abajo y suelta",
+                    "Pantorrillas: lleva las puntas de los pies hacia ti y suelta",
+                    "Muslos: aprieta los muslos y suelta",
+                    "Glúteos y caderas: aprieta y suelta",
+                    "Abdomen: mete el abdomen suavemente y suelta",
+                    "Manos: cierra los puños con fuerza y ábrelos",
+                    "Brazos: dobla los brazos y tensa la parte superior, luego suelta",
+                    "Hombros: súbelos hacia las orejas y déjalos caer",
+                    "Cuello: lleva la barbilla al pecho suavemente y vuelve",
+                    "Mandíbula: aprieta los dientes suavemente y deja la boca un poco abierta",
+                    "Ojos y frente: cierra los ojos con fuerza y arruga la frente, luego relaja",
+                    "Todo el cuerpo: respira despacio y nota la sensación de ligereza"
+                ]
+            },
+            "walk": {
+                "t": "Sal a caminar 5–10 min",
+                "d": "Levántate del escritorio y camina despacio alrededor del edificio o por el pasillo. 5 minutos cuentan como la pausa de hoy; sigue si te sienta bien.",
+                "steps": [
+                    "Ponte de pie, guarda el móvil en el bolsillo y empieza a caminar despacio",
+                    "Mira a tu alrededor y busca 3 cosas que veas, como un árbol, el cielo o el color de un edificio",
+                    "Baja los hombros y balancea los brazos suavemente al caminar",
+                    "Inhala durante 3–4 pasos y exhala durante 4–6",
+                    "Antes de volver, nota cómo se sienten tu cuerpo y tu mente comparado con el inicio"
+                ]
+            },
+            "breath48": {
+                "t": "Respiración 4-8",
+                "d": "Inhala 4 segundos y exhala 8. Ayuda al cuerpo a calmarse cuando hay palpitaciones o malestar de estómago.",
+                "steps": [
+                    "Siéntate o ponte de pie cómodamente y apoya una mano en el abdomen",
+                    "Inhala despacio por la nariz durante 4 segundos, dejando que el abdomen se eleve",
+                    "Exhala despacio por la boca durante 8 segundos, como si soplaras una vela suavemente",
+                    "Sigue el ritmo de la pantalla hasta el final. Si te mareas, vuelve a respirar con normalidad"
+                ]
+            }
+        },
+        "resetPhases": [
+            "Inhala por la nariz",
+            "Un poco más de aire",
+            "Exhala largo por la boca"
+        ],
+        "resetMin": "{n} min",
+        "resetStart": "▶ Iniciar",
+        "resetStop": "■ Detener",
+        "resetStepOf": "Paso {n}/{total}: {s}",
+        "resetDoneMsg": "¡Listo, bien hecho! 💛 Cuenta como la pausa de hoy.",
+        "resetStopped": "Detenido",
+        "resetCount": "Pausas cortas hoy: {n}",
+        "noteLabels": {
+            "dump": "Escribe todo lo que te da vueltas en la cabeza (sin ordenar)",
+            "problem": "El problema que más me pesa ahora es…",
+            "action": "El paso más pequeño que puedo dar en 10 minutos es…"
+        },
+        "notePh": {
+            "dump": "p. ej. informe para el viernes, responder al cliente, pagar la tarjeta…",
+            "problem": "p. ej. el proyecto va atrasado",
+            "action": "p. ej. escribir a Ana para pedir las cifras más recientes"
+        },
+        "noteSave": "💾 Guardar en mi registro privado",
+        "noteClear": "Borrar texto",
+        "noteSaved": "Guardado. Puedes verlo en “Mi registro” (solo en este dispositivo).",
+        "noteNeedLogin": "Inicia sesión para guardar (tu texto sigue en esta página).",
+        "noteEmpty": "Todavía no hay nada que guardar.",
+        "causeNames": {
+            "work": "Carga de trabajo / plazos",
+            "people": "Jefe / compañeros",
+            "money": "Dinero / deudas",
+            "job": "Estabilidad laboral / futuro",
+            "family": "Familia / relaciones",
+            "sleep": "Sueño / salud",
+            "commute": "Traslados",
+            "study": "Estudios / exámenes"
+        },
+        "causeMax": "Puedes elegir hasta 3. Toca uno de los elegidos para quitarlo primero.",
+        "skills": {
+            "prio": {
+                "t": "Matriz de prioridades de Eisenhower",
+                "s": [
+                    "Haz una lista de todas tus tareas pendientes.",
+                    "Divídelas en 4 casillas: urgente + importante (hazlo ya), importante no urgente (agéndalo), urgente no importante (delégalo o hazlo breve), ni una cosa ni otra (descártalo).",
+                    "Elige solo 1–3 tareas de “urgente + importante” para hoy."
+                ]
+            },
+            "timebox": {
+                "t": "Time-boxing: reserva tiempo para una tarea",
+                "s": [
+                    "Elige una tarea y dale un horario claro, p. ej. 10:00–10:45.",
+                    "Apaga las notificaciones en ese rato y haz solo esa tarea.",
+                    "Cuando acabe el tiempo, para, descansa 5 minutos y decide si necesitas reservar más."
+                ]
+            },
+            "sayno": {
+                "t": "Decir que no con cortesía (un guion)",
+                "s": [
+                    "Agradece y reconoce: “Gracias por pensar en mí.”",
+                    "Explica tu límite con claridad: “Ahora tengo A y B para antes del viernes.”",
+                    "Ofrece una opción: “Si es necesario, ¿podemos pasarlo a la próxima semana o me ayudas a decidir qué es más importante?”"
+                ]
+            },
+            "desc": {
+                "t": "Habla con tu jefe o compañeros con el guion DESC",
+                "s": [
+                    "D (Describir): cuenta los hechos sin juzgar.",
+                    "E (Expresar): di cómo te sientes o el impacto, hablando desde el “yo”.",
+                    "S (Especificar): pide claramente una sola cosa.",
+                    "C (Consecuencia): di el buen resultado si eso ocurre."
+                ]
+            },
+            "clarify": {
+                "t": "Pide expectativas claras",
+                "s": [
+                    "Al recibir una tarea nueva, pregunta brevemente: “¿Para cuándo es y es más importante que mis otras tareas?”",
+                    "Confírmalo por escrito: “Entiendo que … es para el …, ¿correcto?”",
+                    "Guarda el mensaje y úsalo cuando se acumulen las tareas."
+                ]
+            },
+            "budget": {
+                "t": "Presupuesto inicial 50/30/20",
+                "s": [
+                    "50 % necesidades: alquiler, comida, transporte, pagos mínimos de deudas.",
+                    "30 % gustos: comer fuera, salidas, compras.",
+                    "20 % ahorro de emergencia o pagos extra de deudas. Ajusta las proporciones a tu vida real."
+                ]
+            },
+            "debt": {
+                "t": "Ayuda gratuita con las deudas",
+                "s": [
+                    "Haz una lista de cada deuda: saldo, tasa de interés, cuota mensual.",
+                    "Si no puedes pagar, contacta al acreedor antes de atrasarte y pide reestructurar la deuda.",
+                    "Pide asesoría gratuita en la Clínica de Deudas o en la línea del Banco de Tailandia 1213. Cuidado con estafadores que piden transferir dinero primero."
+                ]
+            },
+            "circle": {
+                "t": "Círculo de control",
+                "s": [
+                    "Escribe todas tus preocupaciones sobre el trabajo y el futuro.",
+                    "Sepáralas en dos grupos: lo que puedo controlar (habilidades, resultados, contactos, fondo de emergencia) y lo que no (la economía, las decisiones de la empresa).",
+                    "Elige una cosa que puedas controlar y haz una acción esta semana."
+                ]
+            },
+            "skillplan": {
+                "t": "Plan de habilidades de 90 días",
+                "s": [
+                    "Elige una habilidad que ayude en tu trabajo actual o en el siguiente.",
+                    "Reserva el tiempo: 2 veces por semana, 30 minutos cada vez (p. ej. martes y jueves a las 20:00).",
+                    "Cada mes, crea un pequeño trabajo que muestre esa habilidad y actualiza tu perfil o CV."
+                ]
+            },
+            "istate": {
+                "t": "Habla con mensajes en primera persona",
+                "s": [
+                    "Cambia “Nunca me ayudas” por “Me siento agotado/a cuando…”.",
+                    "Fórmula: Me siento… cuando… porque… Me gustaría…",
+                    "Elige un momento en que ambos estén tranquilos y escucha a la otra persona hasta el final."
+                ]
+            },
+            "boundary": {
+                "t": "Pon un límite a tu tiempo personal",
+                "s": [
+                    "Elige un límite, p. ej. no responder chats de trabajo después de las 20:00, o el domingo para descansar.",
+                    "Avísalo con amabilidad: “Después de las 20:00 solo responderé lo urgente.”",
+                    "Cúmplelo de forma constante. Sentir algo de culpa al principio es normal."
+                ]
+            },
+            "wake": {
+                "t": "Despertarte a la misma hora cada día",
+                "s": [
+                    "Elige una hora de despertar que puedas mantener todos los días, incluso el fin de semana (con menos de 1 hora de diferencia).",
+                    "Recibe luz del día o luz brillante en los 30 minutos tras despertar.",
+                    "Acuéstate cuando tengas sueño de verdad, no solo porque es la hora."
+                ]
+            },
+            "rule20": {
+                "t": "La regla de los 20 minutos (no fuerces el sueño)",
+                "s": [
+                    "Si sientes que llevas más de unos 20 minutos despierto/a en la cama, levántate.",
+                    "Haz algo tranquilo con luz tenue, como leer un libro en papel (evita las pantallas).",
+                    "Vuelve a la cama cuando tengas sueño y usa la cama solo para dormir."
+                ]
+            },
+            "caffeine": {
+                "t": "Hora límite para la cafeína",
+                "s": [
+                    "Deja el café, el té, el té verde y las bebidas energéticas al menos 8 horas antes de dormir (dormir a las 23:00 = última taza antes de las 15:00).",
+                    "Cambia la taza de la tarde por agua, infusión sin cafeína o descafeinado.",
+                    "Observa tu sueño durante una semana: ¿te duermes con más facilidad?"
+                ]
+            },
+            "audio": {
+                "t": "Haz de tu traslado tu propio tiempo",
+                "s": [
+                    "Prepara un pódcast, un audiolibro o una lista relajante antes de salir de casa.",
+                    "A la ida escucha algo que quieras aprender; a la vuelta, algo ligero, para separar el trabajo de la casa.",
+                    "En los atascos, cambia revisar chats de trabajo por lo que elegiste escuchar."
+                ]
+            },
+            "ride": {
+                "t": "Respirar en el camino",
+                "s": [
+                    "Mantén los ojos abiertos y quédate de pie o sentado/a con estabilidad (si conduces, solo cuando estés detenido/a).",
+                    "Inhala por la nariz 4 segundos y exhala despacio 6. Repite 6–10 veces.",
+                    "Mientras respiras, nota tus pies en el suelo y los sonidos a tu alrededor."
+                ]
+            },
+            "pomodoro": {
+                "t": "Pomodoro 25+5",
+                "s": [
+                    "Elige una tarea o lección y pon un temporizador de 25 minutos.",
+                    "Haz solo eso, con el teléfono lejos.",
+                    "Descansa 5 minutos; tras 4 rondas, descansa 15–30 minutos."
+                ]
+            },
+            "retrieval": {
+                "t": "Práctica de recuperación + repaso espaciado",
+                "s": [
+                    "Cierra el libro y escribe o di lo que recuerdas, o haz exámenes anteriores.",
+                    "Revisa tus respuestas y anota lo que fallaste.",
+                    "Repasa con intervalos: al día siguiente, a los 3 días y a la semana."
+                ]
+            },
+            "stresseat": {
+                "t": "Comer por estrés: haz una pausa antes de comer",
+                "s": [
+                    "Antes de tomar comida, haz una respiración y puntúa tu hambre del 1 al 10 (1 = mucha hambre, 10 = muy lleno/a)",
+                    "Si no tienes hambre de verdad, haz primero una pausa de 5 minutos: bebe agua, respira 4-8 o camina un poco, y luego decide",
+                    "Mantén las comidas principales a horas regulares y no te las saltes; tener mucha hambre facilita comer por estrés",
+                    "Cambia un tentempié que sueles tomar con estrés por otra cosa que te guste y sacie más, como fruta, yogur o frutos secos",
+                    "Esto no es una dieta y no hay nada que contar. Si comer por estrés te preocupa, puedes hablar con un médico o nutricionista"
+                ]
+            }
+        },
+        "skillTry": "Probar hoy",
+        "skillAdded": "✓ Añadido a hoy",
+        "skillAddedMsg": "Añadido a “Lo que elegí probar hoy” en la misión de hoy.",
+        "descLabels": {
+            "d": "D: qué pasó (hechos)",
+            "e": "E: cómo me siento / el impacto",
+            "s": "S: lo que pido",
+            "c": "C: el buen resultado si ocurre"
+        },
+        "descPh": {
+            "d": "p. ej. llegaron tareas urgentes después de las 18:00 tres veces esta semana",
+            "e": "p. ej. preocupado/a por no poder hacer bien mi trabajo",
+            "s": "p. ej. enviar las tareas urgentes antes de las 16:00",
+            "c": "p. ej. podré entregar a tiempo y con mejor calidad"
+        },
+        "descOut": "Cuando {d}, me siento {e}. ¿Podríamos {s}? Así, {c}.",
+        "budgetLabel": "Ingreso mensual después de impuestos (THB)",
+        "budgetOut": "Necesidades {a} · Gustos {b} · Ahorro / pago extra de deudas {c}",
+        "debtClinic": "Clínica de Deudas (BOT + SAM), asesoría gratis ↗",
+        "debtHotline": "📞 Línea del Banco de Tailandia 1213",
+        "tipNone": "Elige lo que te estresa en “Ataca la causa” para recibir consejos hechos para ti.",
+        "tipFmt": "{cause}: {skill} · Empieza por: {step}",
+        "selfDoneBtn": "Marcar hecho",
+        "selfDone": "✓ Hecho",
+        "checkQ": {
+            "sleep": "Dificultad para dormir o sueño poco profundo",
+            "head": "Dolor de cabeza o tensión en cuello y hombros",
+            "gut": "Malestar de estómago, hinchazón o reflujo ácido",
+            "heart": "Palpitaciones o corazón acelerado en reposo",
+            "eat": "Comer más o menos de lo habitual por estrés",
+            "social": "No querer ver ni hablar con nadie",
+            "smoke": "Fumar cigarrillos o cigarrillos electrónicos más de lo habitual para aliviar el estrés",
+            "alcohol": "Beber alcohol más de lo habitual para aliviar el estrés",
+            "other": "Usar otras sustancias más de lo habitual para aliviar el estrés"
+        },
+        "checkShort": {
+            "sleep": "Sueño",
+            "head": "Cabeza / cuello y hombros",
+            "gut": "Estómago",
+            "heart": "Palpitaciones",
+            "eat": "Alimentación",
+            "social": "Ver a otras personas",
+            "smoke": "Cigarrillos / electrónicos",
+            "alcohol": "Alcohol",
+            "other": "Otras sustancias"
+        },
+        "checkScale": [
+            "Nada",
+            "1–2 días",
+            "3–4 días",
+            "Casi todos los días"
+        ],
+        "checkThis": "Esta vez ({date})",
+        "checkPrev": "La vez anterior ({date})",
+        "checkRowFmt": "Esta vez {a} · anterior {b}",
+        "checkRowFirst": "Esta vez {a}",
+        "checkFirst": "Este es tu primer chequeo. Vuelve la próxima semana para ver los cambios.",
+        "checkSumNone": "Esta semana ningún área se presentó 3 días o más. Sigue cuidándote así.",
+        "checkSumSome": "{n} área(s) se presentaron 3 días o más, lo que puede estar relacionado con el estrés. Prueba el autocuidado de abajo.",
+        "checkAdvice": {
+            "sleep": "Dormir mal de forma continua puede estar relacionado con el estrés. Prueba técnicas de la TCC-I (terapia cognitivo-conductual para el insomnio), el primer enfoque recomendado para el insomnio.",
+            "head": "El dolor de cabeza y la tensión en cuello y hombros pueden estar relacionados con el estrés y con estar mucho tiempo sentado. Prueba estiramientos en el escritorio y la relajación muscular progresiva.",
+            "gut": "El malestar de estómago puede estar relacionado con el estrés. Prueba la respiración lenta 4-8 antes de comer y mantén horarios regulares de comida.",
+            "heart": "Las palpitaciones en reposo pueden estar relacionadas con el estrés. Prueba 2 minutos de respiración lenta 4-8. Si pasa a menudo o continúa, consulta a un médico, porque puede haber otras causas físicas.",
+            "eat": "Comer más o menos de lo habitual es una forma en que el cuerpo afronta el estrés. No es tu culpa. Prueba la tarjeta «Comer por estrés».",
+            "social": "Querer estar a solas a veces es normal, pero si dura varios días, hablar con una persona de confianza puede aligerar la carga. Prueba enviarle un mensaje corto.",
+            "smoke": "Con estrés, mucha gente fuma más para relajarse. Es comprensible. Si quieres reducir o dejarlo, hay especialistas que te ayudan a planificarlo gratis y sin juzgarte.",
+            "alcohol": "Con estrés, mucha gente bebe más para desconectar. Es comprensible. Si quieres beber menos, hay una línea gratuita y confidencial.",
+            "other": "Si últimamente usas más para sobrellevar el estrés, no estás solo/a. Hay una línea gratuita, confidencial y sin juicios."
+        },
+        "actSkill": "📘 Abrir tarjeta: {name}",
+        "actTalk": "💬 Habla con alguien de confianza →",
+        "actTel": "📞 Llama al {n} {name} (gratis)",
+        "telNames": {
+            "1600": "Línea nacional para dejar de fumar",
+            "1413": "Línea para dejar el alcohol",
+            "1165": "Línea de tratamiento de drogas"
+        },
+        "checkLast": "Último chequeo {date}",
+        "checkNever": "Aún no lo has hecho. Se recomienda una vez por semana.",
+        "detailCheck": "{n} área(s) en 3+ días",
+        "profSaved": "Guardado. Las preguntas se ajustarán a esto.",
+        "docTitle": "🩺 Considera hablar con un médico o psicólogo",
+        "docIntro": "Según tus respuestas guardadas, algunas cosas continúan o son bastante intensas. Un profesional puede ayudarte a encontrar la causa y el cuidado adecuado. No hace falta esperar a que empeore.",
+        "docWhy": {
+            "sleep": "Dormir mal 3 o más días por semana, dos semanas seguidas",
+            "stress": "Evaluación de estrés en nivel alto dos veces seguidas (con 7 días o más de diferencia)",
+            "burnout": "Agotamiento alto o grave dos veces seguidas",
+            "dep": "Puntuación 9Q de 7 o más",
+            "smoke": "Fumar más de lo habitual para aliviar el estrés 3 o más días por semana, dos semanas seguidas",
+            "alcohol": "Beber más de lo habitual para aliviar el estrés 3 o más días por semana, dos semanas seguidas",
+            "other": "Usar otras sustancias más de lo habitual para aliviar el estrés 3 o más días por semana, dos semanas seguidas"
+        },
+        "docFreeHead": "Empieza por las opciones gratuitas",
+        "docFree": [
+            "🏥 Un hospital público cerca de ti (o tu centro de salud asignado) con la Cobertura Universal (tarjeta dorada), la Seguridad Social o los beneficios de funcionario. Dile al personal: «Quiero consultar sobre estrés, sueño o estado de ánimo».",
+            "📞 Línea de salud mental 1323, gratis, 24 horas"
+        ],
+        "docPaidHead": "Opciones de pago",
+        "docPaid": [
+            "Clínicas u hospitales privados con psiquiatras o psicólogos",
+            "Plataformas de consulta en línea con psicólogos o psiquiatras"
+        ],
+        "docNote": "Consejo general basado en las respuestas guardadas en este dispositivo. No es un diagnóstico.",
+        "ovNames": {
+            "stress": "Evaluación de estrés",
+            "burnout": "Chequeo de agotamiento",
+            "check": "Chequeo de cuerpo y hábitos",
+            "dep": "Detección de depresión"
+        },
+        "ovLast": "Último {date}",
+        "ovNever": "Aún no realizado",
+        "ovGo": "Ir →",
+        "ovDocOn": "🩺 Te sugerimos hablar con un médico o psicólogo · toca para ver opciones gratuitas",
+        "ovDocOff": "✓ Por ahora tus respuestas guardadas no muestran señales para ir al médico",
+        "ovNudgeCheck": "🩺 Es hora del chequeo semanal de cuerpo y hábitos. Toma 1 minuto.",
+        "ovNudgeDep": "💛 Últimamente has registrado estrés varios días. ¿Quieres probar el cribado de depresión de 2 preguntas? Toma menos de un minuto y te ayuda a cuidarte mejor.",
+        "ovStart": "Empezar →",
+        "ovLater": "Más tarde",
+        "talkTemplates": [
+            "Últimamente estoy algo cansado/a. ¿Tienes un rato para hablar?",
+            "Gracias por estar ahí. ¿Te apetece salir a caminar juntos?",
+            "Hoy ha sido un día pesado. ¿Puedo desahogarme un momento contigo?"
+        ],
+        "talkLabel": "Mensaje {n}",
+        "talkSend": "Enviar por LINE ↗",
+        "dep2Q": [
+            "En las últimas 2 semanas, incluido hoy, ¿te has sentido decaído/a, triste o sin esperanza?",
+            "En las últimas 2 semanas, incluido hoy, ¿te has sentido aburrido/a o sin disfrutar nada de lo que haces?"
+        ],
+        "dep9Q": [
+            "Poco interés en hacer cualquier cosa",
+            "Sentirse mal, deprimido/a o desanimado/a",
+            "Dificultad para dormir, despertarse a menudo o dormir demasiado",
+            "Cansarse fácilmente o tener poca energía",
+            "Falta de apetito o comer en exceso",
+            "Sentirse mal consigo mismo/a, pensar que ha fracasado o que ha decepcionado a su familia",
+            "Dificultad para concentrarse, por ejemplo al ver la televisión, escuchar la radio o en tareas que requieren atención",
+            "Hablar o moverse tan despacio que otros lo notan, o estar tan inquieto/a que no puede quedarse quieto/a como antes",
+            "Pensamientos de hacerse daño o de que estaría mejor muerto/a"
+        ],
+        "depYesNo": [
+            "Sí",
+            "No"
+        ],
+        "dep9Scale": [
+            "Nunca",
+            "Algunos días (1–7 días)",
+            "A menudo (más de 7 días)",
+            "Todos los días"
+        ],
+        "dep2Label": "2Q · Cribado de depresión de 2 preguntas",
+        "dep9Label": "9Q · En las últimas 2 semanas, incluido hoy, ¿con qué frecuencia has tenido estos síntomas?",
+        "depBandNames": [
+            "Ninguno o muy leve",
+            "Leve",
+            "Moderado",
+            "Grave"
+        ],
+        "depMeaning": [
+            "Sin síntomas de depresión o síntomas muy leves. Sigue cuidándote y vuelve si cambian tus sentimientos.",
+            "Síntomas leves de depresión. Te sugerimos consultar a un médico para una evaluación adicional. También puedes llamar a la línea de salud mental 1323, gratis, 24 horas.",
+            "Síntomas moderados de depresión. Te sugerimos ver a un médico para evaluación y tratamiento. Llama al 1323, gratis, 24 horas.",
+            "Síntomas graves de depresión. Consulta a un médico pronto. No tienes que afrontarlo solo/a. Llama al 1323, gratis, 24 horas."
+        ],
+        "depScoreName": "Puntuación 9Q",
+        "depCrisisLow": "Tu puntuación total puede ser baja, pero los pensamientos de muerte o de hacerte daño siempre importan. No tienes que afrontarlo solo: llama al 1323 (gratis, 24 horas) o cuéntaselo a alguien de confianza, y consulta a un médico.",
+        "depResNone": "2Q: sin riesgo",
+        "depResScore": "9Q {score} puntos ({band})",
+        "depLast": "Última vez {date} · {result}",
+        "depNever": "Aún no realizado",
+        "pmrPhases": [
+            "Tensa y mantén (5 s)",
+            "Suelta (10 s)"
+        ],
+        "b48Phases": [
+            "Inhala (4)",
+            "Exhala despacio (8)"
+        ]
     }
 };
