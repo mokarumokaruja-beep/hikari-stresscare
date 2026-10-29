@@ -126,29 +126,6 @@ h1, h2, h3 {
     font-size: 28px;
 }
 
-.nav-links {
-    display: flex;
-    gap: 24px;
-}
-
-.nav-links a {
-    color: var(--text);
-    text-decoration: none;
-}
-
-.nav-links a:hover {
-    color: var(--primary);
-}
-
-.menu-button {
-    display: none;
-    border: none;
-    background: none;
-    color: var(--text);
-    font-size: 26px;
-    cursor: pointer;
-}
-
 /* ===== Hero ===== */
 .hero {
     display: flex;
@@ -760,31 +737,6 @@ footer p {
 
 /* ===== Responsive: มือถือ ===== */
 @media (max-width: 700px) {
-    .menu-button {
-        display: block;
-    }
-
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        gap: 0;
-        background-color: white;
-        box-shadow: 0 8px 16px rgba(52, 72, 140, 0.12);
-    }
-
-    .nav-links.open {
-        display: flex;
-    }
-
-    .nav-links a {
-        padding: 14px 5%;
-        border-top: 1px solid #eef0f8;
-    }
-
     .hero {
         flex-direction: column;
         margin: 16px 16px 0;
@@ -848,19 +800,6 @@ footer p {
         grid-template-columns: 90px 1fr 44px;
         font-size: 14px;
     }
-}
-
-/* ===== เพิ่มเติม: เมนูปุ่มขอความช่วยเหลือ ===== */
-.nav-links {
-    gap: 18px;
-    font-size: 15px;
-}
-
-.nav-links .nav-help {
-    padding: 4px 12px;
-    color: var(--pink);
-    border: 2px solid var(--pink);
-    border-radius: 999px;
 }
 
 /* ===== การ์ดดูแลตัวเองแบบไอคอน ===== */
@@ -1508,41 +1447,6 @@ a.feature:hover {
 }
 
 /* ===== Responsive สำหรับส่วนใหม่ ===== */
-/* v17: เมนูมี 10 ลิงก์ (เพิ่ม "เช็กภาวะหมดไฟ") จึงเปลี่ยนเป็นปุ่ม ☰ ตั้งแต่ 1360px ลงมา (เดิม 1150px) ไม่ให้ลิงก์ตัดเป็น 2 บรรทัด */
-@media (max-width: 1360px) {
-    .menu-button {
-        display: block;
-        order: 3;             /* ย้ายปุ่ม ☰ ไปไว้ขวาสุด */
-    }
-
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        gap: 0;
-        background-color: white;
-        box-shadow: 0 8px 16px rgba(52, 72, 140, 0.12);
-    }
-
-    .nav-links.open {
-        display: flex;
-    }
-
-    .nav-links a {
-        padding: 14px 5%;
-        border-top: 1px solid #eef0f8;
-    }
-
-    .nav-links .nav-help {
-        border: none;
-        border-top: 1px solid #eef0f8;
-        border-radius: 0;
-    }
-}
-
 @media (max-width: 960px) {
     .research-grid,
     .plan-grid,
@@ -2222,13 +2126,6 @@ footer .tel-link { color: #fff; }
 .plan-card h3 small { font-size: 14px; font-weight: 500; color: var(--muted); }
 .plan-desc { margin: 4px 0 12px; font-size: 15px; color: #3a4570; }
 
-/* จอกว้างกว่า 1360px: เมนูชิดขึ้นเล็กน้อยให้พอดี 1 บรรทัด */
-@media (min-width: 1361px) and (max-width: 1640px) {
-    /* v18: 11 ลิงก์ (เพิ่ม "เช็กร่างกาย") ชิดขึ้นอีกนิดให้พอดี 1 บรรทัดทุกภาษา */
-    .nav-links { gap: 11px; font-size: 13.5px; }
-    .nav-links a { white-space: nowrap; }
-    .topbar { gap: 12px; }
-}
 
 @media (max-width: 700px) {
     .burnout-card { padding: 20px 16px; }
@@ -2350,3 +2247,127 @@ footer .tel-link { color: #fff; }
     .reset-orb { transition: none !important; }
 }
 #footerEmail, #privacyEmail { overflow-wrap: anywhere; }
+
+/* ===== v19: โหมดหน้า (แสดงทีละหน้า) + แถบแท็บเมนูที่เห็นตลอด ===== */
+/* แต่ละ section มี data-page บอกว่าอยู่หน้าไหน script.js ส่วนที่ 4 ใส่ class page-off ให้หน้าที่ไม่ได้เปิด */
+[data-page].page-off { display: none !important; }
+main { min-height: calc(100vh - 220px); }
+html { scroll-padding-top: 124px; }
+.section { scroll-margin-top: 0; }
+[tabindex="-1"]:focus { outline: none; }
+
+/* แถวบน: โลโก้ + ภาษา + เข้าสู่ระบบ / แถวล่าง: แท็บเมนู (เลื่อนซ้าย–ขวาได้) */
+.topbar {
+    --gut: 5vw;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding: 10px var(--gut) 0;
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: saturate(1.4) blur(6px);
+}
+.tabbar {
+    order: 10;
+    flex: 0 0 auto;
+    width: calc(100% + 2 * var(--gut));
+    margin: 0 calc(-1 * var(--gut));
+    padding: 4px var(--gut) 6px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--gut);
+    scrollbar-width: thin;
+    scrollbar-color: #cfd6ee transparent;
+    border-top: 1px solid #eef0f8;
+    -webkit-overflow-scrolling: touch;
+}
+.tabbar::-webkit-scrollbar { height: 4px; }
+.tabbar::-webkit-scrollbar-thumb { background: #cfd6ee; border-radius: 4px; }
+.tabbar a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    white-space: nowrap;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 999px;
+    scroll-snap-align: start;
+    transition: background-color 0.15s, color 0.15s;
+}
+.tabbar a:hover { background-color: #f0f3fc; color: var(--primary-text); }
+.tabbar a:focus-visible { outline: 3px solid var(--primary); outline-offset: -3px; }
+.tabbar a[aria-current="page"] {
+    color: #fff;
+    background-color: var(--primary);
+    font-weight: 600;
+}
+.tabbar .nav-help { color: #c2335a; }
+.tabbar .nav-help[aria-current="page"] { color: #fff; background-color: #d23c64; }
+.tabbar .nav-game {
+    margin-inline-start: 6px;
+    color: #5b3fb8;
+    background: linear-gradient(135deg, #f3edff, #ffeef4);
+    border: 2px solid #d9cdfb;
+}
+.tabbar .nav-game::before { content: "🐾"; margin-inline-end: 6px; }
+.tabbar .nav-game:hover { color: #4a2fa3; background: linear-gradient(135deg, #ebe2ff, #ffe4ee); }
+
+/* หน้าแรก: การ์ดทางลัดไปแต่ละหน้า */
+.hub { grid-template-columns: repeat(4, 1fr); margin-top: 28px; }
+.hub-title { grid-column: 1 / -1; margin: 0 0 2px; font-size: 22px; }
+.hub .feature { min-height: 96px; }
+.hub .feature-help h3 { color: #c2335a; }
+.orange { color: #c86a1f; background-color: #ffeedd; }
+@media (max-width: 960px) {
+    .hub { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+    .topbar { --gut: 12px; padding-top: 8px; }
+    html { scroll-padding-top: 112px; }
+    .hub { grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 16px; }
+    .hub .feature { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px; min-height: 0; }
+    .hub .icon-circle { width: 44px; height: 44px; font-size: 21px; }
+    .hub .feature h3 { font-size: 16px; }
+    .hub .feature p { font-size: 13px; }
+    .hub-title { font-size: 19px; }
+    .tabbar a { padding: 0 12px; font-size: 14.5px; }
+}
+@media (max-width: 340px) {
+    .hub { grid-template-columns: 1fr; }
+}
+/* บอกว่ายังมีเมนูให้เลื่อนดู: จางที่ขอบด้านที่ยังเลื่อนได้ (script.js ใส่ class more-start / more-end) */
+.tabbar.more-end { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
+.tabbar.more-start { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); }
+.tabbar.more-start.more-end { -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent); }
+/* จอกว้าง: ชิดขึ้นให้เมนูภาษาไทยพอดีแถวเดียวตั้งแต่ 1280px (ภาษาที่คำยาวกว่าจะเลื่อนซ้าย–ขวาได้) */
+@media (min-width: 1000px) {
+    .tabbar { gap: 0; padding-inline: 24px; scroll-padding-inline: 24px; }
+    .tabbar a { padding: 0 9px; font-size: 14.5px; }
+    .tabbar .nav-game { margin-inline-start: 4px; }
+}
+/* v19: การ์ด "ภารกิจวันนี้" (แสดงวันที่) + แถบเตือนในหน้าแรก */
+.hub-day { display: inline-block; margin-inline-start: 4px; padding: 1px 8px; font-size: 12px; font-weight: 600; color: #1f6b44; background-color: #e3f5ea; border-radius: 999px; white-space: nowrap; vertical-align: middle; }
+.home-alert { grid-column: 1 / -1; display: grid; gap: 8px; }
+.home-alert-item { display: flex; align-items: center; min-height: 44px; padding: 10px 14px; color: #7a2140; font-size: 15px; font-weight: 500; text-decoration: none; background-color: #fff0f4; border: 1px solid #f6c6d4; border-radius: 14px; }
+.home-alert-item[data-alert="doctor"] { color: #1f5a3c; background-color: #e9f7ef; border-color: #bfe5cf; }
+.home-alert-item:hover { text-decoration: underline; }
+.hub { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 960px) {
+    .hub { grid-template-columns: repeat(2, 1fr); }
+    .hub .feature-today { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+    .hub .feature-today { flex-direction: row; align-items: center; }
+}
+/* v19: หน้าแรกบนมือถือให้สั้นลง: รูปเตี้ยลง */
+@media (max-width: 700px) {
+    .hero .hero-image { height: 240px; object-fit: cover; object-position: center 20%; }
+    .why-image img { height: 200px; }
+}

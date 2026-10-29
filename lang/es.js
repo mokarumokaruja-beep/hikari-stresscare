@@ -372,7 +372,21 @@ LANG.es = {
         "privacy.12": "🩺 <b>Chequeo corporal, detección de depresión y tu respuesta sobre uso de sustancias (si la diste):</b> se guardan solo en este dispositivo y nunca se envían. Puedes editarlo en el chequeo corporal y borrarlo todo con el botón de abajo.",
         "research.40": "Detección de depresión",
         "research.41": "Cribado 2Q y evaluación 9Q",
-        "research.42": "Herramientas de detección de depresión del Departamento de Salud Mental de Tailandia, usadas en hospitales y servicios de salud de todo el país. Se usan en la sección «Detección de depresión» de este sitio, con la redacción original en tailandés."
+        "research.42": "Herramientas de detección de depresión del Departamento de Salud Mental de Tailandia, usadas en hospitales y servicios de salud de todo el país. Se usan en la sección «Detección de depresión» de este sitio, con la redacción original en tailandés.",
+        "header.t": "Misión de hoy",
+        "hub.d": "Un clip al día + 3 tareas + mi resumen",
+        "header.nav": "Menú principal",
+        "header.h": "Inicio",
+        "header.r": "Pausa breve",
+        "header.s": "Test de estrés",
+        "hub.t": "¿Qué te gustaría hacer hoy?",
+        "hub.r": "1–3 minutos, en tu escritorio",
+        "hub.s": "18 preguntas para saber qué te estresa",
+        "hub.b": "¿Cuánto te desgasta el trabajo?",
+        "hub.c": "Sueño, dolor de cabeza, estómago y ánimo",
+        "hub.sc": "Afronta la causa a tu manera",
+        "hub.br": "Temporizador de respiración de 1–5 minutos",
+        "hub.h": "Líneas de salud mental gratuitas, 24 horas"
     },
     "js": {
         "locale": "es-ES",

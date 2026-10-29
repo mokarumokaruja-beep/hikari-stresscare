@@ -372,7 +372,21 @@ LANG.en = {
         "privacy.12": "🩺 <b>Body check, depression screening and your answer about substance use (if given):</b> stored on this device only, never sent anywhere. Edit it in the body check section and delete everything with the button below.",
         "research.40": "Depression screening",
         "research.41": "2Q screen and 9Q assessment",
-        "research.42": "Depression screening tools from Thailand's Department of Mental Health, used in hospitals and health services nationwide. Used in this site's “Depression screening” section, with the original Thai question wording."
+        "research.42": "Depression screening tools from Thailand's Department of Mental Health, used in hospitals and health services nationwide. Used in this site's “Depression screening” section, with the original Thai question wording.",
+        "header.t": "Today's mission",
+        "hub.d": "A daily clip + 3 small tasks + my overview",
+        "header.nav": "Main menu",
+        "header.h": "Home",
+        "header.r": "Quick reset",
+        "header.s": "Stress test",
+        "hub.t": "What would you like to do today?",
+        "hub.r": "1–3 minutes, right at your desk",
+        "hub.s": "18 questions to find what stresses you",
+        "hub.b": "How worn out are you by work?",
+        "hub.c": "Sleep, headaches, stomach and mood",
+        "hub.sc": "Tackle the cause in a way that suits you",
+        "hub.br": "1–5 minute breathing timer",
+        "hub.h": "Free mental health hotlines, 24 hours"
     },
     "js": {
         "locale": "en-US",

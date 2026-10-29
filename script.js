@@ -127,7 +127,6 @@ function applyLanguage() {
     const pack = LANG[lang];
     document.documentElement.lang = lang;
     document.documentElement.dir = pack.dir;          // ภาษาอาหรับอ่านขวาไปซ้าย (rtl)
-    document.title = pack.html["page.title"];
     langSelect.value = lang;
 
     // แท็กที่มี data-i18n: เปลี่ยนข้อความข้างใน
@@ -166,6 +165,8 @@ function applyLanguage() {
     refreshDep();
     renderTalk();
     renderOverview();
+    updatePageTitle();                  // v19: ชื่อแท็บเบราว์เซอร์ = ชื่อหน้า · Hikari
+    updateTabEdges();                   // ความยาวชื่อเมนูเปลี่ยนตามภาษา
 }
 
 langSelect.addEventListener("change", function () {
@@ -307,7 +308,7 @@ document.addEventListener("keydown", function (event) {
 // ปุ่มมุมขวาบน: ยังไม่เข้าสู่ระบบ = เปิดหน้าต่าง, เข้าแล้ว = ไปที่บันทึกของฉัน
 accountButton.addEventListener("click", function () {
     if (currentUser) {
-        document.getElementById("mylog").scrollIntoView();
+        showPage("mylog");
     } else {
         openAuth("login");
     }
@@ -410,7 +411,7 @@ function loginAs(username, logType) {
     addLog(logType, loginVia ? { via: loginVia } : {});
     closeAuth();
     afterUserChange();
-    document.getElementById("mylog").scrollIntoView();
+    showPage("mylog");
 }
 
 document.getElementById("logoutButton").addEventListener("click", function () {
@@ -837,20 +838,171 @@ clearLogButton.addEventListener("click", function () {
 });
 
 
-// ===== 4. เมนูบนมือถือ =====
-
-const menuButton = document.getElementById("menuButton");
+// ===== 4. แสดงทีละหน้า (hash router) + แถบแท็บเมนู =====
+// แต่ละ section ใน index.html มี data-page บอกว่าอยู่หน้าไหน
+// ลิงก์ "#id" ทุกอันและการกระโดดจากโค้ด (showPage) จะเปิดหน้าที่มี id นั้น แล้วซ่อนหน้าอื่น
+// ถ้า id เป็นส่วนแรกของหน้า → เลื่อนไปบนสุด, ถ้าเป็นส่วนย่อย (เช่น #rootcause #talk #privacy) → เลื่อนไปที่ส่วนนั้น
+const PAGE_MAIN = {
+    home: "home", today: "today", reset: "reset", assessment: "assessment", burnout: "burnout", check: "check",
+    selfcare: "selfcare", breathe: "breathe", videos: "videos", research: "research",
+    mylog: "mylog", plans: "plans", help: "help"
+};
 const navLinks = document.getElementById("navLinks");
+const pageSections = document.querySelectorAll("main [data-page]");
+let currentPage = null;
+let routedHash = null;
 
-menuButton.addEventListener("click", function () {
-    navLinks.classList.toggle("open");
+function reducedMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+// หาว่า id นี้อยู่ในหน้าไหน (null = ไม่ใช่ส่วนของหน้าใดเลย)
+function pageOf(targetId) {
+    if (!targetId) {
+        return null;
+    }
+    const target = document.getElementById(targetId);
+    if (!target) {
+        return null;
+    }
+    const section = target.closest("main [data-page]");
+    return section ? section.dataset.page : null;
+}
+
+function pageLabel(page) {
+    const tab = navLinks.querySelector('[data-tab="' + page + '"]');
+    return tab ? tab.textContent.trim() : "";
+}
+
+function updatePageTitle() {
+    const base = LANG[lang].html["page.title"];
+    document.title = currentPage && currentPage !== "home" ? pageLabel(currentPage) + " · " + base : base;
+}
+
+// แสดงหน้าที่มี targetId (ไม่แก้ hash) options: { focus: false } = ผู้เรียกจะย้ายโฟกัสเอง, block = ตำแหน่ง scrollIntoView
+function routeTo(targetId, options) {
+    const opts = options || {};
+    let page = pageOf(targetId);
+    if (!page) {
+        page = "home";
+        targetId = "home";
+    }
+    const changed = page !== currentPage;
+    if (changed && currentPage === "videos" && !videoModal.classList.contains("hidden")) {
+        closeVideo();                       // ออกจากหน้าวิดีโอ: ปิดวิดีโอที่เปิดค้าง
+    }
+    for (let i = 0; i < pageSections.length; i++) {
+        pageSections[i].classList.toggle("page-off", pageSections[i].dataset.page !== page);
+    }
+    currentPage = page;
+    const tabs = navLinks.querySelectorAll("[data-tab]");
+    for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].dataset.tab === page) {
+            tabs[i].setAttribute("aria-current", "page");
+            // เลื่อนแท็บที่เลือกให้อยู่ในแถบ (เลื่อนแค่แถบ ไม่เลื่อนทั้งหน้า)
+            const bar = navLinks.getBoundingClientRect();
+            const tab = tabs[i].getBoundingClientRect();
+            if (tab.left < bar.left + 8 || tab.right > bar.right - 8) {
+                navLinks.scrollBy({ left: tab.left - bar.left - (bar.width - tab.width) / 2, behavior: reducedMotion() ? "instant" : "smooth" });
+            }
+        } else {
+            tabs[i].removeAttribute("aria-current");
+        }
+    }
+    updatePageTitle();
+
+    const main = document.getElementById(PAGE_MAIN[page]);
+    const target = document.getElementById(targetId);
+    const behavior = reducedMotion() || changed || opts.instant ? "instant" : "smooth";
+    let focusTo = null;
+    if (targetId === PAGE_MAIN[page] || target === main) {
+        window.scrollTo({ top: 0, behavior: behavior });
+        focusTo = main.querySelector("h1, h2");
+    } else {
+        if (changed) {
+            window.scrollTo({ top: 0, behavior: "instant" });
+        }
+        target.scrollIntoView({ block: opts.block || "start", behavior: behavior });
+        // ส่วนย่อย: โฟกัสที่ตัวมันเอง (ถ้าโฟกัสได้) หรือหัวข้อแรกของส่วนนั้น
+        focusTo = target.getAttribute("tabindex") !== null || /^H[1-4]$/.test(target.tagName) ? target : target.querySelector("h2, h3, h4");
+    }
+    // ย้ายโฟกัสไปที่หัวข้อ เพื่อให้คนใช้คีย์บอร์ด/โปรแกรมอ่านหน้าจอเริ่มที่หน้าใหม่
+    if (opts.focus !== false && focusTo) {
+        if (!focusTo.hasAttribute("tabindex")) {
+            focusTo.setAttribute("tabindex", "-1");
+        }
+        focusTo.focus({ preventScroll: true });
+    }
+}
+
+// ไปที่หน้า/ส่วนที่มี id นี้ และเพิ่มประวัติให้ปุ่มย้อนกลับของเบราว์เซอร์ใช้ได้
+// ใช้ pushState (ไม่ใช่ location.hash =) เพื่อไม่ให้เบราว์เซอร์เลื่อน/ย้ายโฟกัสเองซ้อนกับเรา
+function showPage(targetId, options) {
+    const hash = "#" + targetId;
+    if (location.hash !== hash) {
+        history.pushState(null, "", hash);
+    }
+    routedHash = location.hash;
+    routeTo(targetId, options);
+}
+
+// ปุ่มย้อนกลับ / ไปข้างหน้า และการแก้ที่อยู่เว็บเอง
+function onHistory() {
+    if (location.hash === routedHash) {
+        return;
+    }
+    routedHash = location.hash;
+    routeTo(decodeURIComponent(location.hash.slice(1)));
+}
+window.addEventListener("popstate", onHistory);
+window.addEventListener("hashchange", onHistory);
+
+// ลิงก์ "#id" ทุกอันในหน้า (รวมลิงก์ที่สร้างจากโค้ดภายหลัง)
+document.addEventListener("click", function (event) {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+    }
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || link.target === "_blank") {
+        return;
+    }
+    const id = decodeURIComponent(link.getAttribute("href").slice(1));
+    if (!id || (!pageOf(id) && id !== "home")) {
+        return;
+    }
+    event.preventDefault();
+    showPage(id);
 });
 
-const menuLinks = navLinks.querySelectorAll("a");
-for (let i = 0; i < menuLinks.length; i++) {
-    menuLinks[i].addEventListener("click", function () {
-        navLinks.classList.remove("open");
-    });
+// แถบเมนูเลื่อนได้: จางที่ขอบด้านที่ยังมีเมนูซ่อนอยู่ (ซ้าย/ขวาตามจริงบนจอ ใช้ได้กับภาษาอาหรับ)
+function updateTabEdges() {
+    const max = navLinks.scrollWidth - navLinks.clientWidth;
+    const pos = Math.abs(navLinks.scrollLeft);          // RTL: scrollLeft ติดลบ
+    const rtl = getComputedStyle(navLinks).direction === "rtl";
+    const atStart = pos <= 2;
+    const atEnd = pos >= max - 2;
+    navLinks.classList.toggle("more-start", max > 2 && (rtl ? !atEnd : !atStart));
+    navLinks.classList.toggle("more-end", max > 2 && (rtl ? !atStart : !atEnd));
+}
+navLinks.addEventListener("scroll", updateTabEdges, { passive: true });
+window.addEventListener("resize", updateTabEdges);
+
+// เปิดหน้าเว็บครั้งแรก (รวมลิงก์จากเกม เช่น index.html#rootcause)
+function startRouter() {
+    if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+    }
+    routedHash = location.hash;
+    routeTo(decodeURIComponent(location.hash.slice(1)), { focus: false });
+    updateTabEdges();
+    // เบราว์เซอร์อาจเลื่อนไปที่ #id เองอีกครั้งตอนโหลดเสร็จ: จัดตำแหน่งซ้ำให้ตรงกับหน้าที่เปิด
+    if (location.hash) {
+        window.addEventListener("load", function () {
+            if (location.hash === routedHash) {
+                routeTo(decodeURIComponent(location.hash.slice(1)), { focus: false, instant: true });
+            }
+        }, { once: true });
+    }
 }
 
 
@@ -1174,7 +1326,7 @@ document.getElementById("todayCareBreathe").addEventListener("click", function (
     if (timer === null) {
         breatheButton.click();
     }
-    document.getElementById("breathe").scrollIntoView({ block: "start" });
+    showPage("breathe", { focus: false });
     breatheButton.focus({ preventScroll: true });
 });
 
@@ -1706,6 +1858,7 @@ function renderJourney() {
         label += " · " + fill(t("roundLabel"), { r: info.round });
     }
     document.getElementById("todayDay").textContent = label;
+    document.getElementById("hubDay").textContent = label;      // v19: การ์ดทางลัดในหน้าแรก
     document.getElementById("todayCat").textContent = t("catNames")[v.cat] + " · " + v.lang;
     document.getElementById("todayStreak").textContent = streak > 0 ? fill(t("streak"), { n: streak }) : t("streak0");
     document.getElementById("todayLight").textContent = fill(t("lightLabel"), { n: info.data.light });
@@ -2478,6 +2631,7 @@ function finishReset(r) {
 document.getElementById("heroReset").addEventListener("click", function (event) {
     event.preventDefault();
     const card = document.getElementById("reset-sigh");
+    showPage("reset", { focus: false });
     card.scrollIntoView({ block: "center" });
     card.querySelector(".reset-btn").focus({ preventScroll: true });
 });
@@ -3550,6 +3704,7 @@ function goToReset(id) {
     if (!card) {
         return;
     }
+    showPage("reset", { focus: false });
     card.scrollIntoView({ block: "center" });
     card.querySelector(".reset-btn").focus({ preventScroll: true });
 }
@@ -3870,6 +4025,28 @@ function renderOverview() {
     } else {
         doc.appendChild(el("p", "ov-ok", t("ovDocOff")));
     }
+    renderHomeAlert(reasons.length > 0);
+}
+
+// v19: หน้าแรกสั้นลง ภาพรวมย้ายไปหน้า "ภารกิจวันนี้" จึงแสดงแถบเตือนเล็ก ๆ ในหน้าแรก
+// เฉพาะเมื่อมีการ์ดแนะนำพบแพทย์ หรือชวนทำแบบคัดกรอง 2Q อยู่ (กดแล้วไปที่ภาพรวม)
+function renderHomeAlert(doctorOn) {
+    const box = document.getElementById("homeAlert");
+    box.textContent = "";
+    const items = [];
+    if (doctorOn) {
+        items.push(["doctor", t("ovDocOn")]);
+    }
+    if (depSuggested()) {
+        items.push(["dep", t("ovNudgeDep")]);
+    }
+    items.forEach(function (item) {
+        const a = el("a", "home-alert-item", item[1] + " →");
+        a.href = "#overview";
+        a.dataset.alert = item[0];
+        box.appendChild(a);
+    });
+    box.classList.toggle("hidden", items.length === 0);
 }
 
 // ----- ชวนคนที่ไว้ใจคุย: แม่แบบข้อความ 3 แบบ แก้ได้ ส่งทาง LINE (ไม่เก็บข้อความไว้ที่ไหน) -----
@@ -4200,3 +4377,4 @@ setupContact();
 setupInAppNotice();
 loadGoogle();
 applyLanguage();
+startRouter();

@@ -372,7 +372,21 @@ LANG.fr = {
         "privacy.12": "🩺 <b>Bilan corporel, dépistage de la dépression et votre réponse sur l'usage de substances (si donnée) :</b> enregistrés sur cet appareil uniquement, jamais envoyés. Modifiable dans le bilan corporel, et tout peut être supprimé avec le bouton ci-dessous.",
         "research.40": "Dépistage de la dépression",
         "research.41": "Dépistage 2Q et évaluation 9Q",
-        "research.42": "Outils de dépistage de la dépression du Département de la santé mentale de Thaïlande, utilisés dans les hôpitaux et services de santé du pays. Utilisés dans la section « Dépistage de la dépression » de ce site, avec la formulation thaïe d'origine."
+        "research.42": "Outils de dépistage de la dépression du Département de la santé mentale de Thaïlande, utilisés dans les hôpitaux et services de santé du pays. Utilisés dans la section « Dépistage de la dépression » de ce site, avec la formulation thaïe d'origine.",
+        "header.t": "Mission du jour",
+        "hub.d": "Un clip par jour + 3 petites tâches + mon aperçu",
+        "header.nav": "Menu principal",
+        "header.h": "Accueil",
+        "header.r": "Pause courte",
+        "header.s": "Test de stress",
+        "hub.t": "Que voulez-vous faire aujourd'hui ?",
+        "hub.r": "1 à 3 minutes, à votre bureau",
+        "hub.s": "18 questions pour trouver la source du stress",
+        "hub.b": "À quel point le travail vous épuise-t-il ?",
+        "hub.c": "Sommeil, maux de tête, ventre et humeur",
+        "hub.sc": "Agir sur la cause, à votre façon",
+        "hub.br": "Minuteur de respiration de 1 à 5 minutes",
+        "hub.h": "Lignes d'écoute gratuites, 24 h/24"
     },
     "js": {
         "locale": "fr-FR",

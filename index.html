@@ -35,20 +35,6 @@
             <span class="brand-sun">☀</span>
             <span>Hikari<small>StressCare</small></span>
         </a>
-        <button data-i18n-aria="header.1" id="menuButton" class="menu-button" aria-label="เปิดเมนู">☰</button>
-        <nav id="navLinks" class="nav-links">
-            <a data-i18n="header.2" href="#assessment">ประเมิน</a>
-            <a data-i18n="header.b" href="#burnout">เช็กภาวะหมดไฟ</a>
-            <a data-i18n="header.c" href="#check">เช็กร่างกาย</a>
-            <a data-i18n="header.3" href="#selfcare">ดูแลตัวเอง</a>
-            <a data-i18n="header.4" href="#breathe">ฝึกหายใจ</a>
-            <a data-i18n="header.v" href="#videos">วิดีโอ</a>
-            <a data-i18n="header.5" href="#research">งานวิจัย</a>
-            <a data-i18n="header.g" href="game.html" class="nav-game">เกมสวนแสง</a>
-            <a data-i18n="header.7" href="#mylog">บันทึกของฉัน</a>
-            <a data-i18n="header.8" href="#plans">แผนบริการ</a>
-            <a data-i18n="header.9" href="#help" class="nav-help">ขอความช่วยเหลือ</a>
-        </nav>
         <div class="top-actions">
             <select id="langSelect" class="lang-select" aria-label="เลือกภาษา">
                 <option value="th">🌐 ไทย</option>
@@ -64,6 +50,23 @@
             </select>
             <button id="accountButton" class="btn btn-primary btn-small" data-dynamic>เข้าสู่ระบบ</button>
         </div>
+        <!-- v19: แถบแท็บเมนู แสดงตลอด เลื่อนซ้าย–ขวาได้ กดแล้วแสดงเฉพาะหน้านั้น (script.js ส่วนที่ 4) -->
+        <nav id="navLinks" class="tabbar" data-i18n-aria="header.nav" aria-label="เมนูหลัก">
+            <a data-i18n="header.h" href="#home" data-tab="home">หน้าแรก</a>
+            <a data-i18n="header.t" href="#today" data-tab="today">ภารกิจวันนี้</a>
+            <a data-i18n="header.r" href="#reset" data-tab="reset">พักสั้น</a>
+            <a data-i18n="header.s" href="#assessment" data-tab="assessment">ประเมินความเครียด</a>
+            <a data-i18n="header.b" href="#burnout" data-tab="burnout">เช็กภาวะหมดไฟ</a>
+            <a data-i18n="header.c" href="#check" data-tab="check">เช็กร่างกาย</a>
+            <a data-i18n="header.3" href="#selfcare" data-tab="selfcare">ดูแลตัวเอง</a>
+            <a data-i18n="header.4" href="#breathe" data-tab="breathe">ฝึกหายใจ</a>
+            <a data-i18n="header.v" href="#videos" data-tab="videos">วิดีโอ</a>
+            <a data-i18n="header.5" href="#research" data-tab="research">งานวิจัย</a>
+            <a data-i18n="header.7" href="#mylog" data-tab="mylog">บันทึกของฉัน</a>
+            <a data-i18n="header.8" href="#plans" data-tab="plans">แผนบริการ</a>
+            <a data-i18n="header.9" href="#help" data-tab="help" class="nav-help">ขอความช่วยเหลือ</a>
+            <a data-i18n="header.g" href="game.html" class="nav-game">เกมสวนแสง</a>
+        </nav>
     </header>
 
     <!-- ===== หน้าต่างเข้าสู่ระบบ / สมัครสมาชิก ===== -->
@@ -129,7 +132,7 @@
     <main>
 
         <!-- ===== 01 Hero ===== -->
-        <section id="home" class="hero">
+        <section id="home" data-page="home" class="hero">
             <div class="hero-text">
                 <p class="script">Small Steps, Brighter Days</p>
                 <h1 data-i18n="home.1">เหนื่อยสะสมจากงาน?<br>เริ่มแก้ที่ต้นเหตุได้ทีละก้าว</h1>
@@ -153,8 +156,51 @@
             <img data-i18n-alt="home.5" src="images/hero-girl.webp" alt="หญิงสาวนั่งพักผ่อนริมทะเลสาบท่ามกลางดอกไม้" class="hero-image" width="525" height="535" fetchpriority="high">
         </section>
 
+        <!-- ===== v19: ทางลัดไปแต่ละหน้า (หน้าแรกเป็นศูนย์รวม) ===== -->
+        <section class="features hub" data-page="home" aria-labelledby="hubTitle">
+            <h2 id="hubTitle" class="hub-title" data-i18n="hub.t">เลือกสิ่งที่อยากทำวันนี้</h2>
+            <!-- แสดงเฉพาะเมื่อมีการ์ดแนะนำพบแพทย์ หรือชวนทำ 2Q อยู่ (script.js renderHomeAlert) ลิงก์ไปที่ภาพรวมในหน้าภารกิจวันนี้ -->
+            <div id="homeAlert" class="home-alert hidden" role="status"></div>
+            <a class="feature feature-today" href="#today">
+                <span class="icon-circle green" aria-hidden="true">▶</span>
+                <div><h3><span data-i18n="header.t">ภารกิจวันนี้</span> <small id="hubDay" class="hub-day" data-dynamic></small></h3><p data-i18n="hub.d">คลิปวันละ 1 คลิป + ภารกิจ 3 ข้อ + ภาพรวมของฉัน</p></div>
+            </a>
+            <a class="feature" href="#reset">
+                <span class="icon-circle orange" aria-hidden="true">⏱</span>
+                <div><h3 data-i18n="header.r">พักสั้น</h3><p data-i18n="hub.r">1–3 นาที ทำได้ที่โต๊ะทำงาน</p></div>
+            </a>
+            <a class="feature" href="#assessment">
+                <span class="icon-circle pink" aria-hidden="true">♥</span>
+                <div><h3 data-i18n="header.s">ประเมินความเครียด</h3><p data-i18n="hub.s">18 ข้อ รู้ต้นเหตุของความเครียด</p></div>
+            </a>
+            <a class="feature" href="#burnout">
+                <span class="icon-circle purple" aria-hidden="true">🔋</span>
+                <div><h3 data-i18n="header.b">เช็กภาวะหมดไฟ</h3><p data-i18n="hub.b">เหนื่อยจากงานแค่ไหน</p></div>
+            </a>
+            <a class="feature" href="#check">
+                <span class="icon-circle blue" aria-hidden="true">🩺</span>
+                <div><h3 data-i18n="header.c">เช็กร่างกาย</h3><p data-i18n="hub.c">การนอน ปวดหัว ท้องไส้ และอารมณ์</p></div>
+            </a>
+            <a class="feature" href="#selfcare">
+                <span class="icon-circle green" aria-hidden="true">❦</span>
+                <div><h3 data-i18n="header.3">ดูแลตัวเอง</h3><p data-i18n="hub.sc">รับมือที่ต้นเหตุ ด้วยวิธีที่เหมาะกับคุณ</p></div>
+            </a>
+            <a class="feature" href="#breathe">
+                <span class="icon-circle blue" aria-hidden="true">🫁</span>
+                <div><h3 data-i18n="header.4">ฝึกหายใจ</h3><p data-i18n="hub.br">ตัวจับเวลา 1–5 นาที</p></div>
+            </a>
+            <a class="feature" href="#mylog">
+                <span class="icon-circle purple" aria-hidden="true">▥</span>
+                <div><h3 data-i18n="header.7">บันทึกของฉัน</h3><p data-i18n="features.6">ติดตามความรู้สึกและผลลัพธ์</p></div>
+            </a>
+            <a class="feature feature-help" href="#help">
+                <span class="icon-circle pink" aria-hidden="true">☎</span>
+                <div><h3 data-i18n="header.9">ขอความช่วยเหลือ</h3><p data-i18n="hub.h">สายด่วนสุขภาพจิต โทรฟรี 24 ชั่วโมง</p></div>
+            </a>
+        </section>
+
         <!-- ===== พักสั้น 1–3 นาที: 6 การ์ด มีตัวจับเวลาในตัว (ข้อมูลใน content.js RESETS, การทำงานใน script.js ส่วนที่ 16) ===== -->
-        <section id="reset" class="section reset-section">
+        <section id="reset" data-page="reset" class="section reset-section">
             <div class="section-heading">
                 <h2 data-i18n="reset.1">พักสั้น 1–3 นาที ทำได้ที่โต๊ะทำงาน</h2>
                 <p data-i18n="reset.2">ระหว่างประชุมติดกัน งานด่วน หรือบนรถไฟฟ้า เลือก 1 การ์ด กดเริ่ม แล้วทำตามทีละขั้น ตัวจับเวลาจะบอกเมื่อครบ</p>
@@ -165,7 +211,7 @@
         </section>
 
         <!-- ===== ภารกิจ 60 วัน: คลิปวันละ 1 คลิป + ภารกิจ 3 ข้อ + กล่องรางวัล (ข้อมูลใน content.js, การทำงานใน script.js ส่วนที่ 13) ===== -->
-        <section id="today" class="section today-section">
+        <section id="today" data-page="today" class="section today-section">
             <div class="section-heading">
                 <h2 data-i18n="today.1">ภารกิจ 60 วัน ใจสบายขึ้นทีละวัน</h2>
                 <p data-i18n="today.2">ทุกวันมีคลิปใหม่ไม่ซ้ำตลอด 60 วัน สลับกันระหว่างคลื่นเสียงผ่อนคลายกับคลิปเยียวยาใจ ทำภารกิจ 3 ข้อให้ครบเพื่อรับแสง และครบ 7 วันเลือกของรางวัลได้ 1 ชิ้น 🎁</p>
@@ -283,40 +329,9 @@
             <p class="disclaimer today-guest" data-i18n="today.8">คลื่นเสียงและความถี่ เช่น 432/528Hz หรือ binaural beats ใช้เพื่อผ่อนคลาย งานวิจัยยังจำกัด ไม่ใช่การรักษา · binaural beats ควรฟังผ่านหูฟังด้วยเสียงเบา</p>
         </section>
 
-        <!-- ===== 04–07 จุดเด่น 4 ข้อ ===== -->
-        <section class="features">
-            <a class="feature" href="#assessment">
-                <span class="icon-circle pink">♥</span>
-                <div>
-                    <h3 data-i18n="features.1">เข้าใจตัวเอง</h3>
-                    <p data-i18n="features.2">รู้ต้นเหตุของความเครียด</p>
-                </div>
-            </a>
-            <a class="feature" href="#selfcare">
-                <span class="icon-circle green">❦</span>
-                <div>
-                    <h3 data-i18n="features.3">รับมือได้จริง</h3>
-                    <p data-i18n="features.4">กิจกรรมที่เหมาะกับตัวคุณ</p>
-                </div>
-            </a>
-            <a class="feature" href="#mylog">
-                <span class="icon-circle purple">▥</span>
-                <div>
-                    <h3 data-i18n="features.5">เห็นความเปลี่ยนแปลง</h3>
-                    <p data-i18n="features.6">ติดตามความรู้สึกและผลลัพธ์</p>
-                </div>
-            </a>
-            <a class="feature" href="#research">
-                <span class="icon-circle blue">📖</span>
-                <div>
-                    <h3 data-i18n="features.7">ข้อมูลน่าเชื่อถือ</h3>
-                    <p data-i18n="features.8">อ้างอิงงานวิจัยและผู้เชี่ยวชาญ</p>
-                </div>
-            </a>
-        </section>
 
         <!-- ===== 03 ทำไมต้องดูแลใจ ===== -->
-        <section class="why">
+        <section class="why" data-page="home">
             <div class="why-text">
                 <h2 data-i18n="why.1">ทำไมการจัดการความเครียดจึงสำคัญ?</h2>
                 <p data-i18n="why.2">ความเครียดที่สะสมนานส่งผลต่อการนอน สมาธิ ความสัมพันธ์ และสุขภาพร่างกาย การรู้ทันความเครียดตั้งแต่เนิ่น ๆ ช่วยให้เราเลือกวิธีดูแลตัวเองได้ก่อนที่ปัญหาจะหนักขึ้น</p>
@@ -329,7 +344,7 @@
         </section>
 
         <!-- ===== 02 แบบประเมิน + 09–11 ผลประเมิน ===== -->
-        <section id="assessment" class="section">
+        <section id="assessment" data-page="assessment" class="section">
             <div class="section-heading">
                 <h2 data-i18n="assessment.1">แบบประเมินความเครียด</h2>
                 <p data-i18n="assessment.2">ตอบตามความรู้สึกในช่วง 2 สัปดาห์ที่ผ่านมา ทั้งหมด 18 ข้อ</p>
@@ -406,7 +421,7 @@
         </section>
 
         <!-- ===== เช็กภาวะหมดไฟ: Copenhagen Burnout Inventory 13 ข้อ (script.js ส่วนที่ 17) ===== -->
-        <section id="burnout" class="section tinted">
+        <section id="burnout" data-page="burnout" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="burnout.1">เช็กภาวะหมดไฟ (Burnout)</h2>
                 <p data-i18n="burnout.2">13 ข้อ ใช้เวลา 2–3 นาที จากแบบวัด Copenhagen Burnout Inventory (CBI): ภาวะหมดไฟส่วนบุคคล 6 ข้อ และภาวะหมดไฟจากงาน 7 ข้อ</p>
@@ -468,7 +483,7 @@
         </section>
 
         <!-- ===== v18 เช็กร่างกายและพฤติกรรม 1 นาที: สัปดาห์ละครั้ง (content.js CHECK_AREAS, script.js ส่วนที่ 19) ===== -->
-        <section id="check" class="section">
+        <section id="check" data-page="check" class="section">
             <div class="section-heading">
                 <h2 data-i18n="check.1">เช็กร่างกายและพฤติกรรม 1 นาที</h2>
                 <p data-i18n="check.2">ความเครียดสะสมมักบอกเราผ่านร่างกายและพฤติกรรม ตอบสั้น ๆ เรื่อง 7 วันที่ผ่านมา แล้วดูว่าด้านไหนอาจเกี่ยวกับความเครียด พร้อมวิธีดูแลที่ตรงกัน ทำสัปดาห์ละครั้งเพื่อเทียบกับครั้งก่อน</p>
@@ -544,7 +559,7 @@
         </section>
 
         <!-- ===== v18 คัดกรองภาวะซึมเศร้า 2Q → 9Q (กรมสุขภาพจิต) (content.js DEP_*, script.js ส่วนที่ 20) ===== -->
-        <section id="mood-screen" class="section tinted">
+        <section id="mood-screen" data-page="check" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="dep.1">คัดกรองภาวะซึมเศร้า</h2>
                 <p data-i18n="dep.2">แบบคัดกรอง 2 คำถาม (2Q) และแบบประเมิน 9 คำถาม (9Q) ของกรมสุขภาพจิต ถ้าตอบ “มี” ข้อใดข้อหนึ่งใน 2Q จะทำ 9Q ต่อ ใช้เวลา 1–3 นาที</p>
@@ -607,30 +622,8 @@
             </div>
         </section>
 
-        <!-- ===== รับมือที่ต้นเหตุ: เลือกเรื่องที่เครียดที่สุด (สูงสุด 3) แล้วฝึกทักษะสั้น ๆ (script.js ส่วนที่ 18) ===== -->
-        <section id="rootcause" class="section">
-            <div class="section-heading">
-                <h2 data-i18n="root.1">รับมือที่ต้นเหตุ</h2>
-                <p data-i18n="root.2">ความเครียดลดลงได้จริงเมื่อแก้ที่ต้นเหตุ เลือกเรื่องที่ทำให้คุณเครียดที่สุด แล้วฝึกทักษะสั้น ๆ ด้วยตัวเอง นักจิตวิทยาคือก้าวสุดท้ายเมื่อคุณต้องการ</p>
-            </div>
-            <div class="card cause-card">
-                <p id="causeHead" class="small-heading" data-i18n="root.3">เรื่องไหนทำให้คุณเครียดที่สุด? (เลือกได้สูงสุด 3 เรื่อง)</p>
-                <div id="causeChips" class="chip-row cause-chips" role="group" aria-labelledby="causeHead"></div>
-                <p id="causeMsg" class="cause-msg" role="status" data-dynamic></p>
-            </div>
-            <p id="causeEmpty" data-i18n="root.5" class="cause-empty">เลือกอย่างน้อย 1 เรื่องด้านบน เพื่อดูทักษะที่ช่วยได้</p>
-            <div id="causeSkills" class="cause-skills"></div>
-            <!-- v18 ชวนคนที่ไว้ใจคุย: แก้ข้อความได้ ส่งทาง LINE (ไม่เก็บข้อความไว้ที่ไหน) -->
-            <div id="talk" class="card talk-card" tabindex="-1" aria-labelledby="talkTitle">
-                <h3 id="talkTitle" data-i18n="talk.1">💬 ชวนคนที่ไว้ใจคุย</h3>
-                <p data-i18n="talk.2">ไม่ต้องรอให้หนักก่อนถึงจะคุยได้ เลือกข้อความ แก้ให้เป็นคำของคุณ แล้วกดส่งทาง LINE · ข้อความไม่ถูกเก็บไว้ที่ไหน</p>
-                <div id="talkList" class="talk-list"></div>
-            </div>
-            <p data-i18n="root.4" class="disclaimer cause-note">ทักษะเหล่านี้เป็นความรู้ทั่วไป ไม่ใช่คำแนะนำทางการแพทย์หรือการเงินเฉพาะบุคคล ถ้าลองแล้ว 2–4 สัปดาห์ยังไม่ดีขึ้น หรือกระทบงานและชีวิตมาก ควรปรึกษาผู้เชี่ยวชาญ</p>
-        </section>
-
         <!-- ===== 08–11 การ์ดดูแลตัวเอง ===== -->
-        <section id="selfcare" class="section tinted">
+        <section id="selfcare" data-page="selfcare" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="selfcare.1">วิธีดูแลตัวเองที่เริ่มได้วันนี้</h2>
                 <p data-i18n="selfcare.2">กดปุ่มลูกศรเพื่อดูขั้นตอน กิจกรรมเหล่านี้ใช้เวลาไม่เกิน 10 นาที</p>
@@ -695,8 +688,30 @@
             </div>
         </section>
 
+        <!-- ===== รับมือที่ต้นเหตุ: เลือกเรื่องที่เครียดที่สุด (สูงสุด 3) แล้วฝึกทักษะสั้น ๆ (script.js ส่วนที่ 18) ===== -->
+        <section id="rootcause" data-page="selfcare" class="section">
+            <div class="section-heading">
+                <h2 data-i18n="root.1">รับมือที่ต้นเหตุ</h2>
+                <p data-i18n="root.2">ความเครียดลดลงได้จริงเมื่อแก้ที่ต้นเหตุ เลือกเรื่องที่ทำให้คุณเครียดที่สุด แล้วฝึกทักษะสั้น ๆ ด้วยตัวเอง นักจิตวิทยาคือก้าวสุดท้ายเมื่อคุณต้องการ</p>
+            </div>
+            <div class="card cause-card">
+                <p id="causeHead" class="small-heading" data-i18n="root.3">เรื่องไหนทำให้คุณเครียดที่สุด? (เลือกได้สูงสุด 3 เรื่อง)</p>
+                <div id="causeChips" class="chip-row cause-chips" role="group" aria-labelledby="causeHead"></div>
+                <p id="causeMsg" class="cause-msg" role="status" data-dynamic></p>
+            </div>
+            <p id="causeEmpty" data-i18n="root.5" class="cause-empty">เลือกอย่างน้อย 1 เรื่องด้านบน เพื่อดูทักษะที่ช่วยได้</p>
+            <div id="causeSkills" class="cause-skills"></div>
+            <!-- v18 ชวนคนที่ไว้ใจคุย: แก้ข้อความได้ ส่งทาง LINE (ไม่เก็บข้อความไว้ที่ไหน) -->
+            <div id="talk" class="card talk-card" tabindex="-1" aria-labelledby="talkTitle">
+                <h3 id="talkTitle" data-i18n="talk.1">💬 ชวนคนที่ไว้ใจคุย</h3>
+                <p data-i18n="talk.2">ไม่ต้องรอให้หนักก่อนถึงจะคุยได้ เลือกข้อความ แก้ให้เป็นคำของคุณ แล้วกดส่งทาง LINE · ข้อความไม่ถูกเก็บไว้ที่ไหน</p>
+                <div id="talkList" class="talk-list"></div>
+            </div>
+            <p data-i18n="root.4" class="disclaimer cause-note">ทักษะเหล่านี้เป็นความรู้ทั่วไป ไม่ใช่คำแนะนำทางการแพทย์หรือการเงินเฉพาะบุคคล ถ้าลองแล้ว 2–4 สัปดาห์ยังไม่ดีขึ้น หรือกระทบงานและชีวิตมาก ควรปรึกษาผู้เชี่ยวชาญ</p>
+        </section>
+
         <!-- ===== ตัวจับเวลาฝึกหายใจ ===== -->
-        <section id="breathe" class="section">
+        <section id="breathe" data-page="breathe" class="section">
             <div class="section-heading">
                 <h2 data-i18n="breathe.1">ฝึกหายใจไปพร้อมกัน</h2>
                 <p data-i18n="breathe.2">เลือกรูปแบบและเวลา แล้วหายใจตามวงกลม: วงกลมขยาย = หายใจเข้า วงกลมหด = หายใจออก</p>
@@ -729,7 +744,7 @@
         </section>
 
         <!-- ===== วิดีโอคลายเครียด (ฝังจาก YouTube) ===== -->
-        <section id="videos" class="section">
+        <section id="videos" data-page="videos" class="section">
             <div class="section-heading">
                 <h2 data-i18n="videos.1">วิดีโอคลายเครียด</h2>
                 <p data-i18n="videos.2">คลังคลิปของภารกิจ 60 วัน: คลื่นเสียง เสียงธรรมชาติ ดนตรีไทยและสากล ฝึกหายใจ สมาธิ และข้อคิดทั้งภาษาไทยและอังกฤษ คลิปใหม่ปลดล็อกวันละ 1 คลิป</p>
@@ -749,7 +764,7 @@
         </section>
 
         <!-- ===== 12–14 งานวิจัย ===== -->
-        <section id="research" class="section tinted">
+        <section id="research" data-page="research" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="research.1">ข้อมูลอ้างอิงจากงานวิจัย</h2>
                 <p data-i18n="research.2">คำแนะนำในเว็บไซต์อ้างอิงจากงานวิจัยและแบบวัดเหล่านี้ กดที่การ์ดเพื่ออ่านต้นฉบับ</p>
@@ -857,68 +872,8 @@
             </div>
         </section>
 
-        <!-- ===== 15–20 ตัวอย่างแอปพลิเคชัน ===== -->
-        <section id="app" class="section">
-            <div class="section-heading">
-                <h2>Hikari Mobile Application</h2>
-                <p data-i18n="app.1">ต่อยอดจากเว็บไซต์ เป็นแอปที่ช่วยบันทึก วิเคราะห์ และติดตามความเครียดทุกวัน (ต้นแบบ)</p>
-            </div>
-            <div class="phones">
-
-                <!-- จอที่ 1: หน้าแรก + เลือกอารมณ์ (ใช้งานได้จริง) -->
-                <div class="phone">
-                    <p data-i18n="app.2" class="phone-hello">สวัสดี ☀<br><strong>วันนี้คุณเป็นอย่างไร?</strong></p>
-                    <div class="mood-row">
-                        <button class="mood-button" data-mood="great">😄<small data-i18n="app.3">ดีมาก</small></button>
-                        <button class="mood-button" data-mood="good">🙂<small data-i18n="app.4">ดี</small></button>
-                        <button class="mood-button" data-mood="ok">😐<small data-i18n="app.5">ปกติ</small></button>
-                        <button class="mood-button" data-mood="stressed">😟<small data-i18n="app.6">เครียด</small></button>
-                        <button class="mood-button" data-mood="very">😣<small data-i18n="app.7">มาก</small></button>
-                    </div>
-                    <p id="moodMessage" data-dynamic class="mood-message">แตะอารมณ์เพื่อลองใช้งาน</p>
-                    <ul class="phone-menu">
-                        <li data-i18n="app.8">📋 แบบประเมินความเครียด</li>
-                        <li data-i18n="app.9">🌿 กิจกรรมแนะนำวันนี้</li>
-                        <li data-i18n="app.10">📝 บันทึกความรู้สึก</li>
-                        <li data-i18n="app.11">📚 บทความน่ารู้</li>
-                    </ul>
-                </div>
-
-                <!-- จอที่ 2: กิจกรรมแนะนำ -->
-                <div class="phone">
-                    <p data-i18n="app.12" class="phone-title">กิจกรรมแนะนำ</p>
-                    <div class="phone-activity"><img src="images/care-breathe.webp" alt="" width="268" height="151" loading="lazy" decoding="async"><span data-i18n="app.13">ฝึกหายใจ<br><small>5 นาที</small></span></div>
-                    <div class="phone-activity"><img src="images/care-grounding.webp" alt="" width="271" height="150" loading="lazy" decoding="async"><span data-i18n="app.14">Grounding<br><small>3 นาที</small></span></div>
-                    <div class="phone-activity"><img src="images/care-plan.webp" alt="" width="262" height="152" loading="lazy" decoding="async"><span data-i18n="app.15">จัดลำดับงาน<br><small>7 นาที</small></span></div>
-                    <div class="phone-activity"><img src="images/care-sleep.webp" alt="" width="266" height="168" loading="lazy" decoding="async"><span data-i18n="app.16">เตรียมนอน<br><small>10 นาที</small></span></div>
-                </div>
-
-                <!-- จอที่ 3: กราฟติดตามความรู้สึก -->
-                <div class="phone">
-                    <p data-i18n="app.17" class="phone-title">ติดตามความรู้สึก</p>
-                    <svg class="phone-chart" viewBox="0 0 220 120" aria-label="กราฟตัวอย่างความเครียด 7 วัน">
-                        <polyline points="10,90 42,80 74,70 106,45 138,30 170,55 202,40" fill="none" stroke="#f29b5c" stroke-width="3"/>
-                        <circle cx="10" cy="90" r="4" fill="#f29b5c"/>
-                        <circle cx="42" cy="80" r="4" fill="#f29b5c"/>
-                        <circle cx="74" cy="70" r="4" fill="#f29b5c"/>
-                        <circle cx="106" cy="45" r="4" fill="#f29b5c"/>
-                        <circle cx="138" cy="30" r="4" fill="#f29b5c"/>
-                        <circle cx="170" cy="55" r="4" fill="#f29b5c"/>
-                        <circle cx="202" cy="40" r="4" fill="#f29b5c"/>
-                    </svg>
-                    <p data-i18n="app.18" class="phone-small">ข้อมูลตัวอย่าง 7 วัน</p>
-                    <p class="phone-small"><strong data-i18n="app.19">สิ่งที่แอปจะช่วยได้</strong></p>
-                    <ul class="phone-menu">
-                        <li data-i18n="app.20">📈 เห็นแนวโน้มรายสัปดาห์</li>
-                        <li data-i18n="app.21">🔎 รู้ช่วงเวลาที่เครียดบ่อย</li>
-                        <li data-i18n="app.22">🎯 แนะนำกิจกรรมเฉพาะคน</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
         <!-- ===== บันทึกของฉัน (ต้องเข้าสู่ระบบ) ===== -->
-        <section id="mylog" class="section tinted">
+        <section id="mylog" data-page="mylog" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="mylog.1">บันทึกของฉัน</h2>
                 <p data-i18n="mylog.2">เข้าสู่ระบบเพื่อดูความเปลี่ยนแปลงของคะแนนความเครียดและอารมณ์ พร้อมประวัติทุกกิจกรรมของคุณ</p>
@@ -993,7 +948,7 @@
         </section>
 
         <!-- ===== แผนบริการ Free / Premium (ต้นแบบ) ===== -->
-        <section id="plans" class="section">
+        <section id="plans" data-page="plans" class="section">
             <div class="section-heading">
                 <h2 data-i18n="plans.1">แผนบริการในอนาคต</h2>
                 <p data-i18n="plans.2">ใช้ฟรีได้ทุกวัน แผน Premium และ Care+ ด้านล่างเป็นตัวอย่างแผนในอนาคต ยังไม่เปิดให้บริการ</p>
@@ -1046,8 +1001,68 @@
             <p class="disclaimer plan-note" data-i18n="plans.note">ตัวอย่างเท่านั้น: แผนเหล่านี้ยังไม่เปิดให้บริการ กด “สนใจแผนนี้” เพื่อบอกเราว่าคุณสนใจ และดูตัวอย่างสิทธิ์ของแผนในหน้าเว็บ ไม่มีการเก็บเงินหรือชำระเงินใด ๆ</p>
         </section>
 
+        <!-- ===== 15–20 ตัวอย่างแอปพลิเคชัน ===== -->
+        <section id="app" data-page="plans" class="section">
+            <div class="section-heading">
+                <h2>Hikari Mobile Application</h2>
+                <p data-i18n="app.1">ต่อยอดจากเว็บไซต์ เป็นแอปที่ช่วยบันทึก วิเคราะห์ และติดตามความเครียดทุกวัน (ต้นแบบ)</p>
+            </div>
+            <div class="phones">
+
+                <!-- จอที่ 1: หน้าแรก + เลือกอารมณ์ (ใช้งานได้จริง) -->
+                <div class="phone">
+                    <p data-i18n="app.2" class="phone-hello">สวัสดี ☀<br><strong>วันนี้คุณเป็นอย่างไร?</strong></p>
+                    <div class="mood-row">
+                        <button class="mood-button" data-mood="great">😄<small data-i18n="app.3">ดีมาก</small></button>
+                        <button class="mood-button" data-mood="good">🙂<small data-i18n="app.4">ดี</small></button>
+                        <button class="mood-button" data-mood="ok">😐<small data-i18n="app.5">ปกติ</small></button>
+                        <button class="mood-button" data-mood="stressed">😟<small data-i18n="app.6">เครียด</small></button>
+                        <button class="mood-button" data-mood="very">😣<small data-i18n="app.7">มาก</small></button>
+                    </div>
+                    <p id="moodMessage" data-dynamic class="mood-message">แตะอารมณ์เพื่อลองใช้งาน</p>
+                    <ul class="phone-menu">
+                        <li data-i18n="app.8">📋 แบบประเมินความเครียด</li>
+                        <li data-i18n="app.9">🌿 กิจกรรมแนะนำวันนี้</li>
+                        <li data-i18n="app.10">📝 บันทึกความรู้สึก</li>
+                        <li data-i18n="app.11">📚 บทความน่ารู้</li>
+                    </ul>
+                </div>
+
+                <!-- จอที่ 2: กิจกรรมแนะนำ -->
+                <div class="phone">
+                    <p data-i18n="app.12" class="phone-title">กิจกรรมแนะนำ</p>
+                    <div class="phone-activity"><img src="images/care-breathe.webp" alt="" width="268" height="151" loading="lazy" decoding="async"><span data-i18n="app.13">ฝึกหายใจ<br><small>5 นาที</small></span></div>
+                    <div class="phone-activity"><img src="images/care-grounding.webp" alt="" width="271" height="150" loading="lazy" decoding="async"><span data-i18n="app.14">Grounding<br><small>3 นาที</small></span></div>
+                    <div class="phone-activity"><img src="images/care-plan.webp" alt="" width="262" height="152" loading="lazy" decoding="async"><span data-i18n="app.15">จัดลำดับงาน<br><small>7 นาที</small></span></div>
+                    <div class="phone-activity"><img src="images/care-sleep.webp" alt="" width="266" height="168" loading="lazy" decoding="async"><span data-i18n="app.16">เตรียมนอน<br><small>10 นาที</small></span></div>
+                </div>
+
+                <!-- จอที่ 3: กราฟติดตามความรู้สึก -->
+                <div class="phone">
+                    <p data-i18n="app.17" class="phone-title">ติดตามความรู้สึก</p>
+                    <svg class="phone-chart" viewBox="0 0 220 120" aria-label="กราฟตัวอย่างความเครียด 7 วัน">
+                        <polyline points="10,90 42,80 74,70 106,45 138,30 170,55 202,40" fill="none" stroke="#f29b5c" stroke-width="3"/>
+                        <circle cx="10" cy="90" r="4" fill="#f29b5c"/>
+                        <circle cx="42" cy="80" r="4" fill="#f29b5c"/>
+                        <circle cx="74" cy="70" r="4" fill="#f29b5c"/>
+                        <circle cx="106" cy="45" r="4" fill="#f29b5c"/>
+                        <circle cx="138" cy="30" r="4" fill="#f29b5c"/>
+                        <circle cx="170" cy="55" r="4" fill="#f29b5c"/>
+                        <circle cx="202" cy="40" r="4" fill="#f29b5c"/>
+                    </svg>
+                    <p data-i18n="app.18" class="phone-small">ข้อมูลตัวอย่าง 7 วัน</p>
+                    <p class="phone-small"><strong data-i18n="app.19">สิ่งที่แอปจะช่วยได้</strong></p>
+                    <ul class="phone-menu">
+                        <li data-i18n="app.20">📈 เห็นแนวโน้มรายสัปดาห์</li>
+                        <li data-i18n="app.21">🔎 รู้ช่วงเวลาที่เครียดบ่อย</li>
+                        <li data-i18n="app.22">🎯 แนะนำกิจกรรมเฉพาะคน</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <!-- ===== แบบสอบถามหลังทดลองใช้ (ซ่อนไว้ถ้ายังไม่ได้ใส่ลิงก์ใน script.js) ===== -->
-        <section id="feedback" class="section feedback hidden">
+        <section id="feedback" data-page="home" class="section feedback hidden">
             <div class="card feedback-card">
                 <h2 data-i18n="feedback.1">ลองใช้แล้วเป็นอย่างไรบ้าง?</h2>
                 <p data-i18n="feedback.2">ช่วยตอบแบบสอบถามประมาณ 5–7 นาที ความคิดเห็นของคุณจะใช้ตัดสินใจว่า Hikari ควรพัฒนาต่อเป็นแอปหรือไม่ และควรมีอะไรบ้าง</p>
@@ -1056,7 +1071,7 @@
         </section>
 
         <!-- ===== ขอความช่วยเหลือ ===== -->
-        <section id="help" class="section tinted">
+        <section id="help" data-page="help" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="help.1">ต้องการความช่วยเหลือตอนนี้?</h2>
                 <p data-i18n="help.2">ถ้าคุณรู้สึกไม่ไหว หรือไม่ปลอดภัย ไม่ต้องรอ ติดต่อได้ทันที ฟรี</p>
@@ -1111,7 +1126,7 @@
         </section>
 
         <!-- ===== ความเป็นส่วนตัว: ข้อมูลอะไรเก็บที่ไหน + ลบข้อมูลทั้งหมด (script.js ส่วนที่ 15) ===== -->
-        <section id="privacy" class="section">
+        <section id="privacy" data-page="help" class="section">
             <div class="section-heading">
                 <h2 data-i18n="privacy.1">ความเป็นส่วนตัวและข้อมูลของคุณ</h2>
                 <p data-i18n="privacy.2">สรุปสั้น ๆ ว่าเว็บนี้เก็บอะไร เก็บที่ไหน และติดต่อใครบ้าง</p>

@@ -372,7 +372,21 @@ LANG.pt = {
         "privacy.12": "🩺 <b>Check-up corporal, triagem de depressão e sua resposta sobre uso de substâncias (se respondida):</b> ficam só neste dispositivo e nunca são enviados. Edite no check-up corporal e apague tudo com o botão abaixo.",
         "research.40": "Triagem de depressão",
         "research.41": "Triagem 2Q e avaliação 9Q",
-        "research.42": "Ferramentas de triagem de depressão do Departamento de Saúde Mental da Tailândia, usadas em hospitais e serviços de saúde de todo o país. Usadas na seção “Triagem de depressão” deste site, com o texto original em tailandês."
+        "research.42": "Ferramentas de triagem de depressão do Departamento de Saúde Mental da Tailândia, usadas em hospitais e serviços de saúde de todo o país. Usadas na seção “Triagem de depressão” deste site, com o texto original em tailandês.",
+        "header.t": "Missão de hoje",
+        "hub.d": "Um clipe por dia + 3 tarefas + meu resumo",
+        "header.nav": "Menu principal",
+        "header.h": "Início",
+        "header.r": "Pausa curta",
+        "header.s": "Teste de estresse",
+        "hub.t": "O que você quer fazer hoje?",
+        "hub.r": "1–3 minutos, na sua mesa",
+        "hub.s": "18 perguntas para achar a causa do estresse",
+        "hub.b": "Quanto o trabalho te desgasta?",
+        "hub.c": "Sono, dor de cabeça, estômago e humor",
+        "hub.sc": "Lide com a causa do jeito que combina com você",
+        "hub.br": "Timer de respiração de 1–5 minutos",
+        "hub.h": "Linhas de saúde mental gratuitas, 24 horas"
     },
     "js": {
         "locale": "pt-BR",
