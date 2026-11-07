@@ -33,3 +33,17 @@ const CONTACT_EMAIL = "mokaru.entertainment.admin@gmail.com";
 // ที่อยู่เว็บไซต์จริง (ใช้กับรูปตัวอย่างเวลาแชร์ลิงก์ใน LINE / Facebook)
 // ถ้าย้ายเว็บไปที่อื่น ให้แก้ทั้งที่นี่และ og:url / og:image ในส่วน <head> ของ index.html
 const SITE_URL = "https://mokarumokaruja-beep.github.io/hikari-stresscare/";
+
+// สายด่วนช่วยเหลือ (ใช้ทั้งเว็บและเกม: ปุ่มโทรที่สร้างด้วย JavaScript และการ์ดช่วยเหลือ อ่านเบอร์จากที่นี่)
+// HOTLINES_CHECKED = "2026-11-06"  ← วันที่ทีมตรวจเบอร์ล่าสุด: ต้องโทรทดสอบ/ตรวจกับเว็บหน่วยงานใหม่ทุก 3 เดือน แล้วแก้วันที่นี้
+// mental = สายด่วนสุขภาพจิต กรมสุขภาพจิต 24 ชม. · emergency = เจ็บป่วยฉุกเฉิน สพฉ. · samaritans = สะมาริตันส์แห่งประเทศไทย
+// child = สายเด็ก 1387 (มูลนิธิสายเด็ก) ใช้ในเกม
+// ถ้าเปลี่ยนเบอร์ ให้แก้ข้อความในไฟล์ภาษาที่มีเบอร์อยู่ด้วย (ข้อความคงที่ใน index.html / lang/*.js / game-data.js ยังเขียนเบอร์ไว้ตรง ๆ)
+// สายด่วนอื่นไม่ได้อยู่ที่นี่: 1600 / 1413 / 1165 (content.js SUBSTANCE_HOTLINE และ game-data.js SUBSTANCE_CALLS), 1213 (content.js BOT_HOTLINE)
+const HOTLINES_CHECKED = "2026-11-07";
+// v29: social = 1300 ศูนย์ช่วยเหลือสังคม พม. (ความรุนแรง/ถูกทำร้าย ฟรี 24 ชม.) · police = 191 เหตุด่วนเหตุร้าย
+const HOTLINES = { mental: "1323", emergency: "1669", samaritans: "02-113-6789", child: "1387", social: "1300", police: "191" };
+
+// v28 คุยกับน้อง: ค่าเริ่มต้นตอบในเครื่องเท่านั้น (ไม่มีเซิร์ฟเวอร์ ไม่ส่งข้อความไปไหน)
+// ถ้าจะต่อ AI ในอนาคต ให้ดู docs/AI-CHAT.md ก่อน (ต้องผ่านเช็กลิสต์ความปลอดภัย + PDPA) แล้วเปิดบรรทัดนี้ด้วยที่อยู่ Worker ของคุณ (https เท่านั้น)
+// const CHAT_ENDPOINT = "https://hikari-chat.<your-subdomain>.workers.dev/chat";

@@ -355,6 +355,26 @@ h1, h2, h3 {
     border: 2px solid #e6e9f5;
     border-radius: 14px;
     cursor: pointer;
+    min-height: 52px;              /* พื้นที่แตะใหญ่พอบนมือถือ */
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.15s, background-color 0.15s;
+}
+
+.option-label {
+    flex: 1;
+}
+
+/* วงกลมด้านท้าย: ยังไม่เลือก = วงว่าง · เลือกแล้ว = วงสีน้ำเงินมีเครื่องหมายถูก (ฝั่งอาหรับสลับข้างเอง) */
+.option::after {
+    content: "";
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin-inline-start: auto;
+    border: 2px solid #c5cde6;
+    border-radius: 50%;
+    box-sizing: border-box;
 }
 
 .option:hover {
@@ -364,6 +384,26 @@ h1, h2, h3 {
 .option.selected {
     border-color: var(--primary);
     background-color: var(--primary-light);
+    font-weight: 600;
+    box-shadow: 0 0 0 1px var(--primary) inset;
+}
+
+.option.selected::after {
+    content: "✓";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.option:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
 }
 
 .option-emoji {
@@ -374,6 +414,10 @@ h1, h2, h3 {
     display: flex;
     justify-content: space-between;
     gap: 10px;
+}
+
+.quiz-buttons .btn {
+    min-height: 48px;
 }
 
 .quiz-message {
@@ -2371,3 +2415,76 @@ html { scroll-padding-top: 124px; }
     .hero .hero-image { height: 240px; object-fit: cover; object-position: center 20%; }
     .why-image img { height: 200px; }
 }
+
+/* ===== v26: เครื่องเล่นเสียงของ Hikari (แทน YouTube สำหรับเสียงธรรมชาติ/โทนนุ่ม) ===== */
+.hk-sound {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 16px;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(180deg, #8ea4d6, #5d74ad);
+}
+.hk-sound.art-rain   { background: linear-gradient(180deg, #a9bde6, #6f86bd); }
+.hk-sound.art-tone   { background: linear-gradient(180deg, #e8c3b4, #9b84d1); }
+.hk-sound.art-stream { background: linear-gradient(180deg, #a8dcc8, #4f9a88); }
+.hk-sound.art-waves  { background: linear-gradient(180deg, #b6d9ee, #4d8bb5); }
+.hk-sound.art-night  { background: linear-gradient(180deg, #4a4f86, #1f2a5c); }
+.hk-sound.art-bowl   { background: linear-gradient(180deg, #edd3a6, #c48d52); }
+.hk-glow {
+    width: min(34vw, 150px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.12) 70%);
+    transform: scale(0.8);
+    opacity: 0.75;
+}
+/* วงแสงพองยุบช้า ๆ 10 วินาทีต่อรอบ (ราว 6 ครั้งต่อนาที) */
+.hk-sound.is-playing .hk-glow { animation: hk-breathe 10s ease-in-out infinite; }
+@keyframes hk-breathe {
+    0%, 100% { transform: scale(0.8); opacity: 0.7; }
+    45%, 55% { transform: scale(1.05); opacity: 1; }
+}
+.hk-hint { margin: 0; font-size: 15px; line-height: 1.5; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25); max-width: 30em; }
+.hk-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; }
+.hk-play {
+    min-height: 44px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1f2a5c;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+.hk-timer { font-size: 14px; }
+.hk-timer select {
+    min-height: 40px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0 10px;
+    font: inherit;
+    color: #1f2a5c;
+    background: rgba(255, 255, 255, 0.9);
+}
+@media (prefers-reduced-motion: reduce) {
+    .hk-sound.is-playing .hk-glow { animation: none; }
+}
+
+/* v26 ความปลอดภัย: การ์ดช่วยเหลือเมื่อพบข้อความเสี่ยง (ใช้แบบเดียวกับ .crisis-card ของ 9Q) */
+.risk-card { margin: 10px 0 0; }
+.risk-card p { margin: 0 0 10px; }
+/* ช่วงที่อาจกำลังหนัก (body.hk-calm): ไม่แสดงของขายด้วยเงิน ราคา และแบนเนอร์ Premium / Care+ */
+.hk-calm #shopPreview, .hk-calm [data-i18n="today.r3"], .hk-calm #videoPromo,
+.hk-calm #plans, .hk-calm #navLinks [data-tab="plans"], .hk-calm #payModal { display: none !important; }
+/* v26: หน้าเล่นเสียงสูงพอให้ปุ่มไม่ล้นบนมือถือ */
+.video-frame:has(.hk-sound) { aspect-ratio: auto; }
+.video-frame:has(.hk-sound) #videoPlayer { position: relative; }
+.hk-sound { position: relative; min-height: 320px; padding: 24px 16px; }
+.hk-glow { width: min(30vw, 130px); }

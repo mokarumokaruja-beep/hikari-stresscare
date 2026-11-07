@@ -107,6 +107,69 @@ function setTextWithPhones(element, text) {
     linkPhones(element);
 }
 
+// ----- v26 ความปลอดภัย (ฟังก์ชันตรวจอยู่ใน safety.js ตรวจในเครื่องเท่านั้น ไม่ส่งข้อความไปที่ไหน) -----
+// การ์ดช่วยเหลือแบบเดียวกับการ์ด 9Q ข้อ 9 (crisis-card): ขอบคุณ + โทร 1323 / 1669 + บอกคนที่ไว้ใจ · ไม่บล็อกการบันทึก ไม่ตำหนิ
+function riskCard() {
+    const html = LANG[lang].html;
+    const box = document.createElement("div");
+    box.className = "crisis-card risk-card";
+    box.setAttribute("role", "note");
+    const p = document.createElement("p");
+    p.textContent = hkHelpText("care");          // v27: ข้อความการ์ด 10 ภาษาอยู่ใน safety.js
+    const actions = document.createElement("div");
+    actions.className = "crisis-actions";
+    if (hkIntlFirst()) actions.appendChild(hkIntlLink("btn btn-outline"));   // นอกไทย: สายด่วนทั่วโลกก่อน
+    [["btn btn-primary", hkTel(HK_LINES.mental), html["crisis.1323"]],
+        ["btn btn-danger-solid", hkTel(HK_LINES.emergency), html["crisis.1669"]]].forEach(function (b) {
+        const a = document.createElement("a");
+        a.className = b[0];
+        a.href = b[1];
+        a.textContent = b[2];
+        actions.appendChild(a);
+    });
+    if (!hkIntlFirst()) actions.appendChild(hkIntlLink("btn btn-outline"));
+    const tell = document.createElement("a");
+    tell.className = "btn btn-outline";
+    tell.href = "#talk";
+    tell.textContent = hkHelpText("tell");
+    actions.appendChild(tell);
+    box.appendChild(p);
+    box.appendChild(actions);
+    return box;
+}
+
+// ตรวจช่องพิมพ์ข้อความอิสระ: พบคำเสี่ยง → แสดงการ์ดช่วยเหลือใน holder (ครั้งเดียว) + จำเวลาไว้ (ไม่จำข้อความ)
+function watchRisk(input, holder) {
+    let timer = null;
+    const check = function () {
+        clearTimeout(timer);
+        if (!HikariSafety.hasRiskText(input.value)) {
+            // v29: เล่าว่าถูกทำร้าย/ถูกข่มขู่ → การ์ด 1300 / 191 (ไม่บล็อก ไม่ตำหนิ)
+            if (HikariSafety.hasAbuseText(input.value)) {
+                HikariSafety.markRisk(currentUser, "site");
+                updateCalm();
+                if (!holder.querySelector(".abuse-card")) holder.appendChild(hkAbuseCard({ className: "crisis-card risk-card", btnClass: "btn btn-outline", tellHref: "#talk" }));
+            }
+            return;
+        }
+        HikariSafety.markRisk(currentUser, "site");
+        updateCalm();
+        if (!holder.querySelector(".risk-card")) {
+            holder.appendChild(riskCard());
+        }
+    };
+    input.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(check, 700);
+    });
+    input.addEventListener("blur", check);
+}
+
+// ช่วงที่อาจกำลังหนัก (safety.js inDistress): ไม่แสดงของขาย ราคา และแบนเนอร์ Premium / Care+ (ซ่อนด้วย CSS .hk-calm ไม่มีข้อความบอก)
+function updateCalm() {
+    document.body.classList.toggle("hk-calm", HikariSafety.inDistress(userSuffix()));
+}
+
 
 // ===== 1. ภาษา =====
 
@@ -167,6 +230,10 @@ function applyLanguage() {
     renderOverview();
     updatePageTitle();                  // v19: ชื่อแท็บเบราว์เซอร์ = ชื่อหน้า · Hikari
     updateTabEdges();                   // ความยาวชื่อเมนูเปลี่ยนตามภาษา
+    resetClearButton();                 // v27: ปุ่มที่ JavaScript ตั้งข้อความเอง ให้เปลี่ยนภาษาด้วยแม้ยังไม่แสดง
+    if (cMode !== "quiz") {
+        cNext.textContent = t("next");
+    }
 }
 
 langSelect.addEventListener("change", function () {
@@ -363,7 +430,7 @@ let loginVia = null;                  // "google" เมื่อเข้าผ
 // v18: ข้อมูลการใช้สาร (ถามครั้งเดียว), เช็กร่างกายรายสัปดาห์, คัดกรองซึมเศร้า, อารมณ์รายวัน, การชวนเช็กที่กด "ไว้ทีหลัง"
 const GUEST_PREFIXES = ["hikariHistory_", "hikariJourney_", "hikariGame_", "hikariLog_", "hikariOrders_",
     "hikariBurnout_", "hikariReset_", "hikariCauses_",
-    "hikariProfile_", "hikariCheck_", "hikariDep_", "hikariMoods_", "hikariNudge_"];
+    "hikariProfile_", "hikariCheck_", "hikariDep_", "hikariMoods_", "hikariNudge_", "hikariCare_"];
 
 function moveGuestData(username) {
     try {
@@ -497,7 +564,8 @@ function logDetail(entry) {
         return PLAN_NAMES[entry.data.from] + " → " + PLAN_NAMES[entry.data.to];
     }
     if (entry.type === "daily") {
-        return fill(t("dayLabel"), { d: entry.data.day, total: JOURNEY.length }) + " · " + entry.data.title;
+        const dayItem = JOURNEY[entry.data.day - 1];
+        return fill(t("dayLabel"), { d: entry.data.day, total: JOURNEY.length }) + " · " + (dayItem && dayItem.local ? videoTitle(dayItem) : entry.data.title);
     }
     if (entry.type === "order") {
         return "#" + entry.data.id + " · " + t("shopNames")[entry.data.item] + " · ฿" + entry.data.amount;
@@ -509,7 +577,7 @@ function logDetail(entry) {
         return entry.data.cite;
     }
     if (entry.type === "video") {
-        return entry.data.title;        // ชื่อวิดีโอที่ดู
+        return videoTitleById(entry.data.id) || entry.data.title;        // ชื่อวิดีโอที่ดู (เสียงของ Hikari แสดงตามภาษาปัจจุบัน)
     }
     if (entry.type === "burnout") {
         return burnoutDetail(entry.data);
@@ -1020,8 +1088,6 @@ const levelColors = ["#3aa776", "#f4b63f", "#f29b5c", "#f0688a"];
 
 const answers = [];      // answers[0] = คะแนนข้อ 1 ...
 let current = 0;         // ข้อที่กำลังแสดง (เริ่มที่ 0)
-let advanceTimer = null; // ตัวนับเวลาไปข้อถัดไปอัตโนมัติ
-const AUTO_ADVANCE_MS = 300;
 
 const quiz = document.getElementById("quiz");
 const questionText = document.getElementById("questionText");
@@ -1033,6 +1099,87 @@ const nextButton = document.getElementById("nextButton");
 const quizMessage = document.getElementById("quizMessage");
 const result = document.getElementById("result");
 
+// ----- ตัวเลือกคำตอบแบบ radio (ใช้กับแบบประเมินทุกชุดที่ถามทีละข้อ) -----
+// แตะ = เลือกคำตอบ (เปลี่ยนใจได้) แล้วกด "ถัดไป" เอง ไม่ข้ามข้ออัตโนมัติ
+// คีย์บอร์ด: Tab เข้ากลุ่ม · ลูกศรเลื่อน/เลือก · Space เลือก · Enter = กด "ถัดไป" (ถ้ายังไม่เลือก Enter = เลือกข้อที่โฟกัสอยู่)
+// items = [{ label, emoji? }] · selected = ลำดับที่เลือกอยู่ (-1 = ยังไม่เลือก)
+// onPick(i) เก็บคำตอบแล้ววาดคำถามใหม่ (กล่องเดิม) จากนั้นโฟกัสตัวเลือกที่เพิ่งเลือก
+function renderChoices(box, items, selected, onPick, nextBtn) {
+    box.textContent = "";
+    box.setAttribute("role", "radiogroup");
+    items.forEach(function (item, i) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.setAttribute("role", "radio");
+        const on = i === selected;
+        button.setAttribute("aria-checked", on ? "true" : "false");
+        button.classList.toggle("selected", on);
+        // roving tabindex: Tab เข้ามาที่ข้อที่เลือกไว้ (ยังไม่เลือก = ข้อแรก)
+        button.tabIndex = (on || (selected < 0 && i === 0)) ? 0 : -1;
+        if (item.emoji) {
+            const emoji = document.createElement("span");
+            emoji.className = "option-emoji";
+            emoji.setAttribute("aria-hidden", "true");
+            emoji.textContent = item.emoji;
+            button.appendChild(emoji);
+        }
+        const label = document.createElement("span");
+        label.className = "option-label";
+        label.textContent = item.label;
+        button.appendChild(label);
+        button.addEventListener("click", function () {
+            pick(i);
+        });
+        button.addEventListener("keydown", function (event) {
+            const rtl = document.documentElement.dir === "rtl";
+            let move = 0;
+            if (event.key === "ArrowDown" || event.key === (rtl ? "ArrowLeft" : "ArrowRight")) {
+                move = 1;
+            } else if (event.key === "ArrowUp" || event.key === (rtl ? "ArrowRight" : "ArrowLeft")) {
+                move = -1;
+            } else if (event.key === "Enter") {
+                event.preventDefault();          // ไม่ให้ Enter กลายเป็น "คลิก" ตัวเลือก
+                if (nextBtn.disabled) {
+                    pick(i);
+                } else {
+                    nextBtn.click();
+                }
+                return;
+            }
+            if (move !== 0) {
+                event.preventDefault();
+                pick((i + move + items.length) % items.length);
+            }
+        });
+        box.appendChild(button);
+    });
+
+    function pick(i) {
+        onPick(i);
+        if (box.children[i]) {
+            box.children[i].focus({ preventScroll: true });
+        }
+    }
+}
+
+// โฟกัสตัวเลือกที่เลือกไว้ (ยังไม่เลือก = ข้อแรก) ใช้หลังกด ถัดไป/ย้อนกลับ ด้วยคีย์บอร์ด
+function focusChoice(box) {
+    const target = box.querySelector('[aria-checked="true"]') || box.children[0];
+    if (target) {
+        target.focus({ preventScroll: true });
+    }
+}
+
+// ปุ่มย้อนกลับ/ถัดไปของแต่ละข้อ: ข้อแรกซ่อนปุ่มย้อนกลับ (เว้นที่ไว้ ปุ่มถัดไปไม่ขยับ)
+// "ถัดไป" กดได้เมื่อเลือกคำตอบแล้ว · ข้อสุดท้ายเป็น "ดูผล"
+function setQuizNav(back, next, index, total, answered) {
+    back.disabled = (index === 0);
+    back.style.visibility = (index === 0) ? "hidden" : "";
+    next.disabled = !answered;
+    next.textContent = (index === total - 1) ? t("seeResult") : t("next");
+}
+
 // แสดงคำถามข้อปัจจุบัน
 function showQuestion() {
     const total = questionFactors.length;
@@ -1041,60 +1188,27 @@ function showQuestion() {
     progressFill.style.width = ((current + 1) / total * 100) + "%";
     quizMessage.textContent = "";
 
-    optionsBox.innerHTML = "";
-    for (let i = 0; i < choiceEmojis.length; i++) {
-        const button = document.createElement("button");
-        button.className = "option";
-        button.innerHTML = '<span class="option-emoji">' + choiceEmojis[i] + "</span>" + t("choices")[i];
-        if (answers[current] === i) {
-            button.classList.add("selected");
-        }
-        button.addEventListener("click", function (event) {
-            answers[current] = i;              // คะแนน = ลำดับของคำตอบ (0–3)
-            const fromKeyboard = event.detail === 0;   // กด Enter/Space (ไม่ใช่เมาส์/นิ้ว)
-            showQuestion();
-            if (fromKeyboard) {
-                optionsBox.children[i].focus();
-            }
-            autoAdvance(current, fromKeyboard);
-        });
-        optionsBox.appendChild(button);
-    }
-
-    backButton.disabled = (current === 0);
-    nextButton.textContent = (current === total - 1) ? t("seeResult") : t("next");
+    const items = choiceEmojis.map(function (emoji, i) {
+        return { emoji: emoji, label: t("choices")[i] };
+    });
+    renderChoices(optionsBox, items, answers[current] === undefined ? -1 : answers[current], function (i) {
+        answers[current] = i;              // คะแนน = ลำดับของคำตอบ (0–3)
+        showQuestion();
+    }, nextButton);
+    setQuizNav(backButton, nextButton, current, total, answers[current] !== undefined);
 }
 
-// ตอบแล้วไปข้อถัดไปเองหลัง 300 มิลลิวินาที (ข้อสุดท้ายรอให้กด "ดูผล" เอง)
-// ถ้าระหว่างรอผู้ใช้กดย้อนกลับ/ถัดไปเอง (ข้อเปลี่ยนแล้ว) จะไม่ข้ามซ้ำ
-function autoAdvance(index, fromKeyboard) {
-    clearTimeout(advanceTimer);
-    advanceTimer = setTimeout(function () {
-        if (current !== index || answers[index] === undefined || result.classList.contains("hidden") === false) {
-            return;
-        }
-        if (current < questionFactors.length - 1) {
-            current = current + 1;
-            showQuestion();
-            if (fromKeyboard) {
-                optionsBox.children[0].focus();      // ผู้ใช้คีย์บอร์ดทำข้อต่อไปได้ทันที
-            }
-        } else if (fromKeyboard) {
-            nextButton.focus();                      // ข้อสุดท้าย: ไปที่ปุ่ม "ดูผล"
-        }
-    }, AUTO_ADVANCE_MS);
-}
-
-backButton.addEventListener("click", function () {
-    clearTimeout(advanceTimer);
+backButton.addEventListener("click", function (event) {
     if (current > 0) {
         current = current - 1;
         showQuestion();
+        if (event.detail === 0 || current === 0) {
+            focusChoice(optionsBox);           // คีย์บอร์ด หรือปุ่มย้อนกลับถูกซ่อน: ไม่ให้โฟกัสหาย
+        }
     }
 });
 
-nextButton.addEventListener("click", function () {
-    clearTimeout(advanceTimer);
+nextButton.addEventListener("click", function (event) {
     if (answers[current] === undefined) {
         quizMessage.textContent = t("needAnswer");
         return;
@@ -1102,6 +1216,9 @@ nextButton.addEventListener("click", function () {
     if (current < questionFactors.length - 1) {
         current = current + 1;
         showQuestion();
+        if (event.detail === 0) {
+            focusChoice(optionsBox);           // กด Enter/Space: ทำข้อต่อไปได้ทันที
+        }
     } else {
         showResult();
     }
@@ -1199,7 +1316,6 @@ function refreshQuiz() {
 }
 
 document.getElementById("restartButton").addEventListener("click", function () {
-    clearTimeout(advanceTimer);
     answers.length = 0;
     current = 0;
     result.classList.add("hidden");
@@ -1574,9 +1690,9 @@ function renderVideos() {
         card.querySelector("img").src = thumbUrl(v.id);
         card.querySelector(".video-lang").textContent = v.lang;
         card.querySelector(".video-day").textContent = fill(t("dayShort"), { d: day });
-        card.querySelector("h3").textContent = v.title;
+        card.querySelector("h3").textContent = videoTitle(v);
         card.querySelector("p").textContent = t("catNames")[v.cat] + " · " + v.source;
-        card.setAttribute("aria-label", t("videoPlay") + ": " + v.title);
+        card.setAttribute("aria-label", t("videoPlay") + ": " + videoTitle(v));
         card.addEventListener("click", function () { openVideo(v); });
         grid.appendChild(card);
     }
@@ -1584,7 +1700,17 @@ function renderVideos() {
         fill(t("unlockedInfo"), { n: info.unlocked, total: JOURNEY.length });
 }
 
+// v27: ชื่อเสียงของ Hikari เอง (มี titles แยกภาษา) แสดงตามภาษาที่เลือก · คลิป YouTube ใช้ชื่อเดิมของผู้สร้าง
+function videoTitle(v) {
+    return (v && v.titles && (v.titles[lang] || v.titles.en)) || (v && v.title) || "";
+}
+function videoTitleById(id) {
+    return videoTitle(JOURNEY.find(function (x) { return x.id === id; }));
+}
+
 function thumbUrl(id) {
+    const own = JOURNEY.find(function (x) { return x.id === id && x.local; });
+    if (own) return "images/sound-" + own.art + ".svg";     // v26: ภาพปกเสียงของ Hikari
     return "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
 }
 
@@ -1596,8 +1722,15 @@ function updateVideoPromo() {
 
 function openVideo(v) {
     playingVideo = v;
-    document.getElementById("videoTitle").textContent = v.title;
-    document.getElementById("videoSource").href = "https://www.youtube.com/watch?v=" + v.id;
+    document.getElementById("videoTitle").textContent = videoTitle(v);
+    const src = document.getElementById("videoSource");
+    if (v.local) {                       // v26: เสียงของ Hikari เอง เล่นในหน้านี้ ไม่ใช้ YouTube
+        src.href = "sounds/CREDITS.md";
+        src.textContent = hkSoundText("credit", lang) + " ↗";
+    } else {
+        src.href = "https://www.youtube.com/watch?v=" + v.id;
+        src.textContent = (LANG[lang].html && LANG[lang].html["videos.yt"]) || "YouTube ↗";
+    }
     videoPlayer.innerHTML = "";
     videoModal.classList.remove("hidden");
     addLog("video", { id: v.id, title: v.title });
@@ -1610,9 +1743,13 @@ function openVideo(v) {
 
 // เล่นวิดีโอ: ใช้ youtube-nocookie.com (โหมดเก็บข้อมูลผู้ชมน้อยลง)
 function playVideo() {
+    if (playingVideo.local) {
+        renderHkSound(videoPlayer, playingVideo, lang);
+        return;
+    }
     const frame = document.createElement("iframe");
     frame.src = "https://www.youtube-nocookie.com/embed/" + playingVideo.id + "?autoplay=1&rel=0";
-    frame.title = playingVideo.title;
+    frame.title = videoTitle(playingVideo);
     frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
     frame.allowFullscreen = true;
     frame.referrerPolicy = "strict-origin-when-cross-origin";
@@ -1620,6 +1757,7 @@ function playVideo() {
 }
 
 function closeVideo() {
+    HkSound.stop();                      // v26: หยุดเสียงของ Hikari (ค่อย ๆ เบาลง)
     videoPlayer.innerHTML = "";          // เอา iframe ออก เสียงจะได้หยุด
     videoModal.classList.add("hidden");
 }
@@ -1727,9 +1865,11 @@ function loginAsVia(username, logType, via) {
 // ===== 13. ภารกิจ 60 วัน: คลิปวันละ 1 คลิป (ไม่ซ้ำ 60 วัน) + ภารกิจ 3 ข้อ + กล่องรางวัล =====
 // ข้อมูลคลิป งานวิจัย และของรางวัลอยู่ใน content.js (JOURNEY, RESEARCH, REWARDS, SHOP_ITEMS)
 // ภารกิจ 3 ข้อต่อวัน: checkin = เช็กอินอารมณ์หรือทำแบบประเมิน, learn = ฟังคลิปวันนี้หรืออ่านงานวิจัย, breathe = ฝึกหายใจครบ 1 รอบ
-// ทำครบ 3 ข้อ = วันนั้นสำเร็จ: ได้แสง +1 และนับวันต่อเนื่อง · สำเร็จครบทุก 7 วัน = เลือกของรางวัลได้ 1 ชิ้น
+// ทำครบ 3 ข้อ = วันนั้นสำเร็จ: ได้แสง +1 และนับ "วันที่ดูแลตัวเอง" (สะสม ไม่รีเซ็ตเมื่อหายไป) · สำเร็จครบทุก 7 วัน = เลือกของรางวัลได้ 1 ชิ้น
+// v26: ไม่แสดงวันต่อเนื่อง (streak) แล้ว เหรียญที่ 7/14/21/30/45/60 วันนับจากจำนวนวันสะสม (data.done.length)
 const TASKS = ["checkin", "learn", "breathe"];
-const STREAK_BADGES = [7, 14, 21, 30, 45, 60];
+const STREAK_BADGES = [7, 14, 21, 30, 45, 60];       // ชื่อเดิม ใช้กับวันสะสม
+let welcomeOn = false;                               // แสดงข้อความต้อนรับกลับ (เมื่อหายไป ≥ 2 วัน) จนกว่าจะทำภารกิจข้อแรก
 const REWARD_EVERY = 7;
 const DISCOUNTS = { premium: 0.10, careplus: 0.20 };   // ส่วนลดสมาชิกในร้านค้า
 
@@ -1797,9 +1937,14 @@ function researchOfDay(day) {
     return RESEARCH[(day - 1) % RESEARCH.length];
 }
 
-// สรุปงานวิจัยมีภาษาไทยและอังกฤษ ภาษาอื่นแสดงภาษาอังกฤษ
+// สรุปงานวิจัย: ไทย/อังกฤษอยู่ใน content.js · ภาษาอื่นอยู่ที่ LANG.<ภาษา>.js.research (ลำดับเดียวกับ RESEARCH) ถ้าไม่มีใช้ภาษาอังกฤษ
 function researchText(item) {
-    return lang === "th" ? item.th : item.en;
+    if (lang === "th") {
+        return item.th;
+    }
+    const own = LANG[lang].js.research;
+    const i = RESEARCH.indexOf(item);
+    return (own && own[i]) || item.en;
 }
 
 // วันต่อเนื่อง: นับย้อนจากวันนี้ (หรือเมื่อวาน ถ้าวันนี้ยังไม่ครบ) ทีละวัน
@@ -1823,14 +1968,15 @@ function markTask(task) {
     }
     tasks[task] = true;
     data.tasks[info.today] = tasks;
+    welcomeOn = false;
     let message = "";
     const allDone = TASKS.every(function (k) { return tasks[k]; });
     if (allDone && !info.doneToday) {
         data.done.push(info.today);
         data.light += 1;
-        const streak = streakCount(data.done, info.today);
-        if (STREAK_BADGES.indexOf(streak) !== -1) {
-            message = fill(t("badge"), { n: streak });
+        const careDays = data.done.length;
+        if (STREAK_BADGES.indexOf(careDays) !== -1) {
+            message = fill(t("careBadge"), { n: careDays });
         } else {
             message = t("doneThanks");
         }
@@ -1850,8 +1996,17 @@ function markTask(task) {
 function renderJourney() {
     const info = journeyInfo();
     const v = JOURNEY[info.day - 1];
-    const streak = streakCount(info.data.done, info.today);
-    document.getElementById("todayMsg").textContent = "";
+    const careDays = info.data.done.length;
+    // ต้อนรับกลับเมื่อหายไป ≥ 2 วัน (ไม่พูดถึงสิ่งที่พลาดไป) · data.seen = วันล่าสุดที่เปิดหน้าภารกิจ (ข้อมูลเก่าไม่มี ใช้วันสำเร็จล่าสุด)
+    if (info.data.seen !== info.today) {
+        const last = info.data.seen || info.data.done[info.data.done.length - 1];
+        if (last && daysBetween(last, info.today) >= 2) {
+            welcomeOn = true;
+        }
+        info.data.seen = info.today;
+        saveData(journeyKey(), info.data);
+    }
+    document.getElementById("todayMsg").textContent = welcomeOn ? t("welcomeBack") : "";
 
     let label = fill(t("dayLabel"), { d: info.day, total: JOURNEY.length });
     if (info.round > 1) {
@@ -1860,13 +2015,13 @@ function renderJourney() {
     document.getElementById("todayDay").textContent = label;
     document.getElementById("hubDay").textContent = label;      // v19: การ์ดทางลัดในหน้าแรก
     document.getElementById("todayCat").textContent = t("catNames")[v.cat] + " · " + v.lang;
-    document.getElementById("todayStreak").textContent = streak > 0 ? fill(t("streak"), { n: streak }) : t("streak0");
+    document.getElementById("todayStreak").textContent = careDays > 0 ? fill(t("careDays"), { n: careDays }) : t("careDays0");
     document.getElementById("todayLight").textContent = fill(t("lightLabel"), { n: info.data.light });
-    document.getElementById("todayTitle").textContent = v.title;
+    document.getElementById("todayTitle").textContent = videoTitle(v);
     document.getElementById("todaySource").textContent = v.source;
     setTextWithPhones(document.getElementById("todayMission"), t("missions")[info.day - 1]);
     document.getElementById("todayImg").src = thumbUrl(v.id);
-    document.getElementById("todayThumb").setAttribute("aria-label", t("videoPlay") + ": " + v.title);
+    document.getElementById("todayThumb").setAttribute("aria-label", t("videoPlay") + ": " + videoTitle(v));
     document.getElementById("todayGuest").classList.toggle("hidden", Boolean(currentUser));
 
     // ภารกิจ 3 ข้อ: ติ๊กถูกเมื่อทำแล้ว
@@ -1930,7 +2085,7 @@ function renderDots(info) {
                 document.getElementById("todayMsg").textContent = t("lockedMsg");
             });
         } else {
-            dot.setAttribute("aria-label", name + " · " + JOURNEY[d - 1].title);
+            dot.setAttribute("aria-label", name + " · " + videoTitle(JOURNEY[d - 1]));
             dot.addEventListener("click", function () { openVideo(JOURNEY[d - 1]); });
         }
         dots.appendChild(dot);
@@ -2071,6 +2226,9 @@ let payTimer = null;
 let payOrder = null;
 
 function openPayment(item) {
+    if (HikariSafety.inDistress(userSuffix())) {
+        return;                                     // v26: ช่วงที่อาจกำลังหนัก ไม่เปิดหน้าชำระเงิน
+    }
     if (!currentUser) {
         openAuth("login");                          // ต้องมีบัญชี เพื่อให้ทีมงานเพิ่มของให้ถูกคน
         return;
@@ -2333,6 +2491,7 @@ function noteField(box, field, multiline) {
     });
     box.appendChild(label);
     box.appendChild(input);
+    watchRisk(input, box);              // v26: พบคำเสี่ยง → การ์ดช่วยเหลือ (ยังบันทึกได้ตามปกติ)
 }
 
 // ปุ่มบันทึก / ล้าง ของการ์ดที่มีช่องเขียน
@@ -2645,7 +2804,6 @@ document.getElementById("heroReset").addEventListener("click", function (event) 
 // คะแนนแต่ละส่วน = ค่าเฉลี่ย 0–100 · ระดับ: < 50 ต่ำ, 50–74 ปานกลาง, 75–99 สูง, 100 รุนแรง
 const bAnswers = [];
 let bCurrent = 0;
-let bTimer = null;
 let bScores = null;         // ผลล่าสุดที่แสดงอยู่ { p, w }
 
 const bQuiz = document.getElementById("bquiz");
@@ -2725,61 +2883,29 @@ function showBQuestion() {
     document.getElementById("bProgressFill").style.width = ((bCurrent + 1) / total * 100) + "%";
     document.getElementById("bMessage").textContent = "";
 
+    // เหมือนแบบประเมินความเครียด: แตะเพื่อเลือก แล้วกด "ถัดไป" เอง
     const choices = item.scale === "deg" ? t("cbiDeg") : t("cbiFreq");
-    bOptions.textContent = "";
-    for (let i = 0; i < choices.length; i++) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "option";
-        button.textContent = choices[i];
-        button.setAttribute("aria-pressed", bAnswers[bCurrent] === i ? "true" : "false");
-        if (bAnswers[bCurrent] === i) {
-            button.classList.add("selected");
-        }
-        button.addEventListener("click", function (event) {
-            bAnswers[bCurrent] = i;
-            const fromKeyboard = event.detail === 0;
-            showBQuestion();
-            if (fromKeyboard) {
-                bOptions.children[i].focus();
-            }
-            bAutoAdvance(bCurrent, fromKeyboard);
-        });
-        bOptions.appendChild(button);
-    }
-    bBack.disabled = (bCurrent === 0);
-    bNext.textContent = (bCurrent === total - 1) ? t("seeResult") : t("next");
+    const items = choices.map(function (label) {
+        return { label: label };
+    });
+    renderChoices(bOptions, items, bAnswers[bCurrent] === undefined ? -1 : bAnswers[bCurrent], function (i) {
+        bAnswers[bCurrent] = i;
+        showBQuestion();
+    }, bNext);
+    setQuizNav(bBack, bNext, bCurrent, total, bAnswers[bCurrent] !== undefined);
 }
 
-// เหมือนแบบประเมินความเครียด: ตอบแล้วไปข้อถัดไปเองหลัง 300 มิลลิวินาที ข้อสุดท้ายรอกด "ดูผล"
-function bAutoAdvance(index, fromKeyboard) {
-    clearTimeout(bTimer);
-    bTimer = setTimeout(function () {
-        if (bCurrent !== index || bAnswers[index] === undefined || !bResult.classList.contains("hidden")) {
-            return;
-        }
-        if (bCurrent < CBI_ITEMS.length - 1) {
-            bCurrent += 1;
-            showBQuestion();
-            if (fromKeyboard) {
-                bOptions.children[0].focus();
-            }
-        } else if (fromKeyboard) {
-            bNext.focus();
-        }
-    }, AUTO_ADVANCE_MS);
-}
-
-bBack.addEventListener("click", function () {
-    clearTimeout(bTimer);
+bBack.addEventListener("click", function (event) {
     if (bCurrent > 0) {
         bCurrent -= 1;
         showBQuestion();
+        if (event.detail === 0 || bCurrent === 0) {
+            focusChoice(bOptions);
+        }
     }
 });
 
-bNext.addEventListener("click", function () {
-    clearTimeout(bTimer);
+bNext.addEventListener("click", function (event) {
     if (bAnswers[bCurrent] === undefined) {
         document.getElementById("bMessage").textContent = t("needAnswer");
         return;
@@ -2787,6 +2913,9 @@ bNext.addEventListener("click", function () {
     if (bCurrent < CBI_ITEMS.length - 1) {
         bCurrent += 1;
         showBQuestion();
+        if (event.detail === 0) {
+            focusChoice(bOptions);
+        }
     } else {
         showBResult();
     }
@@ -2873,7 +3002,6 @@ function refreshBurnout() {
 }
 
 document.getElementById("bRestart").addEventListener("click", function () {
-    clearTimeout(bTimer);
     bAnswers.length = 0;
     bCurrent = 0;
     bScores = null;
@@ -3001,6 +3129,9 @@ function labeledInput(box, id, labelText, placeholder, value, onInput, type) {
     input.addEventListener("input", function () { onInput(input.value); });
     box.appendChild(label);
     box.appendChild(input);
+    if (input.type === "text") {
+        watchRisk(input, box);          // v26
+    }
     return input;
 }
 
@@ -3517,7 +3648,6 @@ let cMode = "intro";
 let cItems = [];
 let cAnswers = {};
 let cCurrent = 0;
-let cTimer = null;
 let profileAfter = "intro";
 const cOptions = document.getElementById("cOptions");
 const cNext = document.getElementById("cNext");
@@ -3581,7 +3711,6 @@ document.getElementById("profSave").addEventListener("click", function () {
     }));
 });
 document.getElementById("checkEditProfile").addEventListener("click", function () {
-    clearTimeout(cTimer);
     openProfile(cMode === "result" ? "result" : "intro");
 });
 document.getElementById("checkStart").addEventListener("click", function () {
@@ -3593,7 +3722,6 @@ document.getElementById("checkStart").addEventListener("click", function () {
 });
 
 function startCheckQuiz() {
-    clearTimeout(cTimer);
     cItems = checkItemIds();
     cAnswers = {};
     cCurrent = 0;
@@ -3615,58 +3743,28 @@ function showCQuestion() {
     document.getElementById("cMessage").textContent = "";
     const info = areaInfo(id);
     document.getElementById("cRedflag").classList.toggle("hidden", !(info && info.redflag));
-    const choices = t("checkScale");
-    cOptions.textContent = "";
-    for (let i = 0; i < choices.length; i++) {
-        const button = el("button", "option", choices[i]);
-        button.type = "button";
-        const on = cAnswers[id] === i;
-        button.setAttribute("aria-pressed", on ? "true" : "false");
-        button.classList.toggle("selected", on);
-        button.addEventListener("click", function (event) {
-            cAnswers[id] = i;
-            const fromKeyboard = event.detail === 0;
-            showCQuestion();
-            if (fromKeyboard) {
-                cOptions.children[i].focus();
-            }
-            cAutoAdvance(cCurrent, fromKeyboard);
-        });
-        cOptions.appendChild(button);
-    }
-    cBack.disabled = (cCurrent === 0);
-    cNext.textContent = (cCurrent === total - 1) ? t("seeResult") : t("next");
+    // เหมือนแบบประเมินอื่น: แตะเพื่อเลือก แล้วกด "ถัดไป" เอง
+    const items = t("checkScale").map(function (label) {
+        return { label: label };
+    });
+    renderChoices(cOptions, items, cAnswers[id] === undefined ? -1 : cAnswers[id], function (i) {
+        cAnswers[id] = i;
+        showCQuestion();
+    }, cNext);
+    setQuizNav(cBack, cNext, cCurrent, total, cAnswers[id] !== undefined);
 }
 
-// เหมือนแบบประเมินอื่น: ตอบแล้วไปข้อถัดไปเองหลัง 300 มิลลิวินาที ข้อสุดท้ายรอกด "ดูผล"
-function cAutoAdvance(index, fromKeyboard) {
-    clearTimeout(cTimer);
-    cTimer = setTimeout(function () {
-        if (cMode !== "quiz" || cCurrent !== index || cAnswers[cItems[index]] === undefined) {
-            return;
-        }
-        if (cCurrent < cItems.length - 1) {
-            cCurrent += 1;
-            showCQuestion();
-            if (fromKeyboard) {
-                cOptions.children[0].focus();
-            }
-        } else if (fromKeyboard) {
-            cNext.focus();
-        }
-    }, AUTO_ADVANCE_MS);
-}
-
-cBack.addEventListener("click", function () {
-    clearTimeout(cTimer);
+cBack.addEventListener("click", function (event) {
     if (cCurrent > 0) {
         cCurrent -= 1;
         showCQuestion();
+        if (event.detail === 0 || cCurrent === 0) {
+            focusChoice(cOptions);
+        }
     }
 });
 
-cNext.addEventListener("click", function () {
-    clearTimeout(cTimer);
+cNext.addEventListener("click", function (event) {
     if (cAnswers[cItems[cCurrent]] === undefined) {
         document.getElementById("cMessage").textContent = t("needAnswer");
         return;
@@ -3674,6 +3772,9 @@ cNext.addEventListener("click", function () {
     if (cCurrent < cItems.length - 1) {
         cCurrent += 1;
         showCQuestion();
+        if (event.detail === 0) {
+            focusChoice(cOptions);
+        }
     } else {
         finishCheck();
     }
@@ -3855,7 +3956,6 @@ function refreshCheck() {
 
 // เปลี่ยนผู้ใช้: ข้อมูลที่แสดงต้องเป็นของคนใหม่ (คำถามการใช้สารปรับตามข้อมูลของคนนั้น)
 function resetCheckFlow() {
-    clearTimeout(cTimer);
     if (cMode === "quiz" || cMode === "profile") {
         if (loadProfile() === null) {
             openProfile("quiz", true);
@@ -3979,6 +4079,7 @@ function addNudge(box, kind, text, href) {
 }
 
 function renderOverview() {
+    updateCalm();                       // v26: ทุกครั้งที่ข้อมูลเช็ก/อารมณ์/ผู้ใช้เปลี่ยน
     const nudges = document.getElementById("ovNudges");
     nudges.textContent = "";
     if (checkDue()) {
@@ -4049,12 +4150,8 @@ function renderHomeAlert(doctorOn) {
     box.classList.toggle("hidden", items.length === 0);
 }
 
-// ----- ชวนคนที่ไว้ใจคุย: แม่แบบข้อความ 3 แบบ แก้ได้ ส่งทาง LINE (ไม่เก็บข้อความไว้ที่ไหน) -----
+// ----- ชวนคนที่ไว้ใจคุย: แม่แบบข้อความ 3 แบบ แก้ได้ ส่งผ่านแผงแชร์ share.js (LINE / WhatsApp / ฯลฯ) ไม่เก็บข้อความไว้ที่ไหน -----
 const talkEdits = [null, null, null];      // ข้อความที่แก้แล้ว (หน่วยความจำเท่านั้น) null = ใช้แม่แบบของภาษาปัจจุบัน
-
-function lineShareUrl(text) {
-    return "https://line.me/R/share?text=" + encodeURIComponent(text);
-}
 
 function renderTalk() {
     const list = document.getElementById("talkList");
@@ -4068,20 +4165,22 @@ function renderTalk() {
         box.rows = 2;
         box.maxLength = 500;
         box.value = talkEdits[i] !== null ? talkEdits[i] : tpl;
-        const send = el("a", "btn btn-primary btn-small talk-send", t("talkSend"));
-        send.target = "_blank";
-        send.rel = "noopener";
-        send.setAttribute("aria-label", t("talkSend") + " · " + fill(t("talkLabel"), { n: i + 1 }));
+        const send = el("button", "btn btn-primary btn-small talk-send", HikariShare.text("sendBtn", lang));
+        send.type = "button";
+        send.setAttribute("aria-label", HikariShare.text("sendBtn", lang) + " · " + fill(t("talkLabel"), { n: i + 1 }));
         const update = function () {
-            const text = box.value.trim();
-            if (text === "") {
-                send.removeAttribute("href");
-                send.setAttribute("aria-disabled", "true");
-            } else {
-                send.href = lineShareUrl(text);
-                send.removeAttribute("aria-disabled");
-            }
+            send.disabled = box.value.trim() === "";
         };
+        // v27: ข้อความส่วนตัวถึงคนที่ไว้ใจ ส่งได้แม้มีคำเสี่ยง (แสดงการ์ดช่วยเหลือด้วย)
+        send.addEventListener("click", function () {
+            HikariShare.open({ text: box.value.trim(), kind: "private", lang: lang, onRisk: function () {
+                HikariSafety.markRisk(currentUser, "site");
+                updateCalm();
+                if (!item.querySelector(".risk-card")) {
+                    item.appendChild(riskCard());
+                }
+            } });
+        });
         box.addEventListener("input", function () {
             talkEdits[i] = box.value;
             update();
@@ -4090,6 +4189,7 @@ function renderTalk() {
         item.appendChild(label);
         item.appendChild(box);
         item.appendChild(send);
+        watchRisk(box, item);           // v26: ข้อความถึงคนที่ไว้ใจ ส่งได้ตามปกติ แต่แสดงสายด่วนด้วย
         list.appendChild(item);
     });
 }
@@ -4102,7 +4202,6 @@ function renderTalk() {
 const dAnswers2 = [];
 const dAnswers9 = [];
 let dCurrent = 0;
-let dTimer = null;
 let dShown = null;                  // ผลที่แสดงอยู่
 const depQuiz = document.getElementById("depQuiz");
 const depResult = document.getElementById("depResult");
@@ -4196,61 +4295,33 @@ function showDQuestion() {
     const labels = is2 ? t("depYesNo") : t("dep9Scale");
     const values = is2 ? [1, 0] : [0, 1, 2, 3];
     const store = is2 ? dAnswers2 : dAnswers9;
-    dOptions.textContent = "";
-    for (let k = 0; k < labels.length; k++) {
-        const button = el("button", "option", labels[k]);
-        button.type = "button";
-        const on = store[step.i] === values[k];
-        button.setAttribute("aria-pressed", on ? "true" : "false");
-        button.classList.toggle("selected", on);
-        button.addEventListener("click", function (event) {
-            store[step.i] = values[k];
-            const fromKeyboard = event.detail === 0;
-            showDQuestion();
-            if (fromKeyboard) {
-                dOptions.children[k].focus();
-            }
-            dAutoAdvance(dCurrent, fromKeyboard);
-        });
-        dOptions.appendChild(button);
-    }
-    dBack.disabled = (dCurrent === 0);
-    dNext.textContent = (dCurrent === steps.length - 1) ? t("seeResult") : t("next");
+    // แตะเพื่อเลือก แล้วกด "ถัดไป" เอง · ลำดับข้อ (depSteps) คำนวณใหม่ทุกครั้งที่วาด
+    // ย้อนกลับไปเปลี่ยน 2Q เป็น "ไม่มี" ทั้ง 2 ข้อ = ข้อ 2Q สุดท้ายกลายเป็น "ดูผล" และไม่บันทึก 9Q
+    const items = labels.map(function (label) {
+        return { label: label };
+    });
+    renderChoices(dOptions, items, values.indexOf(store[step.i]), function (k) {
+        store[step.i] = values[k];
+        showDQuestion();
+    }, dNext);
+    setQuizNav(dBack, dNext, dCurrent, depSteps().length, dAnswered(step));
 }
 
 function dAnswered(step) {
     return (step.q === 2 ? dAnswers2 : dAnswers9)[step.i] !== undefined;
 }
 
-function dAutoAdvance(index, fromKeyboard) {
-    clearTimeout(dTimer);
-    dTimer = setTimeout(function () {
-        const steps = depSteps();
-        if (dCurrent !== index || !depResult.classList.contains("hidden") || !dAnswered(steps[index])) {
-            return;
-        }
-        if (dCurrent < steps.length - 1) {
-            dCurrent += 1;
-            showDQuestion();
-            if (fromKeyboard) {
-                dOptions.children[0].focus();
-            }
-        } else if (fromKeyboard) {
-            dNext.focus();
-        }
-    }, AUTO_ADVANCE_MS);
-}
-
-dBack.addEventListener("click", function () {
-    clearTimeout(dTimer);
+dBack.addEventListener("click", function (event) {
     if (dCurrent > 0) {
         dCurrent -= 1;
         showDQuestion();
+        if (event.detail === 0 || dCurrent === 0) {
+            focusChoice(dOptions);
+        }
     }
 });
 
-dNext.addEventListener("click", function () {
-    clearTimeout(dTimer);
+dNext.addEventListener("click", function (event) {
     const steps = depSteps();
     if (!dAnswered(steps[dCurrent])) {
         document.getElementById("dMessage").textContent = t("needAnswer");
@@ -4259,6 +4330,9 @@ dNext.addEventListener("click", function () {
     if (dCurrent < steps.length - 1) {
         dCurrent += 1;
         showDQuestion();
+        if (event.detail === 0) {
+            focusChoice(dOptions);
+        }
     } else {
         finishDep();
     }
@@ -4293,6 +4367,14 @@ function renderDResult() {
     const entry = dShown;
     const crisis = entry.q9 !== null && entry.q9[DEP_SELF_HARM_ITEM] >= 1;
     document.getElementById("depCrisis").classList.toggle("hidden", !crisis);
+    // v27: ลิงก์สายด่วนฟรีทั่วโลก (findahelpline.com) สำหรับคนที่อยู่นอกไทย ขึ้นก่อนถ้าใช้ภาษาอื่น
+    if (crisis && typeof hkIntlLink === "function") {
+        const acts = document.querySelector("#depCrisis .crisis-actions");
+        const old = acts.querySelector(".crisis-intl");
+        if (old) old.remove();
+        const intl = hkIntlLink("btn btn-outline crisis-intl");
+        if (hkIntlFirst()) acts.insertBefore(intl, acts.firstChild); else acts.appendChild(intl);
+    }
     const box = document.getElementById("dScoreBox");
     const self = document.getElementById("dSelfCare");
     if (entry.score === null) {
@@ -4344,7 +4426,6 @@ function refreshDep() {
 }
 
 function restartDep() {
-    clearTimeout(dTimer);
     dAnswers2.length = 0;
     dAnswers9.length = 0;
     dCurrent = 0;
