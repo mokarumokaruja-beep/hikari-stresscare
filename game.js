@@ -83,6 +83,12 @@ if (!S.causes || typeof S.causes !== "object") S.causes = {};
 // ชวนดูแลตัวเอง: เก็บแค่วันที่แสดงล่าสุดของแต่ละแบบ { mood: "YYYY-MM-DD", check: "YYYY-MM-DD" }
 if (!S.nudge || typeof S.nudge !== "object") S.nudge = {};
 S.sessions = (S.sessions || 0) + 1;
+// v26: กลับมาหลังหายไป ≥ 2 วัน → ต้อนรับอบอุ่น (ไม่พูดถึงสิ่งที่พลาดไป) · S.day = วันล่าสุดที่เปิดเกม
+const welcomeBackNow = (function () {
+    if (typeof S.day !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(S.day)) return false;
+    const n = new Date(); n.setHours(12, 0, 0, 0);
+    return Math.round((n - new Date(S.day + "T12:00:00")) / 86400000) >= 2;
+})();
 function save() { saveData(GAME_KEY, S); }
 // ข้อมูลจากหน้าเว็บ (โดเมนเดียวกัน) อ่านอย่างเดียว ห้ามเขียน: hikariProfile_ / hikariCheck_ / hikariDep_<ผู้ใช้>
 function siteData(name) {
@@ -201,12 +207,15 @@ function markActive() {
     S.rewardDays = Math.min(7, S.rewardDays + 1);
     S.activeDays = (S.activeDays || 0) + 1;
     if (S.days.indexOf(today) < 0) { S.days.push(today); S.days = S.days.slice(-60); }
+    if (CARE_BADGES.indexOf(S.activeDays) >= 0) setTimeout(function () { toast(t("careBadge", { n: S.activeDays })); }, 2800);
     setTimeout(maybeAskSurvey, 1500);
 }
-// วันติดกัน: ถ้าวันล่าสุดที่เล่นเก่ากว่าเมื่อวาน = 0 (ไม่แสดงข้อความว่า "ขาด")
-function currentStreak() {
-    const y = new Date(); y.setDate(y.getDate() - 1);
-    return (S.lastActive === dayStr() || S.lastActive === dayStr(y)) ? (S.streak || 0) : 0;
+// v26: ไม่แสดงวันติดกัน (S.streak ยังเก็บไว้ให้เซฟเก่าใช้ได้ แต่ไม่แสดงที่ไหน) ใช้ "วันที่ดูแลตัวเอง" สะสม = S.activeDays ไม่ลดลง
+const CARE_BADGES = [7, 14, 21, 30, 45, 60];
+function careBadge() {
+    let b = 0;
+    CARE_BADGES.forEach(function (n) { if ((S.activeDays || 0) >= n) b = n; });
+    return b;
 }
 
 // ชวนทำแบบสอบถามครั้งเดียว เมื่อเล่นครบ 3 วัน (ไม่ต้องติดกัน)
@@ -253,11 +262,12 @@ function addLight(n) {
     save();
     renderTop();
 }
-// ชิปหัวจอ: จำนวนวันที่อยู่ด้วยกันทั้งหมด (ไม่ลดลงถ้าหายไป) ส่วนวันติดกันดูได้ในแท็บ "ฉัน"
+// ชิปหัวจอ: จำนวนวันที่อยู่ด้วยกันทั้งหมด (ไม่ลดลงถ้าหายไป) · v26 ไม่มีวันติดกันแล้ว
 function renderTop() {
     $("lightCount").textContent = S.light;
     $("daysCount").textContent = S.activeDays || 0;
     $("daysChip").title = t("daysTogether");
+    document.querySelector(".chip-light").title = t("light");
     $("daysChip").setAttribute("aria-label", t("daysTogether") + " " + (S.activeDays || 0));
 }
 
@@ -305,7 +315,7 @@ function renderIntro() {
     const pg = pages[introPage];
     $("introImg").src = img(pg.img);
     $("introTitle").textContent = t(pg.t);
-    setText($("introText"), t(pg.d, { pet: petName() }));
+    setText($("introText"), t(pg.d, { pet: petName() }) + (introPage === 1 ? " · " + t("nb_intro") : ""));   // v30 neighbors
     $("introNext").textContent = introPage === 2 ? t("introStart") : t("introNext");
     $("introSkip").hidden = introPage === 2;
     document.querySelectorAll("#introDots i").forEach(function (d, i) { d.className = i === introPage ? "on" : ""; });
@@ -350,6 +360,7 @@ function todaysVisitor() {
     return list[h % list.length];
 }
 function stageBg() {
+    if (typeof HikariWorld !== "undefined" && HikariWorld.bg()) return HikariWorld.bg();   // v28 world: ออกไปเดินเล่นที่อื่น
     if (S.world === "trip") return tripStop().bg;
     return WORLDS[S.world].bg[timeOfDay()];
 }
@@ -382,6 +393,7 @@ function renderHome() {
         $("visitorImg").src = img(v);
         $("visitorBtn").setAttribute("aria-label", t("visitor"));
     }
+    if (typeof HikariNeighbors !== "undefined") HikariNeighbors.visitor(v);   // v30 neighbors: ป้ายชื่อ + คำใบ้ครั้งแรก
     // ทริปแสง: บอกสถานที่ + ปุ่มแผนที่ (อยู่ข้างปุ่มพักสั้น)
     const trip = S.world === "trip";
     $("tripAt").hidden = !trip;
@@ -391,6 +403,7 @@ function renderHome() {
         $("tripAt").textContent = t("tripAt", { place: placeName(tripStop().id) });
         $("mapBtn").setAttribute("aria-label", t("mapBtn") + " · " + t("mapBtnSub", { n: stampCount() }));
     }
+    if (typeof HikariWorld !== "undefined") HikariWorld.render();       // v28 world: กล้อง ความลึก จุดเรืองแสง ทางออก
     renderTasks();
     renderMood();
     renderNudge();
@@ -402,7 +415,7 @@ $("visitorBtn").addEventListener("click", function () {
     S.today.visitor = true;
     S.met[v] = true;
     addLight(1);
-    toast(t("visitorThanks", { n: 1 }));
+    toast(typeof HikariNeighbors !== "undefined" ? t("nb_greeted", { n: 1, name: HikariNeighbors.name(v) }) : t("visitorThanks", { n: 1 }));   // v30 neighbors
     if (typeof Pet !== "undefined") Pet.greetVisitor();
     renderHome();
 });
@@ -486,7 +499,7 @@ function renderMood() {
                 const help = document.createElement("p");
                 setText(help, t("moodHelp", { pet: petName() }));
                 box.append(help);
-                box.appendChild(callList(["1323", "1669", "1387"], true));
+                box.appendChild(callList([HK_LINES.mental, HK_LINES.emergency, HK_LINES.child], true));
             } else box.textContent = msg;
             renderCause();
             renderNudge();
@@ -551,9 +564,36 @@ function topCause() {
 // ===== 6. หายใจ 4·6 =====
 let breatheTimer = null, breatheSec = 0, breatheRunning = false;
 
-// ----- เสียงประกอบ: สร้างด้วย Web Audio ในเบราว์เซอร์ (ไม่ต้องโหลดไฟล์เสียง ไม่มีปัญหาลิขสิทธิ์) -----
-const SOUNDS = ["off", "rain", "stream", "purr", "bowl"];
+// ----- เสียงประกอบ v26: เสียงธรรมชาติที่อัดจริง (CC0 / CC BY / Public Domain) ทำให้นุ่มขึ้นแล้ว + โทนนุ่มและขันทิเบต -----
+// ไฟล์อยู่ที่ sounds/ · เครดิตอยู่ที่ sounds/CREDITS.md · โหลดเฉพาะเสียงที่เลือก (ประหยัดเน็ต)
+// "bowl" = ระฆังบอกจังหวะหายใจอย่างเดียว ไม่มีเสียงพื้นหลัง · "purr" = เสียงครางของน้อง สร้างในเบราว์เซอร์
+const SOUNDS = ["off", "rain", "stream", "waves", "birds", "night", "tone432", "tone528", "purr", "bowl"];
+const SOUND_FILES = {
+    rain: "rain-soft", stream: "stream", waves: "waves", birds: "birds", night: "night",
+    tone432: "tone-432", tone528: "tone-528"
+};
+const SOUND_VOL = { rain: 0.9, stream: 0.85, waves: 0.85, birds: 0.8, night: 0.8, tone432: 0.75, tone528: 0.75, purr: 0.7 };
+// ชื่อปุ่มเสียง (ภาษาที่ไม่มีในนี้ใช้ข้อความจากไฟล์ภาษาเดิม หรือภาษาอังกฤษ)
+const SOUND_LABELS = {
+    th: { rain: "ฝนพรำ", stream: "ลำธาร", waves: "คลื่นทะเล", birds: "นกในป่า", night: "คืนเงียบ ๆ", tone432: "โทนนุ่ม 432", tone528: "โทนนุ่ม 528", purr: "เสียงครางของน้อง", bowl: "ระฆังจังหวะหายใจ" },
+    en: { rain: "Light rain", stream: "Stream", waves: "Ocean waves", birds: "Forest birds", night: "Quiet night", tone432: "Soft tone 432", tone528: "Soft tone 528", purr: "Purr", bowl: "Breath bell" },
+    zh: { rain: "细雨", stream: "溪流", waves: "海浪", birds: "林间鸟鸣", night: "宁静夜晚", tone432: "柔和音 432", tone528: "柔和音 528", purr: "小可爱的呼噜声", bowl: "呼吸钵音" },
+    ja: { rain: "小雨", stream: "せせらぎ", waves: "波の音", birds: "森の小鳥", night: "静かな夜", tone432: "やさしい音 432", tone528: "やさしい音 528", purr: "ゴロゴロ音", bowl: "呼吸のおりん" },
+    hi: { rain: "हल्की बारिश", stream: "झरना", waves: "समुद्र की लहरें", birds: "जंगल के पक्षी", night: "शांत रात", tone432: "कोमल स्वर 432", tone528: "कोमल स्वर 528", purr: "घुरघुराहट", bowl: "साँस की घंटी" },
+    es: { rain: "Lluvia suave", stream: "Arroyo", waves: "Olas del mar", birds: "Aves del bosque", night: "Noche tranquila", tone432: "Tono suave 432", tone528: "Tono suave 528", purr: "Ronroneo", bowl: "Campana de respiración" },
+    fr: { rain: "Pluie fine", stream: "Ruisseau", waves: "Vagues", birds: "Oiseaux de la forêt", night: "Nuit calme", tone432: "Son doux 432", tone528: "Son doux 528", purr: "Ronronnement", bowl: "Cloche de respiration" },
+    ar: { rain: "مطر خفيف", stream: "جدول ماء", waves: "أمواج البحر", birds: "طيور الغابة", night: "ليل هادئ", tone432: "نغمة هادئة 432", tone528: "نغمة هادئة 528", purr: "خرخرة", bowl: "جرس التنفس" },
+    pt: { rain: "Chuva fina", stream: "Riacho", waves: "Ondas do mar", birds: "Pássaros da floresta", night: "Noite tranquila", tone432: "Tom suave 432", tone528: "Tom suave 528", purr: "Ronronar", bowl: "Sino da respiração" },
+    ru: { rain: "Тихий дождь", stream: "Ручей", waves: "Морские волны", birds: "Лесные птицы", night: "Тихая ночь", tone432: "Мягкий тон 432", tone528: "Мягкий тон 528", purr: "Мурлыканье", bowl: "Колокол дыхания" }
+};
+function soundLabel(k) {
+    const own = SOUND_LABELS[L] && SOUND_LABELS[L][k];
+    if (own) return own;
+    if (GTEXT[L] && GTEXT[L]["sound_" + k] !== undefined) return GTEXT[L]["sound_" + k];
+    return (SOUND_LABELS.en[k]) || t("sound_" + k);
+}
 let actx = null, ambient = null;
+const soundCache = {};          // ชื่อไฟล์ → Promise<AudioBuffer>
 function audioCtx() {
     const C = window.AudioContext || window.webkitAudioContext;
     if (!C) return null;
@@ -561,13 +601,23 @@ function audioCtx() {
     if (actx.state === "suspended") actx.resume();
     return actx;
 }
-function noiseSource(ctx, brown) {
+function loadSound(name) {
+    const ctx = audioCtx();
+    if (!ctx) return Promise.reject(new Error("no audio"));
+    if (!soundCache[name]) {
+        soundCache[name] = fetch("sounds/" + name + ".m4a")
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+            .then(function (buf) {
+                return new Promise(function (ok, fail) { ctx.decodeAudioData(buf, ok, fail); });   // แบบ callback รองรับ Safari รุ่นเก่า
+            })
+            .catch(function (e) { delete soundCache[name]; throw e; });
+    }
+    return soundCache[name];
+}
+function noiseSource(ctx) {          // ใช้กับเสียงครางของน้องเท่านั้น
     const len = ctx.sampleRate * 4, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
     let last = 0;
-    for (let i = 0; i < len; i++) {
-        const w = Math.random() * 2 - 1;
-        if (brown) { last = (last + 0.02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w;
-    }
+    for (let i = 0; i < len; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.5; }
     const src = ctx.createBufferSource();
     src.buffer = buf;
     src.loop = true;
@@ -579,6 +629,10 @@ function filter(ctx, type, freq, q) {
     if (q) f.Q.value = q;
     return f;
 }
+function fadeIn(ctx, out, vol) {
+    out.gain.setValueAtTime(0, ctx.currentTime);
+    out.gain.linearRampToValueAtTime(vol, ctx.currentTime + 2.5);     // ค่อย ๆ ดังขึ้น ไม่ตกใจ
+}
 function startAmbient(kind) {
     stopAmbient();
     if (kind === "off" || kind === "bowl") return;
@@ -587,38 +641,39 @@ function startAmbient(kind) {
     const out = ctx.createGain();
     out.gain.value = 0;
     out.connect(ctx.destination);
-    const parts = [];
-    if (kind === "rain") {
-        const n = noiseSource(ctx, false), hp = filter(ctx, "highpass", 900), lp = filter(ctx, "lowpass", 6500), g = ctx.createGain();
-        g.gain.value = 0.10;
-        n.connect(hp).connect(lp).connect(g).connect(out);
-        const b = noiseSource(ctx, true), g2 = ctx.createGain();
-        g2.gain.value = 0.25;
-        b.connect(filter(ctx, "lowpass", 400)).connect(g2).connect(out);
-        parts.push(n, b);
-    } else if (kind === "stream") {
-        const n = noiseSource(ctx, true), bp = filter(ctx, "bandpass", 700, 0.6), g = ctx.createGain();
-        g.gain.value = 0.55;
+    const token = {};
+    ambient = { out: out, parts: [], token: token, kind: kind };
+    if (kind === "purr") {
+        // เสียงครางนุ่ม ๆ: เสียงต่ำมาก สั่นเบา ๆ และขึ้นลงช้าเหมือนหายใจ
+        const n = noiseSource(ctx), lp = filter(ctx, "lowpass", 130), am = ctx.createGain();
+        am.gain.value = 0.55;
         const lfo = ctx.createOscillator(), depth = ctx.createGain();
-        lfo.frequency.value = 0.18; depth.gain.value = 0.18;
-        lfo.connect(depth).connect(g.gain);
-        n.connect(bp).connect(g).connect(out);
-        parts.push(n, lfo);
-    } else if (kind === "purr") {
-        const n = noiseSource(ctx, true), lp = filter(ctx, "lowpass", 160), am = ctx.createGain();
-        am.gain.value = 0.5;
-        const lfo = ctx.createOscillator(), depth = ctx.createGain();
-        lfo.frequency.value = 24; depth.gain.value = 0.45;
+        lfo.frequency.value = 23; depth.gain.value = 0.28;
         lfo.connect(depth).connect(am.gain);
-        const slow = ctx.createOscillator(), slowDepth = ctx.createGain();   // ขึ้นลงช้า ๆ เหมือนหายใจ
-        slow.frequency.value = 0.1; slowDepth.gain.value = 0.25;
+        const slow = ctx.createOscillator(), slowDepth = ctx.createGain();
+        slow.frequency.value = 0.1; slowDepth.gain.value = 0.2;
         slow.connect(slowDepth).connect(am.gain);
         n.connect(lp).connect(am).connect(out);
-        parts.push(n, lfo, slow);
+        [n, lfo, slow].forEach(function (p) { p.start(); });
+        ambient.parts.push(n, lfo, slow);
+        fadeIn(ctx, out, SOUND_VOL.purr);
+        return;
     }
-    parts.forEach(function (p) { p.start(); });
-    out.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 1.5);
-    ambient = { out: out, parts: parts };
+    const file = SOUND_FILES[kind];
+    if (!file) return;
+    loadSound(file).then(function (buf) {
+        if (!ambient || ambient.token !== token) return;           // ผู้เล่นเปลี่ยนเสียงไปแล้วระหว่างโหลด
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        src.loop = true;
+        // ข้ามช่วงเงียบสั้น ๆ ที่ตัวเข้ารหัส AAC เติมหัวท้าย ให้วนต่อเนื่อง
+        src.loopStart = Math.min(0.06, buf.duration / 4);
+        src.loopEnd = Math.max(src.loopStart + 1, buf.duration - 0.06);
+        src.connect(out);
+        src.start(0, src.loopStart);
+        ambient.parts.push(src);
+        fadeIn(ctx, out, SOUND_VOL[kind] || 0.8);
+    }).catch(function () { /* โหลดไม่ได้ (เช่น ออฟไลน์) ก็เงียบไปเฉย ๆ */ });
 }
 function stopAmbient() {
     if (!ambient || !actx) return;
@@ -626,23 +681,20 @@ function stopAmbient() {
     ambient = null;
     a.out.gain.cancelScheduledValues(actx.currentTime);
     a.out.gain.setValueAtTime(a.out.gain.value, actx.currentTime);
-    a.out.gain.linearRampToValueAtTime(0, actx.currentTime + 0.8);
-    setTimeout(function () { a.parts.forEach(function (p) { try { p.stop(); } catch (e) { /* หยุดแล้ว */ } }); a.out.disconnect(); }, 900);
+    a.out.gain.linearRampToValueAtTime(0, actx.currentTime + 1.2);
+    setTimeout(function () { a.parts.forEach(function (p) { try { p.stop(); } catch (e) { /* หยุดแล้ว */ } }); a.out.disconnect(); }, 1300);
 }
-// ระฆังเบา ๆ ตอนเปลี่ยนจังหวะหายใจ
+// ระฆังเบา ๆ ตอนเปลี่ยนจังหวะหายใจ: เสียงขันทิเบตที่ตีด้วยไม้หุ้มผ้า (หายใจเข้า = สูงกว่านิด, หายใจออก = ต่ำ)
 function bell(high) {
     const ctx = audioCtx();
     if (!ctx) return;
-    const base = high ? 528 : 396, now = ctx.currentTime;
-    [[1, 0.22], [2, 0.06], [3, 0.03]].forEach(function (h) {
-        const o = ctx.createOscillator(), g = ctx.createGain();
-        o.frequency.value = base * h[0];
-        g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(h[1], now + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + 3.2);
-        o.connect(g).connect(ctx.destination);
-        o.start(now); o.stop(now + 3.3);
-    });
+    loadSound(high ? "chime-in" : "chime-out").then(function (buf) {
+        const src = ctx.createBufferSource(), g = ctx.createGain();
+        g.gain.value = 0.8;
+        src.buffer = buf;
+        src.connect(g).connect(ctx.destination);
+        src.start();
+    }).catch(function () { /* ไม่มีเสียงก็ไม่เป็นไร */ });
 }
 function renderSounds() {
     const row = $("soundRow");
@@ -653,9 +705,10 @@ function renderSounds() {
         b.type = "button";
         b.setAttribute("role", "radio");
         b.setAttribute("aria-checked", String(S.sound === k));
-        b.textContent = t("sound_" + k);
+        b.textContent = k === "off" ? t("sound_off") : soundLabel(k);
         b.addEventListener("click", function () {
             S.sound = k;
+            window.hkSoundRestore = undefined;          // v29: ผู้เล่นเลือกเสียงเอง ไม่ต้องคืนค่าเดิม
             if (k !== "off") S.soundUsed[k] = true;
             save();
             renderSounds();
@@ -797,26 +850,35 @@ function renderLetters() {
         inbox.appendChild(d);
     });
 }
-// ส่งจดหมาย = เปิดหน้าแชร์ของ LINE ให้ผู้เล่นเลือกเพื่อนเอง (ไม่มีเซิร์ฟเวอร์ ไม่เก็บว่าใครส่งถึงใคร)
+// ส่งจดหมาย = เปิดแผงแชร์ (share.js: LINE / WhatsApp / Facebook / ฯลฯ) ให้ผู้เล่นเลือกแอปและเพื่อนเอง (ไม่มีเซิร์ฟเวอร์ ไม่เก็บว่าใครส่งถึงใคร)
 // ลิงก์ในข้อความ: game.html?letter=<ลำดับข้อความ>&from=<โลก> เพื่อนเปิดแล้วจะเห็นการ์ดจดหมายก่อนเข้าเกม
-function letterShareUrl(i) {
-    const link = SITE + "game.html?letter=" + i + "&from=" + S.world + "&openExternalBrowser=1";
-    return "https://line.me/R/share?text=" + encodeURIComponent(LETTERS[L][i] + "\n" + link);
+function letterLink(i) {
+    return SITE + "game.html?letter=" + i + "&from=" + S.world + "&openExternalBrowser=1";
 }
 $("letterSend").addEventListener("click", function () {
     rolloverCheck();
     const msgBox = $("letterMsg");
     if (S.today.letters >= LETTER_LIMIT) return;
-    const url = letterShareUrl(letterPick);
-    const w = window.open(url, "_blank");
-    if (w) { try { w.opener = null; } catch (e) { /* ไม่เป็นไร */ } } else location.href = url;
-    S.today.letters++;
-    S.stats.letters++;
-    S.lettersShared++;
-    addLight(1);
-    msgBox.textContent = t("letterSent", { n: 1 });
-    msgBox.className = "note ok";
-    renderLetters();
+    if (HikariSafety.hasRiskText(LETTERS[L][letterPick])) {
+        // v26: ไม่ส่งเป็นจดหมายใจดีสาธารณะ ชวนส่งถึงคนที่ไว้ใจ + สายด่วนแทน (เก็บจดหมายไว้กับตัวเองได้)
+        HikariSafety.markRisk(USER_KEY, "game");
+        msgBox.textContent = "";
+        msgBox.className = "note";
+        msgBox.appendChild(riskBox(t("riskLetter")));
+        return;
+    }
+    // v27: นับว่าส่งแล้วเมื่อเลือกแอปในแผงแชร์ (kind public: share.js ไม่เปิดแผงถ้าข้อความเสี่ยง)
+    HikariShare.open({ text: LETTERS[L][letterPick], url: letterLink(letterPick), kind: "public", lang: L, onShared: function () {
+        rolloverCheck();
+        if (S.today.letters >= LETTER_LIMIT) return;
+        S.today.letters++;
+        S.stats.letters++;
+        S.lettersShared++;
+        addLight(1);
+        msgBox.textContent = HikariShare.text("readyFriend", L) + " +1 " + t("light");
+        msgBox.className = "note ok";
+        renderLetters();
+    } });
 });
 
 // ===== 8. ร้านค้า =====
@@ -826,7 +888,15 @@ function isOwned(item) {
     if (item.contains) return item.contains.every(function (c) { return S.owned[c]; });
     return !!S.owned[item.id];
 }
+// v26: ช่วงที่อาจกำลังหนัก ไม่แสดงของที่ขายด้วยเงิน ราคา หรือชวนซื้อ (ของแลกแสงยังแสดง) ไม่มีข้อความบอกว่าซ่อน
+function calmMode() {
+    try {
+        return HikariSafety.inDistress(USER_KEY) ||
+            HikariSafety.lowMoods(S.mood, function (m) { return m === "sad" || m === "stressed"; }, Date.now());
+    } catch (e) { return false; }
+}
 function priceHtml(item) {
+    if (item.baht && !item.light && calmMode()) return "";
     if (item.light) {
         return '<span class="price"><img src="' + img("icon_light-currency") + '" alt="">' + item.light + "</span>";
     }
@@ -838,7 +908,9 @@ function renderShop() {
     renderReward();
     const row = $("catRow");
     row.innerHTML = "";
-    CATS.forEach(function (c) {
+    const calm = calmMode();
+    if (calm && shopCat === "pack") shopCat = "wear";
+    CATS.filter(function (c) { return !(calm && c === "pack"); }).forEach(function (c) {
         const b = document.createElement("button");
         b.type = "button";
         b.setAttribute("role", "tab");
@@ -850,7 +922,7 @@ function renderShop() {
     const grid = $("itemGrid");
     grid.innerHTML = "";
     const list = shopCat === "owned" ? GAME_ITEMS.filter(function (x) { return !x.contains && S.owned[x.id]; }) :
-        GAME_ITEMS.filter(function (x) { return x.type === shopCat; });
+        GAME_ITEMS.filter(function (x) { return x.type === shopCat && !(calm && x.baht && !x.light); });
     list.forEach(function (item) {
         const b = document.createElement("button");
         b.type = "button";
@@ -954,7 +1026,7 @@ function openItem(item) {
     // ราคา 3 แผน (เฉพาะของที่ซื้อด้วยเงิน และเปิดขายแล้ว ช่วงทดสอบไม่แสดงส่วนลดของแผนที่ยังสมัครไม่ได้)
     const tiers = $("itemTiers");
     tiers.innerHTML = "";
-    if (item.baht && !TEST_MODE) {
+    if (item.baht && !TEST_MODE && !calmMode()) {
         ["free", "premium", "careplus"].forEach(function (p) {
             const d = document.createElement("div");
             d.className = p === plan ? "me" : "";
@@ -980,6 +1052,7 @@ function renderItemActions() {
     const item = openedItem;
     $("itemActions").innerHTML = "";
     const own = isOwned(item);
+    const calm = calmMode();
     if (own && !item.contains) {
         if (item.type === "wear") {
             const on = S.wear === item.id;
@@ -1009,6 +1082,8 @@ function renderItemActions() {
             renderItemActions();
             renderShop();
         });
+    } else if (calm && !own && item.baht) {
+        // v26: ไม่แสดงปุ่มซื้อ / สนใจ
     } else if (!own && item.baht && PROMPTPAY_ID !== "") {
         actionBtn(t("buyBaht", { n: bahtFor(item.baht) }), true, function () { startBuy(item, null); });
     } else if (!own && item.baht) {
@@ -1024,7 +1099,7 @@ function renderItemActions() {
         if (on) b.classList.add("interest-on");
     }
     // ส่งเป็นของขวัญ: เฉพาะของที่ซื้อด้วยเงิน แผน Premium / Care+ และเปิดขายแล้ว
-    if (item.baht && PROMPTPAY_ID !== "") {
+    if (item.baht && PROMPTPAY_ID !== "" && !calm) {
         const ready = PROMPTPAY_ID !== "";
         const giftOk = plan !== "free";
         const g = actionBtn(t("gift"), false, function () {
@@ -1049,6 +1124,7 @@ $("itemSheet").addEventListener("click", function (e) { if (e.target.id === "ite
 const PAY_MINUTES = 15;
 let payTimer = null, payOrder = null;
 function startBuy(item, giftTo) {
+    if (calmMode()) return;
     if (!currentUser) {
         setItemMsg(t("loginNeed"), "warn");
         const a = document.createElement("a");
@@ -1212,7 +1288,7 @@ function renderMe() {
 
     const st = $("statsBox");
     st.innerHTML = "";
-    [[currentStreak(), "statStreak"], [S.activeDays || 0, "statDays"], [S.stats.letters, "statLetters"], [S.stats.breathe, "statBreathe"],
+    [[S.activeDays || 0, "statCare"], [careBadge() ? "🏅 " + careBadge() : "🌱", "statBadge"], [S.stats.letters, "statLetters"], [S.stats.breathe, "statBreathe"],
         [S.stats.qb, "statQb"], [Object.keys(S.met).length, "statVisitors"]].forEach(function (s) {
         const d = document.createElement("div");
         d.innerHTML = "<b></b>";
@@ -1223,7 +1299,8 @@ function renderMe() {
 
     const album = $("albumBox");
     album.innerHTML = "";
-    Object.keys(WORLDS).forEach(function (k) {
+    if (typeof HikariNeighbors !== "undefined") HikariNeighbors.renderAlbum(album);   // v30 neighbors: กติกา + ไปเยี่ยม
+    else Object.keys(WORLDS).forEach(function (k) {
         WORLDS[k].visitors.forEach(function (v) {
             const im = document.createElement("img");
             im.src = img(v);
@@ -1266,7 +1343,7 @@ function stampCount() { return TRIP_STOPS.filter(function (s) { return S.stamps[
 function placeDesc(id) { return t("placeDesc_" + id); }
 // หายใจครบ / พักสั้นเสร็จ ที่สถานที่ปัจจุบัน: ได้แสตมป์ครั้งเดียวต่อที่ คืนข้อความ (หรือ "" ถ้าไม่ได้)
 function tripStampEarn() {
-    if (S.world !== "trip") return "";
+    if (S.world !== "trip" && S.place !== "trip") return "";              // v28 world: น้องทุกตัวไปเที่ยวได้
     const stop = tripStop();
     if (S.stamps[stop.id]) return "";
     S.stamps[stop.id] = true;
@@ -1276,8 +1353,10 @@ function tripStampEarn() {
     return msg;
 }
 let mapFrom = null, mapPickIdx = 0;
+// v28 world: ที่ที่อยู่ตอนนี้บนแผนที่ (-1 = ยังไม่ได้ไปเที่ยว)
+function tripHere() { return (S.world === "trip" || S.place === "trip") ? tripIndex() : -1; }
 function openMap(focusId, from) {
-    if (S.world !== "trip") return;
+    if (S.world !== "trip" && typeof HikariWorld === "undefined") return;   // v28 world
     mapFrom = from || document.activeElement;
     renderMap();
     mapShowPick();
@@ -1293,10 +1372,10 @@ function closeMap() {
     mapFrom = null;
 }
 function placeLabel(s, i) {
-    return placeName(s.id) + " · " + t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp") + (i === tripIndex() ? " · " + t("mapHere") : "");
+    return placeName(s.id) + " · " + t(S.stamps[s.id] ? "mapStamped" : "mapNoStamp") + (i === tripHere() ? " · " + t("mapHere") : "");   // v28 world
 }
 function renderMap() {
-    const wrap = $("mapWrap"), here = tripIndex();
+    const wrap = $("mapWrap"), here = tripHere();                          // v28 world
     wrap.querySelectorAll(".map-pin").forEach(function (b) { b.remove(); });
     const cards = $("mapCards");
     cards.textContent = "";
@@ -1349,7 +1428,7 @@ function mapShowPlace(i) {
     const s = TRIP_STOPS[i];
     if (!s) return;
     mapPickIdx = i;
-    const here = i === tripIndex();
+    const here = i === tripHere();                                         // v28 world
     $("mapPhoto").src = img(s.bg);
     $("mapPhoto").alt = placeName(s.id);
     $("mapPlace").textContent = placeName(s.id);
@@ -1365,8 +1444,9 @@ function mapShowPlace(i) {
 }
 function goPlace(i) {
     const s = TRIP_STOPS[i];
-    if (!s || S.world !== "trip") return;
+    if (!s || (S.world !== "trip" && typeof HikariWorld === "undefined")) return;   // v28 world
     S.tripStop = i;
+    if (S.world !== "trip") S.place = "trip";                             // v28 world: น้องออกไปเที่ยว
     save();
     $("mapSheet").hidden = true;
     mapFrom = null;
@@ -1391,6 +1471,7 @@ const RENDER = { pick: renderPick, home: renderHome, breathe: renderBreathe, let
 function showTab(name) {
     if (name !== "breathe" && breatheRunning) stopBreathe();
     if (name !== "breathe") { stopAmbient(); setBreatheMode("calm"); }
+    if (name !== "breathe" && window.hkSoundRestore !== undefined) { S.sound = window.hkSoundRestore; window.hkSoundRestore = undefined; save(); }   // v29 world: คืนเสียงเดิมหลัง "หายใจกับเสียงฝน"
     if (name !== "home" && typeof Pet !== "undefined") Pet.leave();
     if (!S.world) name = "pick";
     currentTab = name;
@@ -1418,7 +1499,7 @@ function callList(numbers, small) {
     numbers.forEach(function (n) {
         const a = document.createElement("a");
         a.className = "btn call-btn";
-        a.href = "tel:" + n;
+        a.href = hkTel(n);
         a.innerHTML = "<b></b><span></span>";
         a.querySelector("b").textContent = n;
         a.querySelector("span").textContent = t("call" + n);
@@ -1426,12 +1507,37 @@ function callList(numbers, small) {
     });
     return box;
 }
+// v26: การ์ดช่วยเหลือเมื่อพบข้อความเสี่ยง (โทร 1323 / 1669 + บอกคนที่ไว้ใจ) ไม่ตำหนิ ไม่บล็อก
+function riskBox(text) {
+    const box = document.createElement("div");
+    box.className = "risk-box";
+    box.setAttribute("role", "note");
+    const p = document.createElement("p");
+    p.textContent = text;
+    const tell = document.createElement("button");
+    tell.type = "button";
+    tell.className = "btn btn-small";
+    tell.textContent = hkHelpText("tell");          // v27: safety.js 10 ภาษา
+    tell.addEventListener("click", function () {
+        if (!$("qbSheet").hidden) closeQuick();
+        openTalk();
+    });
+    const intl = hkIntlLink("btn btn-small risk-intl");   // v27: สายด่วนทั่วโลก (นอกไทยขึ้นก่อนเบอร์ไทย)
+    intl.style.margin = "8px 0";
+    intl.style.display = "flex";
+    if (hkIntlFirst()) box.append(p, intl, callList([HK_LINES.mental, HK_LINES.emergency], true), tell);
+    else box.append(p, callList([HK_LINES.mental, HK_LINES.emergency], true), intl, tell);
+    return box;
+}
 let helpFrom = null;
 function openHelp() {
     helpFrom = document.activeElement;
     const c = $("helpCalls");
     c.innerHTML = "";
-    c.appendChild(callList(["1323", "1669", "1387"]));
+    c.appendChild(callList([HK_LINES.mental, HK_LINES.emergency, HK_LINES.child]));
+    // v27: ลิงก์สายด่วนฟรีทั่วโลก สำหรับคนที่อยู่นอกไทย (ขึ้นก่อนถ้าเล่นเป็นภาษาอื่น)
+    const intl = hkIntlLink("btn btn-outline help-intl");
+    if (hkIntlFirst()) c.insertBefore(intl, c.firstChild); else c.appendChild(intl);
     renderHelpSub();
     $("helpSheet").hidden = false;
     $("helpClose").focus();
@@ -1458,6 +1564,7 @@ function closeHelp() {
     if (helpFrom && helpFrom.focus) helpFrom.focus();
 }
 $("helpHome").addEventListener("click", openHelp);
+$("helpTop").addEventListener("click", openHelp);          // v26: ปุ่มช่วยเหลือบนแถบบน แตะได้จากทุกหน้า
 $("helpMe").addEventListener("click", openHelp);
 $("helpClose").addEventListener("click", closeHelp);
 $("helpSheet").addEventListener("click", function (e) { if (e.target.id === "helpSheet") closeHelp(); });
@@ -1479,7 +1586,7 @@ function checkArrival() {
     $("arriveFrom").textContent = t("arriveFrom", { pet: t("pet_" + fw) });
     const c = $("arriveCalls");
     c.innerHTML = "";
-    c.appendChild(callList(["1323"], true));
+    c.appendChild(callList([HK_LINES.mental], true));
     $("arriveSheet").hidden = false;
     $("arriveGo").focus();
 }
@@ -1816,6 +1923,8 @@ function resetStep() {
     stepHeavy = "";
     $("stepInput").value = "";
     $("qbMineText").textContent = "";
+    $("stepRisk").hidden = true;
+    $("stepRisk").innerHTML = "";
 }
 function renderStep() {
     const pet = WORLDS[S.world].pet, two = stepStage === 2;
@@ -1848,7 +1957,29 @@ $("qbStep").addEventListener("click", function () {
 });
 $("stepInput").addEventListener("input", function () {
     if (stepStage === 2) $("stepNext").disabled = !$("stepInput").value.trim();
+    clearTimeout(stepRiskTimer);
+    stepRiskTimer = setTimeout(stepRiskCheck, 700);
 });
+$("stepInput").addEventListener("blur", stepRiskCheck);
+// v26: ตรวจข้อความที่พิมพ์ในเครื่องเท่านั้น (ไม่บันทึกข้อความ) พบคำเสี่ยง → การ์ดช่วยเหลือใต้ช่องพิมพ์ ยังทำต่อได้ตามปกติ
+let stepRiskTimer = null;
+function stepRiskCheck() {
+    clearTimeout(stepRiskTimer);
+    if (!HikariSafety.hasRiskText($("stepInput").value)) {
+        // v29: เล่าว่าถูกทำร้าย → การ์ด 1300 / 191
+        if (HikariSafety.hasAbuseText($("stepInput").value)) {
+            HikariSafety.markRisk(USER_KEY, "game");
+            const h = $("stepRisk");
+            if (!h.querySelector(".abuse-card")) { h.innerHTML = ""; h.appendChild(hkAbuseCard({ className: "risk-box", btnClass: "btn btn-small", intlClass: "btn btn-small risk-intl", onTell: function () { if (!$("qbSheet").hidden) closeQuick(); openTalk(); } })); }
+            h.hidden = false;
+        }
+        return;
+    }
+    HikariSafety.markRisk(USER_KEY, "game");
+    const holder = $("stepRisk");
+    if (!holder.firstChild) holder.appendChild(riskBox(hkHelpText("care")));
+    holder.hidden = false;
+}
 $("stepBack").addEventListener("click", function () {
     if (stepStage === 2) {
         stepStage = 1;
@@ -1949,6 +2080,7 @@ $("nudgeGo").addEventListener("click", function () { nudgeNow = null; nudgeClose
 // ชวนคนที่ไว้ใจคุย: ข้อความสำเร็จรูป 3 แบบ เปิดหน้าแชร์ LINE (นับเป็นการส่งจดหมายของวันนั้น ไม่ปิดกั้นแม้ส่งครบแล้ว)
 let talkPick = 0;
 function renderTalk() {
+    $("talkSend").textContent = HikariShare.text("sendBtn", L);     // v27: ปุ่มเดียวส่งได้หลายแอป
     const list = $("talkList");
     list.innerHTML = "";
     TALK_TEMPLATES[L].forEach(function (text, i) {
@@ -1961,22 +2093,24 @@ function renderTalk() {
         list.appendChild(b);
     });
 }
-function talkShareUrl(i) {
-    return "https://line.me/R/share?text=" + encodeURIComponent(TALK_TEMPLATES[L][i]);
-}
+// v27: ส่งผ่านแผงแชร์ share.js (kind private = ข้อความถึงคนที่ไว้ใจ ส่งได้เสมอ)
 $("talkSend").addEventListener("click", function () {
-    rolloverCheck();
-    const url = talkShareUrl(talkPick);
-    const w = window.open(url, "_blank");
-    if (w) { try { w.opener = null; } catch (e) { /* ไม่เป็นไร */ } } else location.href = url;
-    S.today.letters++;
-    S.stats.letters++;
-    S.lettersShared++;
-    const gain = S.today.letters <= LETTER_LIMIT ? 1 : 0;
-    if (gain) addLight(gain); else { markActive(); save(); }
-    $("talkMsg").textContent = t("talkSent") + (gain ? " +" + gain + " " + t("light") : "");
-    $("talkMsg").className = "note ok";
-    renderLetters();
+    HikariShare.open({ text: TALK_TEMPLATES[L][talkPick], kind: "private", lang: L, onShared: function () {
+        rolloverCheck();
+        S.today.letters++;
+        S.stats.letters++;
+        S.lettersShared++;
+        const gain = S.today.letters <= LETTER_LIMIT ? 1 : 0;
+        if (gain) addLight(gain); else { markActive(); save(); }
+        $("talkMsg").textContent = HikariShare.text("readyTrust", L) + (gain ? " +" + gain + " " + t("light") : "");
+        $("talkMsg").className = "note ok";
+        renderLetters();
+    }, onRisk: function () {
+        HikariSafety.markRisk(USER_KEY, "game");
+        $("talkMsg").textContent = "";
+        $("talkMsg").className = "note";
+        $("talkMsg").appendChild(riskBox(t("riskCare")));
+    } });
 });
 // เปิดจากคำพูดน้อง / ปุ่มในเช็กอินอารมณ์: ไปแท็บจดหมาย แล้วเลื่อนถึงการ์ดชวนคุย
 function openTalk() {
@@ -1996,3 +2130,4 @@ const startHash = location.hash.replace("#", "");
 showTab(S.world ? (Object.prototype.hasOwnProperty.call(RENDER, startHash) ? startHash : "home") : "pick");
 checkArrival();
 if (guestMoved) toast(t("guestMoved"));
+else if (welcomeBackNow && S.world) toast(t("welcomeBack", { pet: petName() }));

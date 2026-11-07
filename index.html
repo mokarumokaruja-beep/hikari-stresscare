@@ -36,7 +36,7 @@
             <span>Hikari<small>StressCare</small></span>
         </a>
         <div class="top-actions">
-            <select id="langSelect" class="lang-select" aria-label="เลือกภาษา">
+            <select id="langSelect" class="lang-select" aria-label="เลือกภาษา" data-i18n-aria="header.lang">
                 <option value="th">🌐 ไทย</option>
                 <option value="en">🌐 English</option>
                 <option value="zh">🌐 中文</option>
@@ -122,7 +122,7 @@
 
     <!-- ป้ายเตือนเมื่อเปิดจากในแอป LINE / Facebook / Instagram (script.js ส่วนที่ 15) -->
     <div id="inAppNotice" class="inapp-notice hidden" role="status">
-        <p><strong id="inAppName" data-dynamic></strong> <span data-i18n="inapp.1">เบราว์เซอร์ในแอปนี้เก็บความคืบหน้าแยกจาก Safari / Chrome ถ้าเปิดลิงก์จากที่อื่นภายหลัง ข้อมูลจะไม่ตามไป แนะนำเปิดในเบราว์เซอร์ปกติ และเปิดจากที่เดิมทุกครั้ง</span></p>
+        <p><strong id="inAppName" data-dynamic></strong> <span data-i18n="inapp.1">เบราว์เซอร์ในแอปนี้เก็บความคืบหน้าแยกจาก Safari / Chrome ถ้าวันหลังเปิดลิงก์จากที่อื่น ข้อมูลจะไม่ตามไปนะ เปิดในเบราว์เซอร์ปกติ และเปิดจากที่เดิมทุกครั้งจะดีที่สุด</span></p>
         <div class="inapp-actions">
             <button id="inAppOpen" class="btn btn-primary btn-small" type="button" data-i18n="inapp.2">เปิดในเบราว์เซอร์</button>
             <button id="inAppClose" class="btn btn-outline btn-small" type="button" data-i18n="inapp.3">ปิด</button>
@@ -136,13 +136,13 @@
             <div class="hero-text">
                 <p class="script">Small Steps, Brighter Days</p>
                 <h1 data-i18n="home.1">เหนื่อยสะสมจากงาน?<br>เริ่มแก้ที่ต้นเหตุได้ทีละก้าว</h1>
-                <p data-i18n="home.2" class="hero-lead">สำหรับคนทำงานที่เหนื่อยสะสม และนักศึกษาที่เริ่มรู้สึกหนัก: เช็กความเครียดและภาวะหมดไฟ พักสั้น 1–3 นาทีที่โต๊ะทำงาน และฝึกทักษะรับมือที่ต้นเหตุด้วยตัวเอง</p>
+                <p data-i18n="home.2" class="hero-lead">ถ้าช่วงนี้งานหรือการเรียนเริ่มหนัก ลองเช็กใจตัวเองดูก่อน พักสั้น ๆ ที่โต๊ะสัก 1–3 นาที แล้วค่อย ๆ ฝึกรับมือกับต้นเหตุไปทีละนิดนะ</p>
                 <div class="hero-actions">
-                    <a data-i18n="home.3" href="#assessment" class="btn btn-primary btn-large">เริ่มประเมินความเครียดของคุณ →</a>
+                    <a data-i18n="home.3" href="#assessment" class="btn btn-primary btn-large">ลองเช็กความเครียดดู →</a>
                     <a data-i18n="home.r" id="heroReset" href="#reset" class="btn btn-outline btn-large">⏱ พักสั้น 1 นาที</a>
                     <a data-i18n="home.t" href="#today" class="btn btn-outline btn-large">▶ ภารกิจวันนี้</a>
                 </div>
-                <p data-i18n="home.4" class="hero-note">✅ ใช้เวลาเพียง 4–6 นาที • ไม่ต้องสมัครสมาชิก</p>
+                <p data-i18n="home.4" class="hero-note">✅ ใช้แค่ 4–6 นาที • ไม่ต้องสมัครสมาชิก</p>
                 <p data-i18n="trust.1" class="trust-line">🔒 ข้อมูลอยู่ในเครื่องคุณเท่านั้น บริษัทหรือหัวหน้าของคุณมองไม่เห็น</p>
                 <!-- ทางเข้าเกมสวนแสง (game.html) -->
                 <a href="game.html" class="game-entry">
@@ -203,7 +203,7 @@
         <section id="reset" data-page="reset" class="section reset-section">
             <div class="section-heading">
                 <h2 data-i18n="reset.1">พักสั้น 1–3 นาที ทำได้ที่โต๊ะทำงาน</h2>
-                <p data-i18n="reset.2">ระหว่างประชุมติดกัน งานด่วน หรือบนรถไฟฟ้า เลือก 1 การ์ด กดเริ่ม แล้วทำตามทีละขั้น ตัวจับเวลาจะบอกเมื่อครบ</p>
+                <p data-i18n="reset.2">ประชุมติดกัน งานด่วน หรือนั่งรถไฟฟ้าอยู่ก็ทำได้ เลือกการ์ดที่ชอบ กดเริ่ม แล้วทำตามไปทีละขั้น ครบเวลาแล้วจะบอกเอง</p>
                 <p id="resetCount" class="reset-count" data-dynamic></p>
             </div>
             <div id="resetGrid" class="reset-grid"></div>
@@ -214,7 +214,7 @@
         <section id="today" data-page="today" class="section today-section">
             <div class="section-heading">
                 <h2 data-i18n="today.1">ภารกิจ 60 วัน ใจสบายขึ้นทีละวัน</h2>
-                <p data-i18n="today.2">ทุกวันมีคลิปใหม่ไม่ซ้ำตลอด 60 วัน สลับกันระหว่างคลื่นเสียงผ่อนคลายกับคลิปเยียวยาใจ ทำภารกิจ 3 ข้อให้ครบเพื่อรับแสง และครบ 7 วันเลือกของรางวัลได้ 1 ชิ้น 🎁</p>
+                <p data-i18n="today.2">วันละไม่กี่นาที ช่วงพักเที่ยงหรือก่อนนอนก็ได้ มีคลิปใหม่ทุกวันตลอด 60 วัน สลับเสียงฟังสบายกับคลิปพักใจ ทำภารกิจ 3 ข้อเพื่อรับแสง ครบ 7 วันเลือกของรางวัลได้ 1 ชิ้น 🎁</p>
             </div>
             <div class="card today-card">
                 <button id="todayThumb" class="today-thumb" type="button">
@@ -325,16 +325,16 @@
                 <p id="orderTitle" class="reward-sub hidden" data-i18n="pay.o1">คำสั่งซื้อของฉัน</p>
                 <div id="orderList" class="order-list"></div>
             </div>
-            <p id="todayGuest" class="disclaimer today-guest" data-i18n="today.4">ยังไม่ได้เข้าสู่ระบบ: ความคืบหน้าจะเก็บไว้ในเครื่องนี้ เข้าสู่ระบบเพื่อดูวันต่อเนื่องในบันทึกของฉัน</p>
-            <p class="disclaimer today-guest" data-i18n="today.8">คลื่นเสียงและความถี่ เช่น 432/528Hz หรือ binaural beats ใช้เพื่อผ่อนคลาย งานวิจัยยังจำกัด ไม่ใช่การรักษา · binaural beats ควรฟังผ่านหูฟังด้วยเสียงเบา</p>
+            <p id="todayGuest" class="disclaimer today-guest" data-i18n="today.4">ยังไม่ได้เข้าสู่ระบบก็ไม่เป็นไร ความคืบหน้าเก็บไว้ในเครื่องนี้ ถ้าเข้าสู่ระบบจะดูวันต่อเนื่องได้ใน “บันทึกของฉัน”</p>
+            <p class="disclaimer today-guest" data-i18n="today.8">เสียงความถี่ต่าง ๆ เช่น 432/528Hz หรือ binaural beats เป็นแค่เสียงฟังสบายเพื่อผ่อนคลาย งานวิจัยยังมีน้อย และไม่ใช่การรักษา · binaural beats ฟังผ่านหูฟังเสียงเบา ๆ นะ</p>
         </section>
 
 
         <!-- ===== 03 ทำไมต้องดูแลใจ ===== -->
         <section class="why" data-page="home">
             <div class="why-text">
-                <h2 data-i18n="why.1">ทำไมการจัดการความเครียดจึงสำคัญ?</h2>
-                <p data-i18n="why.2">ความเครียดที่สะสมนานส่งผลต่อการนอน สมาธิ ความสัมพันธ์ และสุขภาพร่างกาย การรู้ทันความเครียดตั้งแต่เนิ่น ๆ ช่วยให้เราเลือกวิธีดูแลตัวเองได้ก่อนที่ปัญหาจะหนักขึ้น</p>
+                <h2 data-i18n="why.1">ทำไมต้องดูแลความเครียด</h2>
+                <p data-i18n="why.2">ความเหนื่อยจากงานที่สะสมนาน ๆ กระทบทั้งการนอน สมาธิ ความสัมพันธ์ และร่างกาย ถ้ารู้ทันเร็ว เราก็เลือกดูแลตัวเองได้ก่อนที่มันจะหนักขึ้น</p>
                 <a data-i18n="why.3" href="#selfcare" class="btn btn-outline">ดูวิธีดูแลตัวเอง →</a>
             </div>
             <div class="why-image">
@@ -347,7 +347,7 @@
         <section id="assessment" data-page="assessment" class="section">
             <div class="section-heading">
                 <h2 data-i18n="assessment.1">แบบประเมินความเครียด</h2>
-                <p data-i18n="assessment.2">ตอบตามความรู้สึกในช่วง 2 สัปดาห์ที่ผ่านมา ทั้งหมด 18 ข้อ</p>
+                <p data-i18n="assessment.2">มี 18 ข้อ ตอบตามที่รู้สึกใน 2 สัปดาห์ที่ผ่านมา ไม่มีถูกผิดนะ</p>
             </div>
 
             <div class="assessment-layout">
@@ -362,7 +362,7 @@
                             <span id="progressText" data-dynamic>1/18</span>
                         </div>
                         <h3 id="questionText" data-dynamic class="question"></h3>
-                        <div id="options" class="options"></div>
+                        <div id="options" class="options" role="radiogroup" aria-labelledby="questionText"></div>
                         <div class="quiz-buttons">
                             <button data-i18n="assessment.3" id="backButton" class="btn btn-outline">← ย้อนกลับ</button>
                             <button id="nextButton" data-dynamic class="btn btn-primary">ถัดไป →</button>
@@ -395,7 +395,7 @@
                         <div id="historyBox" data-dynamic class="history"></div>
 
                         <div id="helpNote" class="help-note hidden" role="note">
-                            <p data-i18n="assessment.8">คะแนนของคุณค่อนข้างสูง ไม่ต้องรับมือคนเดียว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ สายด่วนสุขภาพจิตโทรฟรีตลอด 24 ชั่วโมง</p>
+                            <p data-i18n="assessment.8">ช่วงนี้คุณแบกอะไรไว้เยอะนะ ไม่ต้องรับไว้คนเดียว ลองเล่าให้คนที่ไว้ใจหรือผู้เชี่ยวชาญฟัง สายด่วนสุขภาพจิตโทรฟรีตลอด 24 ชั่วโมง</p>
                             <div class="help-note-actions">
                                 <a class="btn btn-primary btn-small" href="tel:1323" data-i18n="help.call">📞 โทร 1323 (ฟรี 24 ชม.)</a>
                                 <a class="btn btn-outline btn-small" href="#help" data-i18n="help.see">ดูช่องทางช่วยเหลือ</a>
@@ -408,7 +408,7 @@
                                 <small data-i18n="home.g2">หายใจ 1 นาทีกับน้องแมว หมา กระต่าย หรือฮิคาริ เก็บแสงทุกวัน</small>
                             </span>
                         </a>
-                        <p data-i18n="assessment.9" class="disclaimer">ผลนี้ใช้เพื่อสำรวจตัวเองเท่านั้น ไม่ใช่การวินิจฉัยทางการแพทย์ ผลย้อนหลังเก็บไว้ในเบราว์เซอร์เครื่องนี้ ไม่ได้ส่งไปที่เซิร์ฟเวอร์ของ Hikari · <a href="#privacy">ความเป็นส่วนตัว</a></p>
+                        <p data-i18n="assessment.9" class="disclaimer">ผลนี้เป็นการเช็กเบื้องต้นเพื่อให้รู้จักตัวเอง ไม่ใช่การวินิจฉัยทางการแพทย์ ผลย้อนหลังเก็บไว้ในเบราว์เซอร์เครื่องนี้ ไม่ได้ส่งไปที่เซิร์ฟเวอร์ของ Hikari · <a href="#privacy">ความเป็นส่วนตัว</a></p>
                         <button data-i18n="assessment.10" id="restartButton" class="btn btn-outline">ทำแบบประเมินใหม่</button>
                     </div>
                 </div>
@@ -437,7 +437,7 @@
                     </div>
                     <p id="bSubLabel" class="burnout-sub" data-dynamic></p>
                     <h3 id="bQuestion" class="question" data-dynamic></h3>
-                    <div id="bOptions" class="options" role="group" aria-labelledby="bQuestion"></div>
+                    <div id="bOptions" class="options" role="radiogroup" aria-labelledby="bQuestion"></div>
                     <div class="quiz-buttons">
                         <button data-i18n="assessment.3" id="bBack" class="btn btn-outline" type="button">← ย้อนกลับ</button>
                         <button id="bNext" class="btn btn-primary" type="button" data-dynamic>ถัดไป →</button>
@@ -462,7 +462,7 @@
                     </div>
 
                     <div id="bHelp" class="help-note hidden" role="note">
-                        <p data-i18n="burnout.r4">ความเหนื่อยระดับนี้ไม่ใช่ความอ่อนแอ และไม่ควรแบกไว้คนเดียว ลองคุยกับคนที่ไว้ใจ แพทย์ หรือนักจิตวิทยา และพักให้ได้จริง ถ้ารู้สึกไม่ไหว โทรสายด่วนสุขภาพจิต 1323 ได้ฟรีตลอด 24 ชั่วโมง</p>
+                        <p data-i18n="burnout.r4">ความเหนื่อยระดับนี้ไม่ใช่ความอ่อนแอ และคุณไม่ต้องแบกไว้คนเดียวนะ ลองคุยกับคนที่ไว้ใจ แพทย์ หรือนักจิตวิทยา และพักให้ได้จริง ถ้ารู้สึกไม่ไหว โทรสายด่วนสุขภาพจิต 1323 ได้ฟรีตลอด 24 ชั่วโมง</p>
                         <div class="help-note-actions">
                             <a class="btn btn-primary btn-small" href="tel:1323" data-i18n="help.call">📞 โทร 1323 (ฟรี 24 ชม.)</a>
                             <a class="btn btn-outline btn-small" href="#help" data-i18n="help.see">ดูช่องทางช่วยเหลือ</a>
@@ -476,7 +476,7 @@
                     <h3 data-i18n="burnout.h" class="small-heading">ผลย้อนหลัง</h3>
                     <div id="bHistory" class="history"></div>
 
-                    <p data-i18n="burnout.r5" class="disclaimer">นี่คือการเช็กด้วยตัวเอง ไม่ใช่การวินิจฉัยทางการแพทย์ · คะแนนแต่ละส่วน 0–100: ต่ำกว่า 50 = ต่ำ, 50–74 = ปานกลาง, 75–99 = สูง, 100 = รุนแรง (งานวิจัยนิยมใช้ 50 ขึ้นไปเป็นจุดตัดของภาวะหมดไฟ) · ที่มา: Kristensen et al., 2005 · ผลเก็บไว้ในเครื่องนี้เท่านั้น</p>
+                    <p data-i18n="burnout.r5" class="disclaimer">นี่เป็นการเช็กด้วยตัวเองเบื้องต้น ไม่ใช่การวินิจฉัยทางการแพทย์ · คะแนนแต่ละส่วน 0–100: ต่ำกว่า 50 = ต่ำ, 50–74 = ปานกลาง, 75–99 = สูง, 100 = รุนแรง (งานวิจัยนิยมใช้ 50 ขึ้นไปเป็นจุดตัดของภาวะหมดไฟ) · ที่มา: Kristensen et al., 2005 · ผลเก็บไว้ในเครื่องนี้เท่านั้น</p>
                     <button data-i18n="burnout.r6" id="bRestart" class="btn btn-outline" type="button">ทำใหม่อีกครั้ง</button>
                 </div>
             </div>
@@ -502,10 +502,10 @@
                 <!-- ถามครั้งเดียวก่อนเช็กครั้งแรก: คนที่ไม่ใช้จะไม่เห็นคำถามเรื่องนี้อีกเลย -->
                 <div id="checkProfile" class="hidden" tabindex="-1" aria-labelledby="profTitle">
                     <h3 id="profTitle" class="profile-title" data-i18n="prof.1">ช่วงนี้คุณใช้สิ่งเหล่านี้บ้างไหม</h3>
-                    <p class="profile-sub" data-i18n="prof.2">ข้อมูลอยู่ในเครื่องคุณเท่านั้น ไม่ได้ตัดสิน · ถามครั้งเดียว เพื่อให้คำถามตรงกับคุณ</p>
+                    <p class="profile-sub" data-i18n="prof.2">คำตอบอยู่ในเครื่องคุณเท่านั้น ไม่มีใครตัดสินนะ · ถามแค่ครั้งเดียว เพื่อให้คำถามต่อไปตรงกับคุณ</p>
                     <button id="profNone" class="btn btn-primary btn-large profile-none" type="button" data-i18n="prof.none">ไม่ใช้เลย</button>
                     <fieldset class="profile-boxes">
-                        <legend data-i18n="prof.3">หรือเลือกที่ใช้ (เลือกได้หลายข้อ)</legend>
+                        <legend data-i18n="prof.3">หรือเลือกสิ่งที่ใช้ (เลือกได้หลายข้อ)</legend>
                         <label class="profile-box"><input type="checkbox" id="profSmoke" value="smoke"> <span data-i18n="prof.smoke">บุหรี่ / บุหรี่ไฟฟ้า</span></label>
                         <label class="profile-box"><input type="checkbox" id="profAlcohol" value="alcohol"> <span data-i18n="prof.alcohol">เครื่องดื่มแอลกอฮอล์</span></label>
                         <label class="profile-box"><input type="checkbox" id="profOther" value="other"> <span data-i18n="prof.other">สารอื่น ๆ</span></label>
@@ -526,8 +526,8 @@
                     </div>
                     <p class="burnout-sub" data-i18n="check.q">ใน 7 วันที่ผ่านมา คุณมีอาการนี้กี่วัน</p>
                     <h3 id="cQuestion" class="question" data-dynamic></h3>
-                    <div id="cOptions" class="options" role="group" aria-labelledby="cQuestion"></div>
-                    <p id="cRedflag" class="redflag-inline hidden" data-i18n="check.rf">⚠️ ถ้าเจ็บแน่นหน้าอก หายใจไม่ออก ใจสั่นร่วมกับเป็นลม ปวดหัวรุนแรงทันที หรือแขนขาอ่อนแรง → โทร 1669 หรือไปห้องฉุกเฉินทันที อย่าคิดว่าเป็นแค่ความเครียด</p>
+                    <div id="cOptions" class="options" role="radiogroup" aria-labelledby="cQuestion"></div>
+                    <p id="cRedflag" class="redflag-inline hidden" data-i18n="check.rf">⚠️ เจ็บแน่นหน้าอก หายใจไม่ออก ใจสั่นร่วมกับเป็นลม ปวดหัวรุนแรงทันที แขนขาอ่อนแรง → โทร 1669 หรือไปห้องฉุกเฉินทันที อย่าคิดว่าเป็นแค่ความเครียด</p>
                     <div class="quiz-buttons">
                         <button data-i18n="assessment.3" id="cBack" class="btn btn-outline" type="button">← ย้อนกลับ</button>
                         <button id="cNext" class="btn btn-primary" type="button" data-dynamic>ถัดไป →</button>
@@ -551,9 +551,9 @@
 
                 <!-- สัญญาณอันตราย: แสดงตลอดในส่วนนี้ -->
                 <div class="redflag-box" role="note">
-                    <p data-i18n="check.rf">⚠️ ถ้าเจ็บแน่นหน้าอก หายใจไม่ออก ใจสั่นร่วมกับเป็นลม ปวดหัวรุนแรงทันที หรือแขนขาอ่อนแรง → โทร 1669 หรือไปห้องฉุกเฉินทันที อย่าคิดว่าเป็นแค่ความเครียด</p>
+                    <p data-i18n="check.rf">⚠️ เจ็บแน่นหน้าอก หายใจไม่ออก ใจสั่นร่วมกับเป็นลม ปวดหัวรุนแรงทันที แขนขาอ่อนแรง → โทร 1669 หรือไปห้องฉุกเฉินทันที อย่าคิดว่าเป็นแค่ความเครียด</p>
                 </div>
-                <p id="checkProfileLine" class="profile-line hidden"><span data-i18n="prof.line">คำถามเพิ่มเติมที่ตั้งไว้:</span> <button id="checkEditProfile" class="link-button" type="button" data-i18n="prof.edit">แก้ไขข้อมูลนี้</button></p>
+                <p id="checkProfileLine" class="profile-line hidden"><span data-i18n="prof.line">คำถามเพิ่มเติมที่ตั้งไว้ตอนเริ่ม:</span> <button id="checkEditProfile" class="link-button" type="button" data-i18n="prof.edit">แก้ไขข้อมูลนี้</button></p>
                 <p id="profMsg" class="profile-msg" role="status" data-dynamic></p>
             </div>
         </section>
@@ -562,7 +562,7 @@
         <section id="mood-screen" data-page="check" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="dep.1">คัดกรองภาวะซึมเศร้า</h2>
-                <p data-i18n="dep.2">แบบคัดกรอง 2 คำถาม (2Q) และแบบประเมิน 9 คำถาม (9Q) ของกรมสุขภาพจิต ถ้าตอบ “มี” ข้อใดข้อหนึ่งใน 2Q จะทำ 9Q ต่อ ใช้เวลา 1–3 นาที</p>
+                <p data-i18n="dep.2">แบบคัดกรองโรคซึมเศร้า 2 คำถาม (2Q) และแบบประเมินโรคซึมเศร้า 9 คำถาม (9Q) ของกรมสุขภาพจิต ถ้าตอบ “มี” ข้อใดข้อหนึ่งใน 2Q จะทำ 9Q ต่อ ใช้เวลา 1–3 นาที</p>
                 <p data-i18n="dep.3" class="dep-badge">คัดกรองเบื้องต้น ไม่ใช่การวินิจฉัย</p>
                 <p id="depLast" class="burnout-last" data-dynamic></p>
             </div>
@@ -576,7 +576,7 @@
                     </div>
                     <p id="dSubLabel" class="burnout-sub" data-dynamic></p>
                     <h3 id="dQuestion" class="question" data-dynamic></h3>
-                    <div id="dOptions" class="options" role="group" aria-labelledby="dQuestion"></div>
+                    <div id="dOptions" class="options" role="radiogroup" aria-labelledby="dQuestion"></div>
                     <div class="quiz-buttons">
                         <button data-i18n="assessment.3" id="dBack" class="btn btn-outline" type="button">← ย้อนกลับ</button>
                         <button id="dNext" class="btn btn-primary" type="button" data-dynamic>ถัดไป →</button>
@@ -588,7 +588,7 @@
                     <!-- ข้อ 9 ตอบตั้งแต่ "เป็นบางวัน" ขึ้นไป: การ์ดช่วยเหลืออยู่บนสุด -->
                     <div id="depCrisis" class="crisis-card hidden" aria-labelledby="crisisTitle">
                         <h3 id="crisisTitle" data-i18n="crisis.1">ตอนนี้คุณไม่ต้องผ่านเรื่องนี้คนเดียว</h3>
-                        <p data-i18n="crisis.2">ขอบคุณที่ตอบตรง ๆ ความคิดแบบนี้บอกว่าช่วงนี้ใจคุณเจ็บมาก ถ้าตอนนี้รู้สึกไม่ปลอดภัย ติดต่อได้ทันที ฟรี</p>
+                        <p data-i18n="crisis.2">ขอบคุณที่ตอบตรง ๆ นะ ความคิดแบบนี้บอกว่าช่วงนี้ใจคุณเจ็บมาก และมันดีขึ้นได้เมื่อมีคนช่วย ถ้าตอนนี้รู้สึกไม่ปลอดภัย โทรได้เลย ฟรี</p>
                         <div class="crisis-actions">
                             <a class="btn btn-primary" href="tel:1323" data-i18n="crisis.1323">📞 โทร 1323 สายด่วนสุขภาพจิต (24 ชม.)</a>
                             <a class="btn btn-danger-solid" href="tel:1669" data-i18n="crisis.1669">🚑 โทร 1669 เหตุฉุกเฉิน</a>
@@ -605,7 +605,7 @@
                         <p class="bs-meaning" data-dynamic></p>
                     </div>
                     <div id="dSelfCare" class="dep-selfcare hidden">
-                        <p data-i18n="dep.ok">ไม่พบความเสี่ยงซึมเศร้าในตอนนี้ ดูแลตัวเองต่อไปนะ</p>
+                        <p data-i18n="dep.ok">จากคำตอบตอนนี้ ยังไม่พบความเสี่ยงซึมเศร้า ดูแลตัวเองแบบนี้ต่อไปนะ ถ้าความรู้สึกเปลี่ยนไป กลับมาทำใหม่ได้เสมอ</p>
                         <div class="skill-links">
                             <a class="btn btn-outline btn-small" href="#reset" data-i18n="dep.s1">⏱ พักสั้น 1–3 นาที</a>
                             <a class="btn btn-outline btn-small" href="#selfcare" data-i18n="dep.s2">🌱 วิธีดูแลตัวเอง</a>
@@ -626,7 +626,7 @@
         <section id="selfcare" data-page="selfcare" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="selfcare.1">วิธีดูแลตัวเองที่เริ่มได้วันนี้</h2>
-                <p data-i18n="selfcare.2">กดปุ่มลูกศรเพื่อดูขั้นตอน กิจกรรมเหล่านี้ใช้เวลาไม่เกิน 10 นาที</p>
+                <p data-i18n="selfcare.2">กดลูกศรเพื่อดูวิธีทำ แต่ละอย่างใช้ไม่เกิน 10 นาที ทำที่ทำงาน ที่บ้าน หรือที่หอก็ได้</p>
             </div>
             <div class="care-grid">
                 <article class="card care-card">
@@ -646,28 +646,28 @@
                 <article class="card care-card">
                     <img data-i18n-alt="selfcare.13" src="images/care-plan.webp" alt="กระดานจดรายการงานข้างต้นไม้" width="262" height="152" loading="lazy" decoding="async">
                     <h3 data-i18n="selfcare.14">จัดลำดับงาน</h3>
-                    <p data-i18n="selfcare.15">ลดความกดดันและเพิ่มสมาธิ</p>
+                    <p data-i18n="selfcare.15">หัวโล่งขึ้น ทำทีละเรื่อง</p>
                     <button data-i18n-aria="selfcare.16" class="arrow-button" aria-label="ดูขั้นตอนจัดลำดับงาน">→</button>
                     <p data-i18n="selfcare.17" class="care-steps hidden">จดงานทั้งหมดลงกระดาษ เลือก 3 งานที่สำคัญที่สุด แล้วแบ่งงานแรกเป็นขั้นเล็ก ๆ ที่ทำเสร็จได้ใน 25 นาที</p>
                 </article>
                 <article class="card care-card">
                     <img data-i18n-alt="selfcare.18" src="images/care-sleep.webp" alt="หญิงสาวนอนหลับสบายบนหมอน" width="266" height="168" loading="lazy" decoding="async">
                     <h3 data-i18n="selfcare.19">นอนหลับให้ดีขึ้น</h3>
-                    <p data-i18n="selfcare.20">สร้างคุณภาพการนอน</p>
+                    <p data-i18n="selfcare.20">ให้ร่างกายได้พักจริง ๆ</p>
                     <button data-i18n-aria="selfcare.21" class="arrow-button" aria-label="ดูขั้นตอนนอนหลับให้ดีขึ้น">→</button>
                     <p data-i18n="selfcare.22" class="care-steps hidden">เข้านอนและตื่นเวลาเดิมทุกวัน งดหน้าจอก่อนนอน 30 นาที และเลี่ยงกาแฟหลังบ่ายสองโมง</p>
                 </article>
                 <article class="card care-card">
                     <div class="care-icon yellow">📝</div>
                     <h3 data-i18n="selfcare.23">บันทึกเรื่องดี ๆ</h3>
-                    <p data-i18n="selfcare.24">เพิ่มอารมณ์ด้านบวก</p>
+                    <p data-i18n="selfcare.24">ให้ใจได้เห็นเรื่องดี ๆ</p>
                     <button data-i18n-aria="selfcare.25" class="arrow-button" aria-label="ดูขั้นตอนบันทึกเรื่องดี ๆ">→</button>
                     <p data-i18n="selfcare.26" class="care-steps hidden">ก่อนนอน เขียนเรื่องดี ๆ ที่เกิดขึ้นวันนี้ 3 เรื่อง และเขียนว่าเพราะอะไรมันจึงเกิดขึ้น ใช้เวลา 5–10 นาที</p>
                 </article>
                 <article class="card care-card">
                     <div class="care-icon green">🚶</div>
                     <h3 data-i18n="selfcare.27">ขยับร่างกาย</h3>
-                    <p data-i18n="selfcare.28">ปลดปล่อยความตึงเครียด</p>
+                    <p data-i18n="selfcare.28">คลายความตึงในตัว</p>
                     <button data-i18n-aria="selfcare.29" class="arrow-button" aria-label="ดูขั้นตอนขยับร่างกาย">→</button>
                     <p data-i18n="selfcare.30" class="care-steps hidden">เดินเร็ว ปั่นจักรยาน หรือเต้น 10–30 นาที อย่างน้อย 3 วันต่อสัปดาห์ เริ่มจากน้อย ๆ ก่อน แล้วค่อยเพิ่ม</p>
                 </article>
@@ -692,19 +692,19 @@
         <section id="rootcause" data-page="selfcare" class="section">
             <div class="section-heading">
                 <h2 data-i18n="root.1">รับมือที่ต้นเหตุ</h2>
-                <p data-i18n="root.2">ความเครียดลดลงได้จริงเมื่อแก้ที่ต้นเหตุ เลือกเรื่องที่ทำให้คุณเครียดที่สุด แล้วฝึกทักษะสั้น ๆ ด้วยตัวเอง นักจิตวิทยาคือก้าวสุดท้ายเมื่อคุณต้องการ</p>
+                <p data-i18n="root.2">ความเครียดมักเบาลงเมื่อเราเริ่มดูแลที่ต้นเหตุ เลือกเรื่องที่หนักใจที่สุด แล้วลองฝึกทักษะสั้น ๆ ดู ถ้าอยากคุยกับนักจิตวิทยา ไปได้ทุกเมื่อ ไม่ต้องรอให้หนักก่อน</p>
             </div>
             <div class="card cause-card">
                 <p id="causeHead" class="small-heading" data-i18n="root.3">เรื่องไหนทำให้คุณเครียดที่สุด? (เลือกได้สูงสุด 3 เรื่อง)</p>
                 <div id="causeChips" class="chip-row cause-chips" role="group" aria-labelledby="causeHead"></div>
                 <p id="causeMsg" class="cause-msg" role="status" data-dynamic></p>
             </div>
-            <p id="causeEmpty" data-i18n="root.5" class="cause-empty">เลือกอย่างน้อย 1 เรื่องด้านบน เพื่อดูทักษะที่ช่วยได้</p>
+            <p id="causeEmpty" data-i18n="root.5" class="cause-empty">ลองเลือกสักเรื่องด้านบน แล้ววิธีที่ช่วยได้จะขึ้นมาตรงนี้</p>
             <div id="causeSkills" class="cause-skills"></div>
             <!-- v18 ชวนคนที่ไว้ใจคุย: แก้ข้อความได้ ส่งทาง LINE (ไม่เก็บข้อความไว้ที่ไหน) -->
             <div id="talk" class="card talk-card" tabindex="-1" aria-labelledby="talkTitle">
                 <h3 id="talkTitle" data-i18n="talk.1">💬 ชวนคนที่ไว้ใจคุย</h3>
-                <p data-i18n="talk.2">ไม่ต้องรอให้หนักก่อนถึงจะคุยได้ เลือกข้อความ แก้ให้เป็นคำของคุณ แล้วกดส่งทาง LINE · ข้อความไม่ถูกเก็บไว้ที่ไหน</p>
+                <p data-i18n="talk.2">ไม่ต้องรอให้หนักก่อนถึงจะคุยได้ เลือกข้อความ แก้ให้เป็นคำของคุณ แล้วส่งผ่านแอปแชตที่ใช้ · ข้อความไม่ถูกเก็บไว้ที่ไหน</p>
                 <div id="talkList" class="talk-list"></div>
             </div>
             <p data-i18n="root.4" class="disclaimer cause-note">ทักษะเหล่านี้เป็นความรู้ทั่วไป ไม่ใช่คำแนะนำทางการแพทย์หรือการเงินเฉพาะบุคคล ถ้าลองแล้ว 2–4 สัปดาห์ยังไม่ดีขึ้น หรือกระทบงานและชีวิตมาก ควรปรึกษาผู้เชี่ยวชาญ</p>
@@ -747,7 +747,7 @@
         <section id="videos" data-page="videos" class="section">
             <div class="section-heading">
                 <h2 data-i18n="videos.1">วิดีโอคลายเครียด</h2>
-                <p data-i18n="videos.2">คลังคลิปของภารกิจ 60 วัน: คลื่นเสียง เสียงธรรมชาติ ดนตรีไทยและสากล ฝึกหายใจ สมาธิ และข้อคิดทั้งภาษาไทยและอังกฤษ คลิปใหม่ปลดล็อกวันละ 1 คลิป</p>
+                <p data-i18n="videos.2">คลิปของภารกิจ 60 วัน มีทั้งเสียงฟังสบาย เสียงธรรมชาติ ดนตรี การหายใจ สมาธิ และข้อคิดดี ๆ ทั้งไทยและอังกฤษ เปิดให้ดูวันละ 1 คลิป</p>
                 <p id="videoUnlocked" class="video-unlocked" data-dynamic></p>
             </div>
             <div id="videoGrid" class="video-grid"></div>
@@ -767,7 +767,7 @@
         <section id="research" data-page="research" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="research.1">ข้อมูลอ้างอิงจากงานวิจัย</h2>
-                <p data-i18n="research.2">คำแนะนำในเว็บไซต์อ้างอิงจากงานวิจัยและแบบวัดเหล่านี้ กดที่การ์ดเพื่ออ่านต้นฉบับ</p>
+                <p data-i18n="research.2">คำแนะนำในเว็บนี้มาจากงานวิจัยและแบบวัดเหล่านี้ แตะการ์ดเพื่ออ่านต้นฉบับได้เลย</p>
             </div>
             <div class="research-grid">
                 <a class="card research-card" href="https://pubmed.ncbi.nlm.nih.gov/24395196/" target="_blank" rel="noopener">
@@ -847,7 +847,7 @@
                     <div>
                         <span data-i18n="research.30" class="tag">ภาวะหมดไฟ</span>
                         <h3 data-i18n="research.31">แบบวัดภาวะหมดไฟ Copenhagen (CBI)</h3>
-                        <p data-i18n="research.32">แบบวัดที่ใช้ฟรี พัฒนาจากการศึกษาคนทำงานในเดนมาร์ก วัดความเหนื่อยล้าส่วนบุคคลและจากงาน ใช้ในส่วน “เช็กภาวะหมดไฟ” ของเว็บนี้</p>
+                        <p data-i18n="research.32">แบบวัดที่ใช้ได้ฟรี พัฒนาจากการศึกษาคนทำงานในเดนมาร์ก วัดความเหนื่อยล้าส่วนบุคคลและจากงาน ใช้ในส่วน “เช็กภาวะหมดไฟ” ของเว็บนี้</p>
                         <span class="source">Kristensen et al., Work &amp; Stress, 2005</span>
                     </div>
                 </a>
@@ -876,10 +876,10 @@
         <section id="mylog" data-page="mylog" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="mylog.1">บันทึกของฉัน</h2>
-                <p data-i18n="mylog.2">เข้าสู่ระบบเพื่อดูความเปลี่ยนแปลงของคะแนนความเครียดและอารมณ์ พร้อมประวัติทุกกิจกรรมของคุณ</p>
+                <p data-i18n="mylog.2">เข้าสู่ระบบแล้วจะเห็นว่าความเครียดและอารมณ์ของคุณเปลี่ยนไปยังไง พร้อมสิ่งที่คุณทำมาทั้งหมด</p>
             </div>
             <div id="logGuest" class="card log-card">
-                <p data-i18n="mylog.3">คุณยังไม่ได้เข้าสู่ระบบ ระบบจึงยังไม่บันทึกกิจกรรมของคุณ</p>
+                <p data-i18n="mylog.3">ตอนนี้ยังไม่ได้เข้าสู่ระบบ เลยยังไม่มีการบันทึกสิ่งที่คุณทำนะ</p>
                 <ul class="guest-perks">
                     <li data-i18n="mylog.g1">📈 กราฟคะแนนความเครียดย้อนหลัง 10 ครั้ง</li>
                     <li data-i18n="mylog.g2">😊 กราฟอารมณ์ 7 วันล่าสุด</li>
@@ -1005,13 +1005,13 @@
         <section id="app" data-page="plans" class="section">
             <div class="section-heading">
                 <h2>Hikari Mobile Application</h2>
-                <p data-i18n="app.1">ต่อยอดจากเว็บไซต์ เป็นแอปที่ช่วยบันทึก วิเคราะห์ และติดตามความเครียดทุกวัน (ต้นแบบ)</p>
+                <p data-i18n="app.1">ต่อไปเราอยากทำเป็นแอป ให้คุณจดและดูความเครียดของตัวเองได้ง่าย ๆ ทุกวัน (ต้นแบบ)</p>
             </div>
             <div class="phones">
 
                 <!-- จอที่ 1: หน้าแรก + เลือกอารมณ์ (ใช้งานได้จริง) -->
                 <div class="phone">
-                    <p data-i18n="app.2" class="phone-hello">สวัสดี ☀<br><strong>วันนี้คุณเป็นอย่างไร?</strong></p>
+                    <p data-i18n="app.2" class="phone-hello">สวัสดี ☀<br><strong>วันนี้เป็นยังไงบ้าง</strong></p>
                     <div class="mood-row">
                         <button class="mood-button" data-mood="great">😄<small data-i18n="app.3">ดีมาก</small></button>
                         <button class="mood-button" data-mood="good">🙂<small data-i18n="app.4">ดี</small></button>
@@ -1040,7 +1040,7 @@
                 <!-- จอที่ 3: กราฟติดตามความรู้สึก -->
                 <div class="phone">
                     <p data-i18n="app.17" class="phone-title">ติดตามความรู้สึก</p>
-                    <svg class="phone-chart" viewBox="0 0 220 120" aria-label="กราฟตัวอย่างความเครียด 7 วัน">
+                    <svg class="phone-chart" viewBox="0 0 220 120" aria-label="กราฟตัวอย่างความเครียด 7 วัน" data-i18n-aria="app.chart">
                         <polyline points="10,90 42,80 74,70 106,45 138,30 170,55 202,40" fill="none" stroke="#f29b5c" stroke-width="3"/>
                         <circle cx="10" cy="90" r="4" fill="#f29b5c"/>
                         <circle cx="42" cy="80" r="4" fill="#f29b5c"/>
@@ -1065,7 +1065,7 @@
         <section id="feedback" data-page="home" class="section feedback hidden">
             <div class="card feedback-card">
                 <h2 data-i18n="feedback.1">ลองใช้แล้วเป็นอย่างไรบ้าง?</h2>
-                <p data-i18n="feedback.2">ช่วยตอบแบบสอบถามประมาณ 5–7 นาที ความคิดเห็นของคุณจะใช้ตัดสินใจว่า Hikari ควรพัฒนาต่อเป็นแอปหรือไม่ และควรมีอะไรบ้าง</p>
+                <p data-i18n="feedback.2">ขอเวลาสัก 5–7 นาทีตอบแบบสอบถามหน่อยนะ คำตอบของคุณช่วยให้เรารู้ว่าควรทำ Hikari เป็นแอปไหม และควรมีอะไรบ้าง</p>
                 <a id="surveyLink" class="btn btn-primary btn-large" href="#" target="_blank" rel="noopener" data-i18n="feedback.3">📝 ทำแบบสอบถาม</a>
             </div>
         </section>
@@ -1074,7 +1074,7 @@
         <section id="help" data-page="help" class="section tinted">
             <div class="section-heading">
                 <h2 data-i18n="help.1">ต้องการความช่วยเหลือตอนนี้?</h2>
-                <p data-i18n="help.2">ถ้าคุณรู้สึกไม่ไหว หรือไม่ปลอดภัย ไม่ต้องรอ ติดต่อได้ทันที ฟรี</p>
+                <p data-i18n="help.2">ถ้ารู้สึกไม่ไหวหรือไม่ปลอดภัย ไม่ต้องรอนะ โทรได้เลยตอนนี้ ฟรี</p>
             </div>
             <div class="hotline-grid">
                 <a class="card hotline-card" href="tel:1323">
@@ -1110,7 +1110,7 @@
                         <li data-i18n="help.7">นอนไม่หลับหรือกินไม่ได้ติดต่อกันหลายสัปดาห์</li>
                         <li data-i18n="help.8">รู้สึกสิ้นหวัง ไม่อยากทำสิ่งที่เคยชอบ</li>
                         <li data-i18n="help.9">ความเครียดกระทบการเรียน การงาน หรือความสัมพันธ์</li>
-                        <li data-i18n="help.10">มีความคิดอยากทำร้ายตัวเอง → โทร 1323 หรือ 1669 ทันที</li>
+                        <li data-i18n="help.10">มีความคิดอยากทำร้ายตัวเอง → โทร 1323 หรือ 1669 ได้เลยตอนนี้</li>
                     </ul>
                 </div>
                 <div class="card help-card">
@@ -1138,7 +1138,7 @@
                     <li data-i18n="privacy.12">🩺 <b>เช็กร่างกาย คัดกรองซึมเศร้า และคำตอบเรื่องการใช้สาร (ถ้าตอบ):</b> เก็บในเครื่องนี้เท่านั้น ไม่ส่งไปที่ไหน แก้ไขได้ในส่วนเช็กร่างกาย และลบได้ทั้งหมดด้วยปุ่มด้านล่าง</li>
                     <li data-i18n="privacy.4">🔒 <b>ไม่ส่งไปที่เซิร์ฟเวอร์ของ Hikari:</b> เว็บนี้ยังไม่มีเซิร์ฟเวอร์เก็บข้อมูลผู้ใช้ ทีมงานจึงมองไม่เห็นผลประเมินหรืออารมณ์ของคุณ เปลี่ยนเครื่องหรือล้างข้อมูลเบราว์เซอร์ = ข้อมูลหาย</li>
                     <li data-i18n="privacy.5">🌐 <b>บริการภายนอกที่หน้าเว็บติดต่อ:</b> Google Fonts (ตัวอักษร), jsDelivr (ไลบรารีสร้าง QR), YouTube (รูปตัวอย่าง และวิดีโอผ่าน youtube-nocookie.com เมื่อกดเล่น), Google Sign-In (เฉพาะเมื่อเปิดใช้ปุ่ม Google) และ Google Forms เมื่อคุณกดทำแบบสอบถาม บริการเหล่านี้อาจเห็นที่อยู่ IP และข้อมูลเบราว์เซอร์ของคุณ</li>
-                    <li data-i18n="privacy.6">🩺 <b>ไม่ใช่การรักษาทางการแพทย์:</b> ผลประเมินและคำแนะนำใช้เพื่อสำรวจและดูแลตัวเองเบื้องต้นเท่านั้น ถ้ารู้สึกไม่ไหว โทร 1323 (24 ชั่วโมง) หรือเหตุฉุกเฉิน 1669</li>
+                    <li data-i18n="privacy.6">🩺 <b>ไม่ใช่การวินิจฉัยหรือการรักษา:</b> ผลประเมินและคำแนะนำมีไว้ให้รู้จักและดูแลตัวเองเบื้องต้นเท่านั้น ถ้ารู้สึกไม่ไหว โทร 1323 (24 ชั่วโมง) หรือเหตุฉุกเฉิน 1669</li>
                     <li data-i18n="privacy.7">✉️ <b>ผู้ให้บริการ:</b> บริษัท โมคารุ เอนเตอร์เทนเมนท์ จำกัด</li>
                 </ul>
                 <p id="privacyContact" class="privacy-contact hidden"><a id="privacyContactLink" target="_blank" rel="noopener" data-i18n="footer.c">ติดต่อเรา</a> <span class="contact-line">LINE @833aevlx</span><span id="privacyEmailWrap" class="hidden"> · <a id="privacyEmail"></a></span></p>
@@ -1192,11 +1192,11 @@
             <p class="pay-amount"><span id="payAmount" data-dynamic></span> <small id="payPlan" data-dynamic></small></p>
             <div id="payQr" class="pay-qr" role="img" aria-label="PromptPay QR"></div>
             <p class="pay-meta"><span data-i18n="pay.2">ผู้รับเงิน:</span> <b id="payName" data-dynamic></b></p>
-            <p class="pay-meta"><span data-i18n="pay.3">เลขที่คำสั่งซื้อ:</span> <b id="payOrder" data-dynamic></b> · <span id="payTimer" data-dynamic></span></p>
+            <p class="pay-meta"><span data-i18n="pay.3">ข้อความคำสั่งซื้อ (ส่งพร้อมสลิป):</span> <b id="payOrder" data-dynamic></b> · <span id="payTimer" data-dynamic></span></p>
             <ol class="pay-steps">
-                <li data-i18n="pay.4">เปิดแอปธนาคาร เลือก "สแกน" แล้วสแกน QR นี้</li>
+                <li data-i18n="pay.4">เปิดแอปธนาคาร เลือก “สแกน” แล้วสแกน QR นี้</li>
                 <li data-i18n="pay.5">ตรวจชื่อผู้รับและยอดเงินให้ตรง แล้วกดโอน</li>
-                <li data-i18n="pay.6">ส่งสลิปพร้อมเลขที่คำสั่งซื้อ ทีมงานจะเพิ่มของให้ภายใน 24 ชั่วโมง</li>
+                <li data-i18n="pay.6">ส่งสลิปพร้อมข้อความคำสั่งซื้อ ทีมงานจะส่ง “รหัสรับของ” ภายใน 24 ชั่วโมง ใส่รหัสได้ที่เกมสวนแสง แท็บ “ฉัน”</li>
             </ol>
             <div class="pay-actions">
                 <a id="paySlip" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="pay.7">ส่งสลิป</a>
@@ -1208,6 +1208,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" integrity="sha384-8FWZA6BGMXhsfO+BLtrJK0We6gg5o1JyO8xQm6peWDEUs17ACA5ziE/NIAkl9z2k" crossorigin="anonymous"></script>
     <script src="config.js"></script>
+    <script src="safety.js"></script>
+    <script src="share.js"></script>
     <script src="pay.js"></script>
     <script src="lang/th.js"></script>
     <script src="lang/en.js"></script>
@@ -1220,6 +1222,7 @@
     <script src="lang/ru.js"></script>
     <script src="lang/ja.js"></script>
     <script src="content.js"></script>
+    <script src="soundscape.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

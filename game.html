@@ -34,6 +34,10 @@
         <span class="g-title" data-t="title">Hikari สวนแสง</span>
         <span class="chip chip-light" title="แสง"><img src="game/img/icon_light-currency.webp" alt=""><b id="lightCount">0</b></span>
         <span class="chip chip-days" id="daysChip" title="วันที่อยู่ด้วยกัน"><img src="game/img/icon_heart.webp" alt=""><b id="daysCount">0</b></span>
+        <!-- v26: ปุ่มขอความช่วยเหลือ (1323 / 1669) แตะได้จากทุกหน้า -->
+        <button class="g-help" type="button" id="helpTop" aria-label="ต้องการความช่วยเหลือตอนนี้" data-t-aria="helpBtn">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z" fill="currentColor"/></svg>
+        </button>
     </header>
 
     <main class="g-main">
@@ -51,7 +55,7 @@
             <div class="notice" id="testNotice" hidden>
                 <p id="testNoticeText"></p>
                 <button class="btn btn-small" type="button" id="openExternal" data-t="openExternal" hidden>เปิดในเบราว์เซอร์</button>
-                <button class="notice-close" type="button" id="testNoticeClose" aria-label="ปิด">×</button>
+                <button class="notice-close" type="button" id="testNoticeClose" aria-label="ปิด" data-t-aria="close">×</button>
             </div>
             <div class="stage" id="stage">
                 <img class="stage-bg" id="stageBg" alt="">
@@ -142,12 +146,12 @@
                 <p class="note" data-t="letterHow"></p>
                 <p class="note" id="letterMsg" role="status"></p>
             </div>
-            <!-- ชวนคนที่ไว้ใจคุย: ข้อความสำเร็จรูป ส่งทาง LINE -->
+            <!-- ชวนคนที่ไว้ใจคุย: ข้อความสำเร็จรูป ส่งผ่านแผงแชร์ (share.js) -->
             <div class="card talk-card" id="talkCard">
                 <h2 class="h-card" data-t="talkTitle">ชวนคนที่ไว้ใจคุย</h2>
                 <p class="muted" data-t="talkSub"></p>
                 <div class="letter-list" id="talkList" role="radiogroup"></div>
-                <button class="btn btn-primary btn-wide" id="talkSend" type="button" data-t="talkSend">ส่งทาง LINE</button>
+                <button class="btn btn-primary btn-wide" id="talkSend" type="button" data-t="talkSend">ส่งผ่านแอปแชต</button>
                 <p class="note" data-t="talkHow"></p>
                 <p class="note" id="talkMsg" role="status"></p>
             </div>
@@ -188,7 +192,7 @@
             <div class="card" id="redeemCard">
                 <h2 class="h-card" data-t="redeemTitle">ใส่รหัสรับของ</h2>
                 <div class="redeem-row">
-                    <input class="field" id="redeemInput" autocomplete="off" spellcheck="false" aria-label="รหัส">
+                    <input class="field" id="redeemInput" autocomplete="off" spellcheck="false" aria-label="รหัส" data-t-aria="redeemTitle">
                     <button class="btn btn-primary" id="redeemBtn" type="button" data-t="redeemBtn">รับของ</button>
                 </div>
                 <p class="note" id="redeemMsg" role="status"></p>
@@ -203,7 +207,7 @@
                 <div class="stats" id="statsBox"></div>
             </div>
             <div class="card">
-                <h2 class="h-card" data-t="album">อัลบั้มเพื่อนที่มาเยี่ยม</h2>
+                <h2 class="h-card nb-head"><span data-t="album">อัลบั้มเพื่อนที่มาเยี่ยม</span><button class="nb-info-btn" type="button" id="nbInfoBtn" data-t-aria="nb_infoAria" aria-label="เพื่อนบ้านมาเยี่ยมยังไง?">?</button></h2><!-- v30 neighbors -->
                 <div class="album" id="albumBox"></div>
             </div>
             <div class="card">
@@ -428,6 +432,7 @@
                 <div class="qb-art small"><img id="stepImg" alt=""></div>
                 <p class="qb-say" id="stepSay" aria-live="polite"></p>
                 <textarea class="field qb-input" id="stepInput" rows="2" maxlength="160" autocomplete="off" spellcheck="false"></textarea>
+                <div id="stepRisk" hidden></div>
                 <div class="chip-row" id="stepIdeas" hidden></div>
                 <p class="note" data-t="stepPrivate"></p>
                 <div class="item-actions">
@@ -467,8 +472,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script src="config.js"></script>
+<script src="safety.js"></script>
+<script src="share.js"></script>
 <script src="pay.js"></script>
 <script src="game-data.js"></script>
+<!-- v28: คุยกับน้อง (ทำงานในเครื่อง ไม่ส่งข้อความไปไหน) · ปุ่มแชตสร้างบนฉากบ้านโดย game-chat.js -->
+<script src="chat-content.js"></script>
+<script src="game-chat.js"></script>
 <script>
 // โหลดไฟล์ภาษาของเกมตามภาษาที่เลือกในเว็บ (ไทย/อังกฤษอยู่ใน game-data.js แล้ว)
 (function () {
@@ -480,6 +490,11 @@
 })();
 </script>
 <script src="game.js"></script>
+<script src="game-play.js"></script>
 <script src="game-pet.js"></script>
+<script src="game-life.js"></script>
+<script src="game-world.js"></script><!-- v28 world -->
+<script src="game-neighbors.js"></script><!-- v30 neighbors -->
+<script src="game-friends.js"></script><!-- v30 friends: เพื่อนผ่านลิงก์ชวน (เยี่ยมสวน ของขวัญ เที่ยวด้วยกัน) -->
 </body>
 </html>

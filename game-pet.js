@@ -19,12 +19,18 @@ const Pet = (function () {
     let active = false, mode = "idle", pos = { x: 50, y: 9 }, thinkTimer = null, sayTimer = null, zzzTimer = null;
     let walkTimer = null, petTimer = null, purr = null, lastBondAt = 0, lastTapAt = 0;
 
+    // v28 world: ขอบเขตพื้นที่เดินของฉาก (game-world.js ปรับตามฉาก) · x เป็น % ของโลก, y = แถบพื้นจากขอบล่าง (%)
+    const WB = { x0: 16, x1: 84, y0: 3, y1: 16, ratio: 1, scale: 1, center: null };
+    function space() { return document.getElementById("wWorld") || stage; }      // v28 world: พิกัดเทียบกับโลก (กว้างกว่าจอได้)
+    function cx() { return WB.center ? WB.center() : 50; }                        // v28 world: กลางจอที่กล้องมองอยู่
+
     if (S.bond === undefined) S.bond = 0;
     if (S.petSound === undefined) S.petSound = true;
 
     // ---------- เครื่องมือ ----------
     function rand(a, b) { return a + Math.random() * (b - a); }
     function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+    function PP() { return typeof PetPlay !== "undefined" ? PetPlay : null; }   // v28: game-play.js (เล่น/ให้อาหาร/ลูบแบบมีชีวิต)
     function night() { return timeOfDay() === "night"; }
     function line(kind) {
         const lines = (PET_LINES[L] || PET_LINES.en)[kind];
@@ -71,10 +77,12 @@ const Pet = (function () {
         return S.world === "trip" ? "float" : "";
     }
     function place(x, y, seconds) {
-        pos.x = Math.max(16, Math.min(84, x));
-        pos.y = Math.max(3, Math.min(16, y));
+        pos.x = Math.max(WB.x0, Math.min(WB.x1, x));                              // v28 world
+        pos.y = Math.max(WB.y0, Math.min(WB.y1, y));
         el.style.setProperty("--walk", (seconds || 0) + "s");
-        el.style.setProperty("--depth", (1.1 - (pos.y - 3) * 0.022).toFixed(3));
+        const far = (pos.y - WB.y0) / Math.max(1, WB.y1 - WB.y0);              // v28 world: ไกล = ตัวเล็กลง + อยู่หลัง
+        el.style.setProperty("--depth", ((1.1 - far * 0.29) * WB.scale).toFixed(3));
+        el.style.zIndex = String(40 - Math.round(pos.y));
         el.style.left = pos.x + "%";
         el.style.bottom = pos.y + "%";
     }
@@ -84,14 +92,14 @@ const Pet = (function () {
     // เดินไปที่ (x, y) แล้วเรียก done
     function walkTo(x, y, done, speed) {
         clearTimeout(walkTimer);
-        const dx = x - pos.x, dy = y - pos.y;
-        const dist = Math.sqrt(dx * dx + dy * dy * 4);
+        const dx = x - pos.x, dy = y - pos.y, rx = dx * WB.ratio;               // v28 world: ระยะเทียบความกว้างจอ
+        const dist = Math.sqrt(rx * rx + dy * dy * 4);
         if (dist < 2 || reduced) {
             place(x, y, 0);
             if (done) done();
             return;
         }
-        const sec = Math.max(0.35, Math.min(3.2, dist / (speed || 22)));
+        const sec = Math.max(0.35, Math.min(3.2 * Math.max(1, WB.ratio * 0.8), dist / (speed || 22)));
         mode = "walk";
         face(dx);
         setPose("stretch");
@@ -111,7 +119,7 @@ const Pet = (function () {
 
     // ---------- เอฟเฟกต์ ----------
     function petPoint() {
-        const s = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
+        const s = space().getBoundingClientRect(), r = el.getBoundingClientRect();   // v28 world
         return { x: (r.left + r.width / 2 - s.left) / s.width * 100, y: (r.top + r.height * 0.25 - s.top) / s.height * 100 };
     }
     function fx(kind, n, at) {
@@ -235,7 +243,8 @@ const Pet = (function () {
         const r = Math.random();
         const v = !$("visitorBtn").hidden;
         if (r < 0.38) {
-            walkTo(rand(20, 80), rand(4, 15), function () { schedule(rand(2500, 5000)); });
+            const span = (WB.x1 - WB.x0) / Math.max(1, WB.ratio) * 0.45;            // v28 world: เดินเล่นแถวที่กล้องมอง
+            walkTo(rand(Math.max(WB.x0, cx() - span), Math.min(WB.x1, cx() + span)), rand(WB.y0 + 1, WB.y1 - 1), function () { schedule(rand(2500, 5000)); });
             return;
         }
         if (r < 0.48 && v) {
@@ -289,6 +298,7 @@ const Pet = (function () {
     // ---------- การเล่นด้วยกัน ----------
     function react() {
         if (mode === "sleep") { wake(); firstPetToday(); addBond(1); return; }
+        if (PP() && PP().busy()) { PP().tapDuring(); return; }    // แตะระหว่างวิ่งไล่บอล/กินขนม = หยุด หันมามอง
         if (mode === "walk") { clearTimeout(walkTimer); place(petCurrentX(), pos.y, 0); }
         mode = "busy";
         setPose(pick(["happy", "play", "happy", "belly"]));
@@ -303,25 +313,29 @@ const Pet = (function () {
         schedule(5000);
     }
     function petCurrentX() {
-        const s = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
+        const s = space().getBoundingClientRect(), r = el.getBoundingClientRect();   // v28 world
         return (r.left + r.width / 2 - s.left) / s.width * 100;
     }
+    let petSleeping = false;
     function startPetting() {
-        if (mode === "sleep") { clearInterval(zzzTimer); }
+        petSleeping = mode === "sleep";               // ลูบตอนหลับ = หลับต่อ ยิ้มในฝัน ไม่สะดุ้งตื่น
+        if (PP()) PP().strokeStart(petSleeping);
+        if (mode === "walk") { clearTimeout(walkTimer); place(petCurrentX(), pos.y, 0); }
         clearTimeout(walkTimer);
         mode = "pet";
         el.classList.add("petting");
-        setPose("happy");
+        if (!petSleeping) { setPose("happy"); speak(line("pet"), 4000); }
         startPurr();
-        speak(line("pet"), 4000);
         firstPetToday();
         clearInterval(petTimer);
-        petTimer = setInterval(function () { fx("heart", 1); addBond(1); }, 450);
+        petTimer = setInterval(function () { fx("heart", 1, PP() ? PP().finger() : null); addBond(1); }, petSleeping ? 900 : 450);
     }
     function stopPetting() {
         clearInterval(petTimer);
         el.classList.remove("petting");
         stopPurr();
+        if (PP()) PP().strokeEnd();
+        if (mode === "pet" && petSleeping) { petSleeping = false; goSleep(); return; }
         if (mode === "pet") { mode = "idle"; setPose("sit"); setAnim(restAnim()); }
         schedule(4000);
     }
@@ -338,6 +352,7 @@ const Pet = (function () {
         down.lx = e.clientX;
         down.ly = e.clientY;
         if (!down.petting && down.moved > 45) { down.petting = true; startPetting(); }
+        if (down.petting && PP()) PP().stroke(e);
     });
     function endPointer() {
         if (!down) return;
@@ -354,13 +369,13 @@ const Pet = (function () {
 
     // แตะพื้น → น้องเดินไปตรงนั้น
     stage.addEventListener("click", function (e) {
-        if (e.target.closest(".pet, .visitor, .stage-say, .bond-chip")) return;
-        if (mode === "pet") return;
-        const r = stage.getBoundingClientRect();
+        if (e.target.closest(".pet, .visitor, .stage-say, .bond-chip, .toy")) return;
+        if (mode === "pet" || (PP() && PP().busy())) return;
+        const r = space().getBoundingClientRect();                                 // v28 world: แตะตรงไหนของโลกก็ได้
         const x = (e.clientX - r.left) / r.width * 100;
         const yFromBottom = (r.bottom - e.clientY) / r.height * 100;
         if (mode === "sleep") { wake(); return; }
-        walkTo(x, Math.min(16, Math.max(3, yFromBottom - 6)), function () {
+        walkTo(x, Math.min(WB.y1, Math.max(WB.y0, yFromBottom - 6)), function () {   // v28 world
             if (Math.random() < 0.4) { fx("note", 1); }
             schedule(rand(3000, 5000));
         }, 26);
@@ -437,9 +452,10 @@ const Pet = (function () {
     // เรียกน้อง: วิ่งมาตรงกลางด้านหน้า
     function call() {
         if (!active || mode === "pet") return;
+        if (PP()) PP().abort();
         if (mode === "sleep") { wake(); return; }
         audioCtx();
-        walkTo(50, 3, function () {
+        walkTo(cx(), WB.y0, function () {                                          // v28 world
             face(Math.random() < 0.5 ? -5 : 5);
             setPose("happy"); hop(); voice(); fx("heart", 2);
             speak(line("call"), 3000);
@@ -453,8 +469,8 @@ const Pet = (function () {
         $("playSound").setAttribute("aria-pressed", String(!!S.petSound));
         $("playSoundTxt").textContent = S.petSound ? t("petSoundOn") : t("petSoundOff");
     }
-    $("playBall").addEventListener("click", playBall);
-    $("playTreat").addEventListener("click", giveTreat);
+    $("playBall").addEventListener("click", function () { if (PP()) PP().ball(); else playBall(); });
+    $("playTreat").addEventListener("click", function () { if (PP()) PP().feed(); else giveTreat(); });
     $("playCall").addEventListener("click", call);
     $("playSound").addEventListener("click", function () {
         S.petSound = !S.petSound;
@@ -476,7 +492,7 @@ const Pet = (function () {
         active = true;
         toyEl.hidden = true;
         if (night()) {
-            place(rand(35, 65), 8, 0);
+            place(cx() + rand(-12, 12) / WB.ratio, 8, 0);                            // v28 world
             goSleep();
             return;
         }
@@ -486,13 +502,13 @@ const Pet = (function () {
         setAnim(restAnim());
         say.textContent = defaultSay();
         if (reduced) {
-            place(50, 8, 0);
+            place(cx(), 8, 0);                                                     // v28 world
             schedule(4000);
             return;
         }
-        place(8, 8, 0);
+        place(Math.max(WB.x0, cx() - 42 / WB.ratio), 8, 0);                        // v28 world
         setTimeout(function () {
-            walkTo(50, 8, function () {
+            walkTo(cx(), 8, function () {
                 hop();
                 fx("heart", 2);
                 workSpeak("greet", 4500);
@@ -509,6 +525,7 @@ const Pet = (function () {
         clearInterval(zzzTimer);
         clearInterval(petTimer);
         stopPurr();
+        if (PP()) PP().leave();
         fxBox.innerHTML = "";
     }
     // เช็กอินอารมณ์แล้วน้องตอบสนอง
@@ -516,7 +533,7 @@ const Pet = (function () {
         if (!active) return;
         if (id === "sad" || id === "stressed") {
             if (mode === "sleep") wake();
-            walkTo(50, 3, function () {
+            walkTo(cx(), WB.y0, function () {                                      // v28 world
                 setPose("sit");
                 setAnim("squish");
                 fx("heart", 4);
@@ -548,7 +565,42 @@ const Pet = (function () {
         speak(text, onTap ? 9000 : 7000, onTap || null);
         schedule(7000);
     }
-    return { enter: enter, leave: leave, onMood: onMood, greetVisitor: greetVisitor, say: sayLine, _wasActive: false };
+    // v28 world: ให้ game-world.js ตั้งขอบเขตฉาก วางตำแหน่ง และพาน้องไปดมที่จุดเรืองแสง
+    function sniffAt(x, y, done) {
+        if (!active) { if (done) done(); return; }
+        if (mode === "sleep") wake();
+        if (mode === "pet") stopPetting();
+        walkTo(x, y, function () {
+            face(x > pos.x ? 1 : -1);
+            mode = "busy";
+            setPose("stretch");
+            setAnim("wiggle");
+            fx("note", 1);
+            setTimeout(function () { if (mode === "busy") { mode = "idle"; setPose("sit"); setAnim(restAnim()); } }, 1500);
+            schedule(7000);
+            if (done) done();
+        }, 30);
+    }
+    function moveTo(x, y, walkInX) {
+        clearTimeout(walkTimer);
+        if (mode === "walk" || mode === "busy") { mode = "idle"; setPose("sit"); setAnim(restAnim()); }
+        place(mode === "sleep" && walkInX !== undefined ? walkInX : x, y, 0);       // หลับอยู่: วางไว้ในฉากเลย ไม่ค้างที่ขอบ
+        if (active && walkInX !== undefined && mode !== "sleep") setTimeout(function () { walkTo(walkInX, y, function () { schedule(4000); }, 30); }, 60);
+    }
+    // v28: ช่องทางให้ game-play.js ใช้ท่าทาง/การเดิน/เอฟเฟกต์ของน้อง (ไม่แก้ตรรกะเดิน)
+    const api = {
+        el: el, body: body, flip: flip, pimg: pimg, stage: stage, fxBox: fxBox, toyEl: toyEl,
+        active: function () { return active; },
+        mode: function (m) { if (m) mode = m; return mode; },
+        pos: function () { return pos; },
+        stopWalk: function () { clearTimeout(walkTimer); },
+        walkTo: walkTo, place: place, face: face, setPose: setPose, setAnim: setAnim, restAnim: restAnim, hop: hop,
+        voice: voice, fx: fx, speak: speak, line: line, addBond: addBond, firstPetToday: firstPetToday,
+        schedule: schedule, wake: wake, goSleep: goSleep
+    };
+    if (PP()) PP().attach(api);
+    return { enter: enter, leave: leave, onMood: onMood, greetVisitor: greetVisitor, say: sayLine, _wasActive: false, _api: api,
+        bounds: WB, pos: pos, moveTo: moveTo, sniffAt: sniffAt, isActive: function () { return active; } };   // v28 world
 })();
 
 // game.js วาดหน้าบ้านไปก่อนไฟล์นี้โหลด จึงเริ่มน้องตรงนี้ถ้าหน้าบ้านเปิดอยู่

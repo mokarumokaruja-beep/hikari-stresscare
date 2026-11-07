@@ -15,6 +15,7 @@ LANG.es = {
         "header.7": "Mi registro",
         "header.8": "Planes",
         "header.9": "Pedir ayuda",
+        "header.lang": "Elegir idioma",
         "auth.1": "Cerrar ventana",
         "auth.2": "Iniciar sesión",
         "auth.3": "Registrarse",
@@ -47,7 +48,7 @@ LANG.es = {
         "assessment.6": "Primeros pasos",
         "assessment.7": "Tus resultados anteriores",
         "assessment.8": "Tu puntuación es bastante alta. No tienes que afrontarlo solo/a: habla con alguien de confianza o con un profesional. La línea de salud mental es gratuita y atiende las 24 horas.",
-        "assessment.9": "Este resultado es solo para autoconocimiento, no es un diagnóstico médico. Los resultados anteriores se guardan en este navegador y no se envían a un servidor de Hikari · <a href=\"#privacy\">Privacidad</a>",
+        "assessment.9": "Es una autoevaluación rápida para conocerte mejor, no un diagnóstico médico. Los resultados anteriores se guardan en este navegador y no se envían a un servidor de Hikari · <a href=\"#privacy\">Privacidad</a>",
         "assessment.10": "Hacer la evaluación otra vez",
         "assessment.11": "“Entender lo que sientes es el comienzo del cambio”",
         "assessment.12": "Una joven escribiendo sus emociones junto a una maceta",
@@ -141,6 +142,7 @@ LANG.es = {
         "app.12": "Actividades sugeridas",
         "app.13": "Respiración<br><small>5 min</small>",
         "app.14": "Grounding<br><small>3 min</small>",
+        "app.chart": "Gráfico de ejemplo del estrés en 7 días",
         "app.15": "Priorizar tareas<br><small>7 min</small>",
         "app.16": "Prepararse para dormir<br><small>10 min</small>",
         "app.17": "Seguimiento del ánimo",
@@ -151,7 +153,7 @@ LANG.es = {
         "app.22": "🎯 Recibir actividades personalizadas",
         "mylog.1": "Mi registro",
         "mylog.2": "Inicia sesión para ver cómo cambian tu puntuación de estrés y tu ánimo, además del historial de todas tus actividades.",
-        "mylog.3": "No has iniciado sesión, así que todavía no se registran tus actividades.",
+        "mylog.3": "Todavía no has iniciado sesión, así que lo que hagas no se está guardando.",
         "mylog.4": "Iniciar sesión / Registrarse",
         "mylog.5": "⬇ Descargar (CSV)",
         "mylog.6": "Cerrar sesión",
@@ -240,7 +242,7 @@ LANG.es = {
         "today.5": "💡 Misión extra (opcional)",
         "today.6": "📖 Investigación de hoy",
         "today.7": "Pruébalo:",
-        "today.8": "Las ondas y frecuencias como 432/528 Hz o los ritmos binaurales son para relajarse; la evidencia es limitada y no son un tratamiento · Escucha los binaurales con auriculares a bajo volumen",
+        "today.8": "Los tonos como 432/528 Hz o los pulsos binaurales son solo una escucha agradable para relajarse; la investigación es limitada y no son un tratamiento · Escucha los pulsos binaurales con auriculares y a volumen bajo",
         "today.t1": "📝 Registro de ánimo (o haz la evaluación)",
         "today.t2": "🎧 Escucha el video de hoy o 📖 lee la investigación de hoy (elige uno)",
         "today.t3": "🌬️ Haz 1 ronda de respiración o 1 pausa corta",
@@ -277,7 +279,7 @@ LANG.es = {
         "privacy.3": "📱 <b>Se guarda en este dispositivo (localStorage del navegador):</b> tu cuenta (usuario y contraseña cifrada con hash), resultados de evaluación, registros de ánimo, registro de actividad, recorrido de 60 días, recompensas, pedidos, idioma y datos del juego Jardín de Luz",
         "privacy.4": "🔒 <b>No se envía a un servidor de Hikari:</b> este sitio aún no tiene servidor para datos de usuarios, así que nuestro equipo no puede ver tus resultados ni tu ánimo. Si cambias de dispositivo o borras los datos del navegador, los datos se pierden",
         "privacy.5": "🌐 <b>Servicios externos que contacta esta página:</b> Google Fonts (tipografías), jsDelivr (librería de códigos QR), YouTube (miniaturas y, al pulsar reproducir, videos mediante youtube-nocookie.com), Google Sign-In (solo si el botón de Google está activado) y Google Forms al abrir la encuesta. Estos servicios pueden ver tu dirección IP y datos del navegador",
-        "privacy.6": "🩺 <b>No es un tratamiento médico:</b> los resultados y consejos son solo para autoconocimiento y autocuidado básico. Si te sientes desbordado/a, llama al 1323 (24 horas) o al 1669 en emergencias",
+        "privacy.6": "🩺 <b>No es diagnóstico ni tratamiento:</b> los resultados y consejos son solo para conocerte y cuidarte de forma básica. Si sientes que no puedes más, llama al 1323 (24 horas) o al 1669 en emergencias",
         "privacy.7": "✉️ <b>Proveedor del servicio:</b> MOKARU ENTERTAINMENT CO., LTD.",
         "privacy.8": "🗑️ Borrar todos los datos de este dispositivo",
         "privacy.9": "¿Borrar tu cuenta, resultados, ánimo, registro, recorrido, recompensas, pedidos y datos del juego de este dispositivo? No se puede deshacer.",
@@ -307,7 +309,7 @@ LANG.es = {
         "burnout.r6": "Hacerlo de nuevo",
         "burnout.h": "Resultados anteriores",
         "root.1": "Ataca la causa",
-        "root.2": "El estrés baja de verdad cuando actúas sobre lo que lo causa. Elige lo que más te estresa y practica por tu cuenta habilidades cortas. El psicólogo es el último paso, cuando lo necesites.",
+        "root.2": "El estrés baja de verdad cuando actúas sobre lo que lo causa. Elige lo que más te estresa y practica por tu cuenta habilidades cortas. Si quieres hablar con un psicólogo, puedes hacerlo cuando quieras, sin esperar a estar peor.",
         "root.3": "¿Qué te estresa más? (elige hasta 3)",
         "root.4": "Estas habilidades son conocimientos generales, no consejos médicos ni financieros personalizados. Si no mejoras tras 2–4 semanas de práctica, o si afecta mucho tu trabajo y tu vida, consulta a un profesional.",
         "root.5": "Elige al menos 1 tema arriba para ver habilidades que pueden ayudarte",
@@ -346,20 +348,20 @@ LANG.es = {
         "dep.2": "El cribado de 2 preguntas (2Q) y la evaluación de 9 preguntas (9Q) del Departamento de Salud Mental de Tailandia. Si respondes «Sí» a alguna pregunta del 2Q, sigue el 9Q. Toma de 1 a 3 minutos.",
         "dep.3": "Cribado inicial, no es un diagnóstico",
         "dep.r1": "Tu resultado",
-        "dep.ok": "Por ahora no se detecta riesgo de depresión. Sigue cuidándote y vuelve cuando quieras si algo cambia.",
+        "dep.ok": "Según tus respuestas, por ahora no se detecta riesgo de depresión. Sigue cuidándote y vuelve cuando quieras si algo cambia.",
         "dep.s1": "⏱ Pausa de 1–3 min",
         "dep.s2": "🌱 Ideas de autocuidado",
         "dep.s3": "💬 Habla con alguien de confianza",
         "dep.r2": "Cribado inicial, no es un diagnóstico. Solo un médico puede diagnosticar. · 9Q: menos de 7 = sin síntomas o muy leves, 7–12 = leve, 13–18 = moderado, 19 o más = grave · Los resultados se guardan solo en este dispositivo.",
         "dep.src": "Fuente: cribado de depresión 2Q y evaluación de depresión 9Q, Departamento de Salud Mental, Ministerio de Salud Pública de Tailandia",
         "crisis.1": "Ahora mismo no tienes que pasar por esto a solas",
-        "crisis.2": "Gracias por responder con sinceridad. Pensamientos así nos dicen que estás sufriendo mucho. Si ahora no te sientes a salvo, busca ayuda de inmediato. Es gratis.",
+        "crisis.2": "Gracias por responder con sinceridad. Pensamientos así nos dicen que estás sufriendo mucho, y con apoyo esto puede mejorar. Si ahora no te sientes a salvo, busca ayuda de inmediato. Es gratis.",
         "crisis.1323": "📞 Llama al 1323, línea de salud mental (24 h)",
         "crisis.1669": "🚑 Llama al 1669, emergencias",
         "crisis.er": "🏥 Ve a urgencias de un hospital cercano",
         "crisis.tell": "💬 Díselo ahora a alguien de confianza y pídele que se quede contigo",
         "talk.1": "💬 Habla con alguien de confianza",
-        "talk.2": "No hace falta esperar a que pese demasiado. Elige un mensaje, cámbialo con tus propias palabras y envíalo por LINE. · Los mensajes no se guardan en ningún sitio.",
+        "talk.2": "No hace falta esperar a que pese demasiado. Elige un mensaje, cámbialo con tus propias palabras y envíalo por tu app de chat. · Los mensajes no se guardan en ningún sitio.",
         "dir.1": "📒 Directorio de líneas de ayuda (llamada gratuita)",
         "dir.1669": "Emergencias médicas (24 h)",
         "dir.1323": "Línea de salud mental, Departamento de Salud Mental (24 h)",
@@ -389,6 +391,158 @@ LANG.es = {
         "hub.h": "Líneas de salud mental gratuitas, 24 horas"
     },
     "js": {
+        "research": [
+            {
+                "t": "La meditación alivia la ansiedad",
+                "f": "Una revisión de 47 ensayos (3.515 personas) halló que los programas de mindfulness mejoraron de forma moderada la ansiedad, la depresión y el dolor.",
+                "tip": "Empieza con 5–10 minutos de mindfulness al día, con constancia."
+            },
+            {
+                "t": "Respiración lenta, mente más calmada",
+                "f": "Respirar unas 6 veces por minuto se asoció con un sistema nervioso más relajado, más calma y menos ansiedad.",
+                "tip": "Inhala 4 segundos y exhala 6 durante 2–5 minutos."
+            },
+            {
+                "t": "Cinco minutos de suspiro cíclico",
+                "f": "Quienes hicieron 'suspiro cíclico' (doble inhalación y una exhalación larga) 5 minutos al día durante un mes mejoraron su ánimo más que un grupo que solo hizo mindfulness.",
+                "tip": "Inhala, añade una segunda inhalación corta y exhala despacio por la boca durante 5 minutos."
+            },
+            {
+                "t": "Respirar con el abdomen ayuda a concentrarse",
+                "f": "Ocho semanas de respiración diafragmática mejoraron la atención y redujeron el ánimo negativo y el cortisol, una hormona del estrés.",
+                "tip": "Pon una mano en el abdomen y deja que suba al respirar, en lugar de levantar los hombros."
+            },
+            {
+                "t": "Contar lo bueno mejora tu visión de la vida",
+                "f": "Quienes anotaron cada semana cosas por las que estaban agradecidos se sintieron mejor con su vida y más optimistas que los grupos de comparación.",
+                "tip": "Escribe 3 cosas por las que estás agradecido una vez a la semana."
+            },
+            {
+                "t": "Tres cosas buenas por la noche",
+                "f": "Escribir cada día durante una semana tres cosas que salieron bien, y por qué, aumentó la felicidad y redujo los síntomas depresivos hasta 6 meses.",
+                "tip": "Esta noche, escribe 3 cosas buenas y por qué pasaron."
+            },
+            {
+                "t": "Escribir lo que sientes",
+                "f": "Escribir abiertamente sobre experiencias difíciles 15–20 minutos durante 3–4 días se asoció con mejor salud física y mental.",
+                "tip": "Escribe sobre lo que sientes 15 minutos, solo para ti."
+            },
+            {
+                "t": "Nombrar emociones calma el cerebro",
+                "f": "Poner las emociones en palabras redujo la actividad de la amígdala, una zona del cerebro que reacciona a la amenaza y al estrés.",
+                "tip": "Di 'Me siento…' cuando una emoción sea fuerte."
+            },
+            {
+                "t": "Una mente que divaga suele ser menos feliz",
+                "f": "La mente de las personas divagaba casi la mitad del tiempo, y en esos momentos solían sentirse menos felices.",
+                "tip": "Elige una actividad hoy y está presente del todo en ella."
+            },
+            {
+                "t": "Caminar en la naturaleza reduce la rumiación",
+                "f": "Un paseo de 90 minutos en la naturaleza redujo el pensamiento negativo repetitivo y la actividad cerebral relacionada, frente a un paseo urbano.",
+                "tip": "Da un paseo por un lugar verde una vez a la semana."
+            },
+            {
+                "t": "Una pausa de 20 minutos en la naturaleza",
+                "f": "Pasar 20–30 minutos en la naturaleza logró la bajada más eficiente del cortisol, una hormona del estrés.",
+                "tip": "Siéntate o camina cerca de árboles durante 20 minutos."
+            },
+            {
+                "t": "Los espacios verdes ayudan al cuerpo",
+                "f": "Estar en espacios verdes se asoció con menos cortisol, un ritmo cardíaco más lento y mejor salud general.",
+                "tip": "Ten una plantita en tu escritorio o haz pausas cerca de zonas verdes."
+            },
+            {
+                "t": "Ver árboles y la recuperación",
+                "f": "Los pacientes operados con vista a árboles estuvieron menos días ingresados y necesitaron menos analgésicos que quienes veían una pared.",
+                "tip": "Coloca tu asiento para ver árboles o el cielo."
+            },
+            {
+                "t": "Moverse ayuda a la mente",
+                "f": "Una gran revisión paraguas halló que la actividad física, incluidos caminar y el yoga, redujo claramente la depresión, la ansiedad y el malestar.",
+                "tip": "Camina rápido o mueve el cuerpo 20–30 minutos hoy."
+            },
+            {
+                "t": "Dormir mejor, mejor ánimo",
+                "f": "Mejorar el sueño redujo la depresión, la ansiedad y el estrés.",
+                "tip": "Acuéstate y levántate a la misma hora todos los días."
+            },
+            {
+                "t": "Buenas relaciones, vida más larga",
+                "f": "Las personas con relaciones sociales más fuertes tuvieron alrededor de un 50% más de probabilidad de supervivencia durante el seguimiento.",
+                "tip": "Escribe o llama a alguien que te importa."
+            },
+            {
+                "t": "Los abrazos amortiguan el estrés",
+                "f": "Las personas con más apoyo social y abrazos frecuentes estaban más protegidas frente al efecto del estrés sobre los resfriados.",
+                "tip": "Abraza hoy a un familiar o a tu mascota."
+            },
+            {
+                "t": "Dar nos hace más felices",
+                "f": "Gastar dinero en otros hizo a las personas más felices que gastarlo en sí mismas, incluso con cantidades pequeñas.",
+                "tip": "Invita o ayuda a alguien con un pequeño gesto."
+            },
+            {
+                "t": "Bondad amorosa",
+                "f": "La meditación de bondad amorosa aumentó las emociones positivas, la sensación de conexión y el tono vagal, que ayuda al cuerpo a calmarse.",
+                "tip": "Piensa en alguien y deséale en silencio: 'Que seas feliz y estés a salvo.'"
+            },
+            {
+                "t": "Sé amable contigo",
+                "f": "Un programa de autocompasión de 8 semanas redujo la depresión, la ansiedad y el estrés y aumentó la satisfacción con la vida.",
+                "tip": "Háblate como le hablarías a un amigo que lo está pasando mal."
+            },
+            {
+                "t": "Replantea el estrés",
+                "f": "Quienes veían el estrés como algo que puede ayudarles a crecer tenían más bienestar y mejor rendimiento laboral.",
+                "tip": "Dite: 'Este estrés me está ayudando a concentrarme.'"
+            },
+            {
+                "t": "El corazón acelerado es energía",
+                "f": "Quienes aprendieron que la activación ayuda al rendimiento mostraron una respuesta del corazón y los vasos sanguíneos más sana ante el estrés.",
+                "tip": "Antes de un examen o una charla, dite: 'Mi cuerpo se está preparando.'"
+            },
+            {
+                "t": "Imagina tu mejor yo posible",
+                "f": "Escribir sobre un futuro en el que todo ha salido bien aumentó el ánimo positivo.",
+                "tip": "Escribe 5 líneas sobre tu vida dentro de un año, cuando las cosas hayan ido bien."
+            },
+            {
+                "t": "Música relajante y estrés",
+                "f": "Escuchar música relajante antes de una tarea estresante ayudó a que el sistema nervioso autónomo se recuperara más rápido después.",
+                "tip": "Escucha música lenta 10 minutos antes de una tarea estresante."
+            },
+            {
+                "t": "La música sí reduce el estrés",
+                "f": "Un metaanálisis de 104 estudios halló que la música redujo tanto el estrés físico (como el ritmo cardíaco) como el psicológico.",
+                "tip": "Prepara una lista de música tranquila para los momentos de estrés."
+            },
+            {
+                "t": "Pulsos binaurales",
+                "f": "Un metaanálisis halló que los pulsos binaurales podrían reducir un poco la ansiedad, pero los resultados varían mucho; úsalos como ayuda para relajarte, no como tratamiento.",
+                "tip": "Usa auriculares a volumen bajo y fíjate en cómo te sientes."
+            },
+            {
+                "t": "El mindfulness también ayuda a personas sanas",
+                "f": "La reducción del estrés basada en mindfulness en personas sanas redujo el estrés y la ansiedad y mejoró la calidad de vida.",
+                "tip": "Fíjate en tu respiración 1 minuto antes de desbloquear el móvil."
+            },
+            {
+                "t": "Haz cosas que importan",
+                "f": "La activación conductual, planificar actividades agradables o con sentido, fue una forma eficaz de reducir la depresión.",
+                "tip": "Programa hoy una actividad que valores, aunque todavía no tengas ganas."
+            },
+            {
+                "t": "Organiza el tiempo, calma la mente",
+                "f": "La gestión del tiempo se asoció con más bienestar y menos malestar, incluso más que con el rendimiento laboral.",
+                "tip": "Antes de dormir, escribe las 3 tareas más importantes de mañana."
+            },
+            {
+                "t": "Diario positivo",
+                "f": "Escribir un diario positivo 15 minutos, 3 veces por semana durante 12 semanas, redujo el malestar y mejoró el bienestar.",
+                "tip": "Escribe 15 minutos sobre lo que te hizo sonreír hoy."
+            }
+        ],
         "locale": "es-ES",
         "questions": [
             "¿Con qué frecuencia te sientes estresado o preocupado?",
@@ -447,7 +601,7 @@ LANG.es = {
         "seeResult": "Ver resultados →",
         "historyFirst": "Esta es tu primera evaluación. Vuelve la próxima semana para ver cómo cambias.",
         "historyDown": "🎉 Bajó {n} puntos desde la última vez",
-        "historyUp": "📈 Subió {n} puntos. Prueba una de las actividades de abajo.",
+        "historyUp": "📈 Subió {n} puntos. Una racha pesada. Prueba una actividad de abajo.",
         "historySame": "➖ Igual que la última vez",
         "moodPrompt": "Toca un estado de ánimo para probar",
         "moodNames": {
@@ -461,7 +615,7 @@ LANG.es = {
             "great": "¡Excelente! Anota lo bueno que pasó hoy.",
             "good": "Me alegra. Intenta mantener este ritmo.",
             "ok": "Los días normales también valen. Descansa la vista un momento.",
-            "stressed": "¿Qué tal 5 minutos de respiración lenta?",
+            "stressed": "Día difícil. Prueba 5 minutos de respiración lenta.",
             "very": "No tienes que enfrentarlo solo. Habla con alguien de confianza o llama al 1323."
         },
         "moodSaved": "✓ Guardado",
@@ -472,7 +626,7 @@ LANG.es = {
         },
         "patternNames": {
             "relax": "Relajante 4-4-6",
-            "box": "Box 4-4-4-4",
+            "box": "Cuadrada 4-4-4-4",
             "slow": "Lenta 5-5"
         },
         "ready": "¿Listo?",
@@ -542,11 +696,16 @@ LANG.es = {
         "dayLabel": "Día {d}/{total}",
         "roundLabel": "Ronda {r}",
         "streak": "🔥 Racha de {n} días",
-        "streak0": "🔥 Empieza tu racha hoy",
+        "streak0": "🌱 Puedes empezar de nuevo cualquier día",
+        "careDays": "🌱 Días cuidándote: {n}",
+        "careDays0": "🌱 Hoy puedes empezar a cuidarte",
+        "careBadge": "🏅 {n} días cuidándote. Gracias por darte este tiempo",
+        "welcomeBack": "Bienvenido de nuevo 🌿 Qué bueno verte. Empieza con algo pequeño y cómodo",
+        "riskCare": "Gracias por escribirlo. Si ahora no te sientes a salvo, puedes hablar de inmediato con alguien dispuesto a escucharte, gratis, 24 horas.",
         "doneBtn": "✅ Hice la misión de hoy",
         "doneAlready": "✓ ¡Hecho por hoy, buen trabajo!",
         "doneThanks": "Guardado. Mañana te espera un video nuevo 🌱",
-        "badge": "🏅 ¡Increíble! {n} días seguidos",
+        "badge": "🏅 {n} días seguidos. Muy bien hecho",
         "lockedMsg": "🔒 Este video se desbloquea en un día posterior",
         "progressLabel": "Misiones hechas: {n}/{total} días en esta ronda",
         "catNames": {
@@ -555,7 +714,7 @@ LANG.es = {
             "sound": "🌊 Sonidos naturales",
             "music": "🎵 Música relajante",
             "learn": "💡 Idea práctica",
-            "wave": "〰️ Ondas sonoras"
+            "wave": "〰️ Tonos relajantes"
         },
         "missions": [
             "Inhala 4 segundos y exhala 6 durante 2 minutos antes de empezar a trabajar o estudiar",
@@ -734,7 +893,7 @@ LANG.es = {
             },
             "stretch": {
                 "t": "Estiramiento en el escritorio: cuello, hombros, espalda",
-                "d": "Alivia la rigidez por estar mucho tiempo sentado/a (síndrome de oficina). Con suavidad; para si duele",
+                "d": "Suelta el cuerpo tras estar mucho tiempo sentado/a. Con suavidad; para si duele",
                 "steps": [
                     "Siéntate erguido/a e inclina la cabeza despacio a la derecha, mantén 15 segundos y cambia a la izquierda.",
                     "Lleva la barbilla suavemente hacia el pecho y mantén 15 segundos.",
@@ -1067,7 +1226,7 @@ LANG.es = {
         "checkSumNone": "Esta semana ningún área se presentó 3 días o más. Sigue cuidándote así.",
         "checkSumSome": "{n} área(s) se presentaron 3 días o más, lo que puede estar relacionado con el estrés. Prueba el autocuidado de abajo.",
         "checkAdvice": {
-            "sleep": "Dormir mal de forma continua puede estar relacionado con el estrés. Prueba técnicas de la TCC-I (terapia cognitivo-conductual para el insomnio), el primer enfoque recomendado para el insomnio.",
+            "sleep": "Dormir mal de forma continua puede estar relacionado con el estrés. Prueba los hábitos de sueño sencillos de abajo, basados en la TCC-I. Si dura semanas, un médico puede ayudarte.",
             "head": "El dolor de cabeza y la tensión en cuello y hombros pueden estar relacionados con el estrés y con estar mucho tiempo sentado. Prueba estiramientos en el escritorio y la relajación muscular progresiva.",
             "gut": "El malestar de estómago puede estar relacionado con el estrés. Prueba la respiración lenta 4-8 antes de comer y mantén horarios regulares de comida.",
             "heart": "Las palpitaciones en reposo pueden estar relacionadas con el estrés. Prueba 2 minutos de respiración lenta 4-8. Si pasa a menudo o continúa, consulta a un médico, porque puede haber otras causas físicas.",
@@ -1132,7 +1291,7 @@ LANG.es = {
             "Hoy ha sido un día pesado. ¿Puedo desahogarme un momento contigo?"
         ],
         "talkLabel": "Mensaje {n}",
-        "talkSend": "Enviar por LINE ↗",
+        "talkSend": "Enviar por chat ↗",
         "dep2Q": [
             "En las últimas 2 semanas, incluido hoy, ¿te has sentido decaído/a, triste o sin esperanza?",
             "En las últimas 2 semanas, incluido hoy, ¿te has sentido aburrido/a o sin disfrutar nada de lo que haces?"
@@ -1167,13 +1326,13 @@ LANG.es = {
             "Grave"
         ],
         "depMeaning": [
-            "Sin síntomas de depresión o síntomas muy leves. Sigue cuidándote y vuelve si cambian tus sentimientos.",
-            "Síntomas leves de depresión. Te sugerimos consultar a un médico para una evaluación adicional. También puedes llamar a la línea de salud mental 1323, gratis, 24 horas.",
-            "Síntomas moderados de depresión. Te sugerimos ver a un médico para evaluación y tratamiento. Llama al 1323, gratis, 24 horas.",
-            "Síntomas graves de depresión. Consulta a un médico pronto. No tienes que afrontarlo solo/a. Llama al 1323, gratis, 24 horas."
+            "Cribado preliminar: sin síntomas de depresión o muy leves. Sigue cuidándote y vuelve si cambia cómo te sientes.",
+            "Cribado preliminar: síntomas leves de depresión. No es un diagnóstico. Te sugerimos consultar a un médico para una evaluación adicional. También puedes llamar a la línea de salud mental 1323, gratis, 24 horas.",
+            "Cribado preliminar: síntomas moderados de depresión. No es un diagnóstico. Te sugerimos ver a un médico para una evaluación y acompañamiento. Llama al 1323, gratis, 24 horas.",
+            "Cribado preliminar: síntomas graves de depresión. No es un diagnóstico. Por favor, consulta a un médico pronto. No tienes que afrontarlo solo. Llama al 1323, gratis, 24 horas."
         ],
         "depScoreName": "Puntuación 9Q",
-        "depCrisisLow": "Tu puntuación total puede ser baja, pero los pensamientos de muerte o de hacerte daño siempre importan. No tienes que afrontarlo solo: llama al 1323 (gratis, 24 horas) o cuéntaselo a alguien de confianza, y consulta a un médico.",
+        "depCrisisLow": "Tu puntuación total puede ser baja, pero los pensamientos de muerte o de hacerte daño siempre importan. No tienes que afrontarlo solo: llama al 1323 (gratis, 24 horas) o cuéntaselo a alguien de confianza, y consulta a un médico. Con apoyo, estos sentimientos pueden aliviarse.",
         "depResNone": "2Q: sin riesgo",
         "depResScore": "9Q {score} puntos ({band})",
         "depLast": "Última vez {date} · {result}",
